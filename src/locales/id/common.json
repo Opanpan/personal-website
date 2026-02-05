@@ -1,0 +1,142 @@
+{
+  "nav": {
+    "home": "Beranda",
+    "about": "Tentang",
+    "experience": "Pengalaman",
+    "projects": "Proyek",
+    "skills": "Keahlian",
+    "contact": "Kontak"
+  },
+  "hero": {
+    "greeting": "Halo, Saya",
+    "name": "Ifan Alriansyah",
+    "title": "Senior Frontend Developer",
+    "subtitle": "Membangun aplikasi web yang skalabel dan berperforma tinggi dengan framework modern. Spesialisasi di fintech dan sistem enterprise dengan pengalaman lebih dari 5 tahun.",
+    "cta_primary": "Lihat Proyek",
+    "cta_secondary": "Unduh CV",
+    "scroll_text": "Gulir untuk menjelajahi"
+  },
+  "about": {
+    "title": "Tentang Saya",
+    "subtitle": "Developer Berdedikasi",
+    "description": "Frontend developer dengan pengalaman lebih dari 5 tahun yang berspesialisasi di fintech dan sistem enterprise. Saya membangun aplikasi web yang skalabel, berperforma tinggi, dan mudah dipelihara menggunakan framework modern seperti React, Next.js, Vue, dan Angular.",
+    "highlight": "Rekam jejak terbukti dalam menghadirkan produk berkualitas tinggi untuk klien-klien besar termasuk Bank Mandiri dan CIMB Niaga. Bersemangat dalam arsitektur bersih, keunggulan UI, dan kolaborasi tim.",
+    "stats": {
+      "years": "Tahun Pengalaman",
+      "projects": "Proyek Selesai",
+      "clients": "Klien Enterprise"
+    }
+  },
+  "experience": {
+    "title": "Pengalaman Kerja",
+    "subtitle": "Perjalanan Profesional Saya",
+    "positions": {
+      "pcs": {
+        "title": "Senior Frontend Developer",
+        "company": "PCS Payment",
+        "location": "Serpong, Indonesia",
+        "period": "Mar 2025 - Sekarang",
+        "description": "PCS Payment adalah konsultan IT yang berspesialisasi dalam mesin EDC dan aplikasi HRIS.",
+        "achievements": [
+          "Merancang boilerplate standar untuk mempercepat pengembangan aplikasi baru",
+          "Mengimplementasikan unit testing komprehensif dengan standar coverage 80%+",
+          "Mengoptimalkan performa form yang menangani 10.000+ objek, mengurangi TBT dari 800ms ke 270ms",
+          "Membuat sistem deteksi perubahan form universal untuk peringatan data yang belum disimpan"
+        ]
+      },
+      "lawencon": {
+        "title": "Middle Frontend Developer",
+        "company": "Lawencon International",
+        "location": "Jakarta, Indonesia",
+        "period": "Sep 2022 - Feb 2025",
+        "description": "Lawencon adalah perusahaan konsultan IT dengan klien utama di sektor perbankan. Ditempatkan di Bank Mandiri, bank nasional terbesar di Indonesia.",
+        "achievements": [
+          "Merefaktor codebase kompleks dari 1000+ baris menjadi di bawah 300 baris tanpa breaking changes",
+          "Mencapai 90% coverage unit test untuk fitur autentikasi pembayaran kritikal",
+          "Merancang solusi microfrontend yang menyatukan 3 aplikasi legacy menjadi satu platform",
+          "Mengintegrasikan modul Angular sebagai remote micro frontend dalam arsitektur shell React"
+        ]
+      },
+      "jojonomic": {
+        "title": "Junior Frontend Developer",
+        "company": "Jojonomic",
+        "location": "Jakarta, Indonesia",
+        "period": "Jan 2021 - Sep 2022",
+        "description": "Jojonomic adalah software house yang berspesialisasi dalam aplikasi kustom, dengan produk unggulan berupa low-code application builder.",
+        "achievements": [
+          "Mempercepat timeline pengembangan dari 60 hari menjadi 30 hari dengan tingkat bug kurang dari 5%",
+          "Berkolaborasi dengan backend engineer untuk menyelaraskan API contracts dan spesifikasi teknis",
+          "Membangun implementasi UI/UX yang responsif dan kompatibel lintas browser"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "title": "Proyek Unggulan",
+    "subtitle": "Karya Terbaru",
+    "view_details": "Lihat Detail",
+    "close": "Tutup",
+    "tech_stack": "Tech Stack",
+    "key_features": "Fitur Utama",
+    "items": {
+      "banking_platform": {
+        "title": "Platform Perbankan Terpadu",
+        "category": "Fintech / Enterprise",
+        "description": "Arsitektur microfrontend yang menyatukan tiga aplikasi perbankan legacy menjadi platform modern yang seamless untuk Bank Mandiri.",
+        "long_description": "Memimpin desain arsitektur dan implementasi solusi microfrontend inovatif yang mengkonsolidasi tiga aplikasi legacy yang berbeda menjadi platform perbankan modern yang terpadu. Proyek ini mentransformasi pengalaman perbankan digital untuk jutaan pengguna sekaligus mengurangi overhead maintenance secara signifikan.",
+        "features": [
+          "Integrasi seamless aplikasi React dan Angular",
+          "Autentikasi pembayaran real-time dengan 90% test coverage",
+          "Performa teroptimasi untuk transaksi volume tinggi",
+          "Module federation untuk siklus deployment independen"
+        ]
+      },
+      "hris_system": {
+        "title": "Dashboard HRIS Enterprise",
+        "category": "Enterprise / SaaS",
+        "description": "Sistem informasi sumber daya manusia komprehensif dengan penanganan form canggih dan sinkronisasi data real-time.",
+        "long_description": "Mengembangkan dashboard HRIS berperforma tinggi yang mampu mengelola struktur data organisasi yang kompleks. Sistem ini menampilkan penanganan form cerdas yang secara efisien memproses lebih dari 10.000 entri data unik sambil mempertahankan waktu respons di bawah 300ms.",
+        "features": [
+          "Pemrosesan data massal dengan TBT teroptimasi (270ms)",
+          "Validasi form cerdas dengan deteksi duplikat",
+          "Perlindungan perubahan yang belum disimpan di semua halaman form",
+          "Boilerplate terstandarisasi untuk pengembangan fitur cepat"
+        ]
+      },
+      "lowcode_builder": {
+        "title": "Low-Code App Builder",
+        "category": "SaaS / Platform",
+        "description": "Visual application builder yang memungkinkan pengguna non-teknis membuat aplikasi bisnis kustom tanpa coding.",
+        "long_description": "Berkontribusi dalam pengembangan platform low-code inovatif yang mendemokratisasi pengembangan aplikasi. Platform ini memungkinkan pengguna bisnis membuat aplikasi canggih melalui antarmuka drag-and-drop yang intuitif, mengurangi waktu pengembangan hingga 50%.",
+        "features": [
+          "Component builder drag-and-drop",
+          "Siklus pengembangan 50% lebih cepat",
+          "Desain responsif kompatibel lintas browser",
+          "Framework integrasi API yang seamless"
+        ]
+      }
+    }
+  },
+  "skills": {
+    "title": "Teknologi & Keahlian",
+    "subtitle": "Tools yang Saya Gunakan",
+    "categories": {
+      "languages": "Bahasa Pemrograman",
+      "frameworks": "Framework & Library",
+      "tools": "Tools & Platform"
+    }
+  },
+  "contact": {
+    "title": "Mari Terhubung",
+    "subtitle": "Hubungi Saya",
+    "description": "Saya selalu terbuka untuk mendiskusikan peluang baru, proyek inovatif, atau cara untuk berkolaborasi. Jangan ragu untuk menghubungi!",
+    "email": "Email",
+    "phone": "Telepon",
+    "location": "Lokasi",
+    "social": "Media Sosial"
+  },
+  "footer": {
+    "copyright": "© 2025 Ifan Alriansyah. Dibuat dengan passion dan kode yang bersih.",
+    "built_with": "Dibangun dengan Next.js, Tailwind CSS, dan ❤️"
+  }
+}

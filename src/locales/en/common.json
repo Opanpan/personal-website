@@ -1,0 +1,142 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "experience": "Experience",
+    "projects": "Projects",
+    "skills": "Skills",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Hello, I'm",
+    "name": "Ifan Alriansyah",
+    "title": "Senior Frontend Developer",
+    "subtitle": "Crafting scalable, high-performance web applications with modern frameworks. Specialized in fintech and enterprise systems with 5+ years of experience.",
+    "cta_primary": "View Projects",
+    "cta_secondary": "Download CV",
+    "scroll_text": "Scroll to explore"
+  },
+  "about": {
+    "title": "About Me",
+    "subtitle": "Passionate Developer",
+    "description": "Frontend developer with over 5 years of experience specializing in fintech and enterprise systems. I build scalable, high-performance, and maintainable web applications using modern frameworks such as React, Next.js, Vue, and Angular.",
+    "highlight": "Proven track record of delivering high-quality products for major clients including Bank Mandiri and CIMB Niaga. Passionate about clean architecture, UI excellence, and collaborative team environments.",
+    "stats": {
+      "years": "Years Experience",
+      "projects": "Projects Delivered",
+      "clients": "Enterprise Clients"
+    }
+  },
+  "experience": {
+    "title": "Work Experience",
+    "subtitle": "My Professional Journey",
+    "positions": {
+      "pcs": {
+        "title": "Senior Frontend Developer",
+        "company": "PCS Payment",
+        "location": "Serpong, Indonesia",
+        "period": "Mar 2025 - Present",
+        "description": "PCS Payment is an IT consultant specializing in EDC machines and HRIS applications.",
+        "achievements": [
+          "Designed standards-compliant boilerplates to accelerate new application development",
+          "Implemented comprehensive unit testing with 80%+ code coverage standards",
+          "Optimized form performance handling 10,000+ objects, reducing TBT from 800ms to 270ms",
+          "Created universal form change detection system for unsaved changes warnings"
+        ]
+      },
+      "lawencon": {
+        "title": "Middle Frontend Developer",
+        "company": "Lawencon International",
+        "location": "Jakarta, Indonesia",
+        "period": "Sep 2022 - Feb 2025",
+        "description": "Lawencon is an IT consulting firm with clients primarily in the banking sector. Placed at Bank Mandiri, Indonesia's largest national bank.",
+        "achievements": [
+          "Refactored complex codebases from 1000+ lines to under 300 lines without breaking changes",
+          "Achieved 90% unit test coverage for critical payment authentication features",
+          "Architected microfrontend solution unifying 3 legacy applications into one platform",
+          "Integrated Angular modules as remote micro frontends within React shell architecture"
+        ]
+      },
+      "jojonomic": {
+        "title": "Junior Frontend Developer",
+        "company": "Jojonomic",
+        "location": "Jakarta, Indonesia",
+        "period": "Jan 2021 - Sep 2022",
+        "description": "Jojonomic is a software house specializing in custom applications, with their flagship being a low-code application builder.",
+        "achievements": [
+          "Accelerated development timelines from 60 days to 30 days with less than 5% bug rate",
+          "Collaborated with backend engineers to align API contracts and technical specifications",
+          "Built responsive, cross-browser compatible UI/UX implementations"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "title": "Featured Projects",
+    "subtitle": "Recent Work",
+    "view_details": "View Details",
+    "close": "Close",
+    "tech_stack": "Tech Stack",
+    "key_features": "Key Features",
+    "items": {
+      "banking_platform": {
+        "title": "Unified Banking Platform",
+        "category": "Fintech / Enterprise",
+        "description": "Microfrontend architecture unifying three legacy banking applications into a seamless, modern platform for Bank Mandiri.",
+        "long_description": "Led the architectural design and implementation of a groundbreaking microfrontend solution that consolidated three disparate legacy applications into a unified, modern banking platform. This project transformed the digital banking experience for millions of users while significantly reducing maintenance overhead.",
+        "features": [
+          "Seamless integration of React and Angular applications",
+          "Real-time payment authentication with 90% test coverage",
+          "Optimized performance handling high-volume transactions",
+          "Module federation for independent deployment cycles"
+        ]
+      },
+      "hris_system": {
+        "title": "Enterprise HRIS Dashboard",
+        "category": "Enterprise / SaaS",
+        "description": "Comprehensive human resource information system with advanced form handling and real-time data synchronization.",
+        "long_description": "Developed a high-performance HRIS dashboard capable of managing complex organizational data structures. The system features intelligent form handling that efficiently processes over 10,000 unique data entries while maintaining sub-300ms response times.",
+        "features": [
+          "Bulk data processing with optimized TBT (270ms)",
+          "Smart form validation with duplicate detection",
+          "Unsaved changes protection across all form pages",
+          "Standardized boilerplate for rapid feature development"
+        ]
+      },
+      "lowcode_builder": {
+        "title": "Low-Code App Builder",
+        "category": "SaaS / Platform",
+        "description": "Visual application builder enabling non-technical users to create custom business applications without coding.",
+        "long_description": "Contributed to the development of an innovative low-code platform that democratizes application development. The platform enables business users to create sophisticated applications through an intuitive drag-and-drop interface, reducing development time by 50%.",
+        "features": [
+          "Drag-and-drop component builder",
+          "50% faster development cycles",
+          "Cross-browser compatible responsive design",
+          "Seamless API integration framework"
+        ]
+      }
+    }
+  },
+  "skills": {
+    "title": "Technologies & Skills",
+    "subtitle": "Tools I Work With",
+    "categories": {
+      "languages": "Languages",
+      "frameworks": "Frameworks & Libraries",
+      "tools": "Tools & Platforms"
+    }
+  },
+  "contact": {
+    "title": "Let's Connect",
+    "subtitle": "Get In Touch",
+    "description": "I'm always open to discussing new opportunities, innovative projects, or ways to collaborate. Feel free to reach out!",
+    "email": "Email",
+    "phone": "Phone",
+    "location": "Location",
+    "social": "Social Links"
+  },
+  "footer": {
+    "copyright": "© 2025 Ifan Alriansyah. Crafted with passion and clean code.",
+    "built_with": "Built with Next.js, Tailwind CSS, and ❤️"
+  }
+}
