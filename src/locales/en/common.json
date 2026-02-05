@@ -79,40 +79,77 @@
     "tech_stack": "Tech Stack",
     "key_features": "Key Features",
     "items": {
-      "banking_platform": {
-        "title": "Unified Banking Platform",
-        "category": "Fintech / Enterprise",
-        "description": "Microfrontend architecture unifying three legacy banking applications into a seamless, modern platform for Bank Mandiri.",
-        "long_description": "Led the architectural design and implementation of a groundbreaking microfrontend solution that consolidated three disparate legacy applications into a unified, modern banking platform. This project transformed the digital banking experience for millions of users while significantly reducing maintenance overhead.",
+      "biztrip": {
+        "title": "CIMB Biztrip",
+        "category": "Enterprise Travel Management",
+        "description": "CIMB internal application for airplane ticket and hotel reservations integrated with Traveloka, used for official travel without using employee's personal funds and supporting petty cash requests.",
+        "long_description": "CIMB internal application for airplane ticket and hotel reservations integrated with Traveloka. This application is specifically used for official travel, so all transactions are conducted directly through the company system without using employee personal funds. In addition, this application also supports petty cash requests and centralized management of official travel needs with complete documentation.",
         "features": [
-          "Seamless integration of React and Angular applications",
-          "Real-time payment authentication with 90% test coverage",
-          "Optimized performance handling high-volume transactions",
-          "Module federation for independent deployment cycles"
+          "Integration of airplane ticket and hotel reservation with Traveloka",
+          "Official travel transactions without using employee personal funds",
+          "Centralized petty cash request and management",
+          "Recording and monitoring official travel for administrative and audit purposes"
         ]
       },
-      "hris_system": {
-        "title": "Enterprise HRIS Dashboard",
-        "category": "Enterprise / SaaS",
-        "description": "Comprehensive human resource information system with advanced form handling and real-time data synchronization.",
-        "long_description": "Developed a high-performance HRIS dashboard capable of managing complex organizational data structures. The system features intelligent form handling that efficiently processes over 10,000 unique data entries while maintaining sub-300ms response times.",
+      "cash_management": {
+        "title": "LAJU by Mandiri",
+        "category": "Enterprise / Cash Management",
+        "description": "Web-based application for ordering and monitoring cash delivery and pickup services for wholesale corporate customers of the company.",
+        "long_description": "Developing an internet-based enterprise application that enables wholesale segment companies to securely and integrally order Cash Pick Up and Delivery service. This system provides convenience in the ordering process, real-time service status monitoring, as well as access to historical transaction data through a secure connection network to support operational needs and audit requirements.",
         "features": [
-          "Bulk data processing with optimized TBT (270ms)",
-          "Smart form validation with duplicate detection",
-          "Unsaved changes protection across all form pages",
-          "Standardized boilerplate for rapid feature development"
+          "Online cash delivery and pickup service ordering",
+          "Real-time Cash Pick Up and Delivery service status monitoring",
+          "Access to transaction history data for reporting and audit needs",
+          "Data security and encrypted connections for enterprise transactions"
         ]
       },
-      "lowcode_builder": {
-        "title": "Low-Code App Builder",
-        "category": "SaaS / Platform",
-        "description": "Visual application builder enabling non-technical users to create custom business applications without coding.",
-        "long_description": "Contributed to the development of an innovative low-code platform that democratizes application development. The platform enables business users to create sophisticated applications through an intuitive drag-and-drop interface, reducing development time by 50%.",
+      "super_app": {
+        "title": "KOPRA by Mandiri",
+        "category": "Enterprise / Cash Management",
+        "description": "Web-based application integrated with the Kopra by Mandiri platform supporting ordering and monitoring Cash Pick Up and Delivery services for wholesale corporate customers.",
+        "long_description": "Enterprise web application integrated with the Kopra by Mandiri platform, designed to meet the needs of wholesale corporate customers in securely, efficiently, and standardized ordering of Cash Pick Up and Delivery services. This solution enables companies to manage ordering processes, monitor service status in real-time, and access transaction history data through Kopra's security infrastructure to support business operational smoothness, financial reporting, and audit needs.",
         "features": [
-          "Drag-and-drop component builder",
-          "50% faster development cycles",
-          "Cross-browser compatible responsive design",
-          "Seamless API integration framework"
+          "Cash Pick Up and Delivery service orders integrated with Kopra by Mandiri platform",
+          "Real-time service status monitoring through Kopra dashboard",
+          "Access to transaction history and reports for operational and audit purposes",
+          "Data security and encrypted connections according to Kopra by Mandiri enterprise security standards"
+        ]
+      },
+      "ifg": {
+        "title": "IFG Life Space",
+        "category": "Digital Insurance Platform",
+        "description": "Digital IFG Life Space platform providing integrated services for information management, services, and insurance interactions for IFG Life customers and partners.",
+        "long_description": "IFG Life Space is an enterprise digital platform developed by IFG Life to support an integrated insurance service ecosystem. The platform enables customers, partners, and internal company to access policy information, administrative services, and supporting insurance activities securely and centrally. IFG Life Space is designed to improve operational efficiency, service transparency, and user experience quality through a reliable digital system consistent with insurance company governance standards.",
+        "features": [
+          "Centralized access to policy information and insurance services",
+          "Service management and monitoring digitally",
+          "Service integration within IFG Life ecosystem",
+          "Data security and access according to enterprise standards and insurance industry regulations"
+        ]
+      },
+      "tembuni": {
+        "title": "Tembuni Birth Center",
+        "category": "Healthcare / Birth Center",
+        "description": "Tembuni Birth Center is a professional birth clinic service with gentle birth approach providing comfortable and safe delivery experience for mothers and babies.",
+        "long_description": "Tembuni Birth Center is a healthcare clinic focused on normal delivery services with gentle birth approach and comprehensive support for pregnant women, delivery, and newborn babies. With delivery room atmosphere designed as comfortably as home and as safely as hospital, Tembuni provides holistic care, including prenatal classes, obstetrics & lactation consultation, and child services. This service is designed to improve comfort, safety, and well-being of mother and baby throughout pregnancy, delivery, and postpartum periods. The clinic environment supports family involvement and focuses on early breastfeeding initiation (IMD) and parent-child bonding.",
+        "features": [
+          "Normal delivery with gentle birth approach with minimal medical intervention",
+          "Pregnancy exercise classes and prenatal yoga for delivery preparation",
+          "Doctor consultation for Obstetrics & Gynecology, lactation, and pediatrics",
+          "Homecare and newborn care after delivery",
+          "Complete polyclinic facilities including pharmacy and laboratory"
+        ]
+      },
+      "accurate": {
+        "title": "PT Accurate Medica Solutions",
+        "category": "Healthcare / Medical Devices Distribution",
+        "description": "PT Accurate Medica Solutions is a high-quality and innovative medical equipment distribution company providing health device solutions for medical professional needs and healthcare institutions.",
+        "long_description": "PT Accurate Medica Solutions is a company focused on distribution and provision of leading medical equipment in Indonesia. Founded to meet the needs of healthcare professionals and medical institutions for reliable medical devices, the company brings various important medical products such as perforators, dura patches, speedy flaps, cranial fixation systems, and other surgical tools designed to support medical procedures with high precision and safety. Accurate Medica Solutions is committed to product quality and service to strengthen healthcare services and improve patient care outcomes.",
+        "features": [
+          "Distribution of various high-quality medical equipment for hospitals and clinics",
+          "Surgical and neurosurgical products such as perforators, dura patches, and cranial fixation systems",
+          "Innovative health device solutions supporting clinical and medical operational procedures",
+          "Commitment to professional customer service and high-standard technical support"
         ]
       }
     }

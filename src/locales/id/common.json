@@ -79,40 +79,77 @@
     "tech_stack": "Tech Stack",
     "key_features": "Fitur Utama",
     "items": {
-      "banking_platform": {
-        "title": "Platform Perbankan Terpadu",
-        "category": "Fintech / Enterprise",
-        "description": "Arsitektur microfrontend yang menyatukan tiga aplikasi perbankan legacy menjadi platform modern yang seamless untuk Bank Mandiri.",
-        "long_description": "Memimpin desain arsitektur dan implementasi solusi microfrontend inovatif yang mengkonsolidasi tiga aplikasi legacy yang berbeda menjadi platform perbankan modern yang terpadu. Proyek ini mentransformasi pengalaman perbankan digital untuk jutaan pengguna sekaligus mengurangi overhead maintenance secara signifikan.",
+      "biztrip": {
+        "title": "CIMB Biztrip",
+        "category": "Enterprise Travel Management",
+        "description": "Aplikasi internal CIMB untuk pemesanan tiket pesawat dan hotel yang terintegrasi dengan Traveloka, digunakan untuk perjalanan dinas tanpa menggunakan dana pribadi karyawan serta mendukung pengajuan petty cash.",
+        "long_description": "Aplikasi internal CIMB untuk pemesanan tiket penerbangan dan hotel yang terintegrasi dengan Traveloka. Aplikasi ini digunakan khusus untuk perjalanan dinas, sehingga seluruh transaksi dilakukan langsung melalui sistem perusahaan tanpa menggunakan dana pribadi karyawan. Selain itu, aplikasi ini juga mendukung pengajuan petty cash serta pengelolaan kebutuhan perjalanan dinas secara terpusat dan terdokumentasi.",
         "features": [
-          "Integrasi seamless aplikasi React dan Angular",
-          "Autentikasi pembayaran real-time dengan 90% test coverage",
-          "Performa teroptimasi untuk transaksi volume tinggi",
-          "Module federation untuk siklus deployment independen"
+  "Integrasi pemesanan tiket pesawat dan hotel dengan Traveloka",
+  "Transaksi perjalanan dinas tanpa penggunaan dana pribadi karyawan",
+  "Pengajuan dan pengelolaan petty cash secara terpusat",
+  "Pencatatan dan monitoring perjalanan dinas untuk kebutuhan administrasi dan audit"
         ]
       },
-      "hris_system": {
-        "title": "Dashboard HRIS Enterprise",
-        "category": "Enterprise / SaaS",
-        "description": "Sistem informasi sumber daya manusia komprehensif dengan penanganan form canggih dan sinkronisasi data real-time.",
-        "long_description": "Mengembangkan dashboard HRIS berperforma tinggi yang mampu mengelola struktur data organisasi yang kompleks. Sistem ini menampilkan penanganan form cerdas yang secara efisien memproses lebih dari 10.000 entri data unik sambil mempertahankan waktu respons di bawah 300ms.",
+      "cash_management": {
+        "title": "LAJU by Mandiri",
+        "category": "Enterprise / Cash Management",
+        "description": "Aplikasi berbasis web untuk pemesanan dan pemantauan layanan pengantaran serta penjemputan uang tunai bagi nasabah perusahaan segmen wholesale.",
+        "long_description": "Mengembangkan aplikasi enterprise berbasis internet yang memungkinkan perusahaan segmen wholesale melakukan pemesanan layanan Cash Pick Up and Delivery secara aman dan terintegrasi. Sistem ini menyediakan kemudahan dalam proses pemesanan, pemantauan status layanan secara real-time, serta akses data historis transaksi melalui jaringan koneksi yang aman untuk mendukung kebutuhan operasional dan audit.",
         "features": [
-          "Pemrosesan data massal dengan TBT teroptimasi (270ms)",
-          "Validasi form cerdas dengan deteksi duplikat",
-          "Perlindungan perubahan yang belum disimpan di semua halaman form",
-          "Boilerplate terstandarisasi untuk pengembangan fitur cepat"
+          "Pemesanan layanan pengantaran dan penjemputan uang tunai secara online",
+          "Pemantauan status layanan Cash Pick Up and Delivery secara real-time",
+          "Akses data historis transaksi untuk kebutuhan pelaporan dan audit",
+          "Keamanan data dan koneksi terenkripsi untuk transaksi enterprise"
         ]
       },
-      "lowcode_builder": {
-        "title": "Low-Code App Builder",
-        "category": "SaaS / Platform",
-        "description": "Visual application builder yang memungkinkan pengguna non-teknis membuat aplikasi bisnis kustom tanpa coding.",
-        "long_description": "Berkontribusi dalam pengembangan platform low-code inovatif yang mendemokratisasi pengembangan aplikasi. Platform ini memungkinkan pengguna bisnis membuat aplikasi canggih melalui antarmuka drag-and-drop yang intuitif, mengurangi waktu pengembangan hingga 50%.",
+      "super_app": {
+        "title": "KOPRA by Mandiri",
+        "category": "Enterprise / Cash Management",
+        "description": "Aplikasi berbasis web dalam ekosistem Kopra by Mandiri yang mendukung pemesanan dan pemantauan layanan Cash Pick Up and Delivery untuk nasabah korporasi segmen wholesale.",
+        "long_description": "Aplikasi enterprise berbasis web yang terintegrasi dengan platform Kopra by Mandiri, dirancang untuk memenuhi kebutuhan nasabah korporasi segmen wholesale dalam melakukan pemesanan layanan Cash Pick Up and Delivery secara aman, efisien, dan terstandarisasi. Solusi ini memungkinkan perusahaan mengelola proses pemesanan, memantau status layanan secara real-time, serta mengakses data historis transaksi melalui infrastruktur keamanan Kopra guna mendukung kelancaran operasional bisnis, pelaporan keuangan, dan kebutuhan audit.",
         "features": [
-          "Component builder drag-and-drop",
-          "Siklus pengembangan 50% lebih cepat",
-          "Desain responsif kompatibel lintas browser",
-          "Framework integrasi API yang seamless"
+          "Pemesanan layanan Cash Pick Up and Delivery terintegrasi dengan platform Kopra by Mandiri",
+          "Pemantauan status layanan secara real-time melalui dashboard Kopra",
+          "Akses data historis dan laporan transaksi untuk kebutuhan operasional dan audit",
+          "Keamanan data dan koneksi terenkripsi sesuai standar keamanan enterprise Kopra by Mandiri"
+        ]
+      },
+      "ifg": {
+        "title": "IFG Life Space",
+        "category": "Digital Insurance Platform",
+        "description": "Platform digital IFG Life Space yang menyediakan layanan terintegrasi untuk pengelolaan informasi, layanan, dan interaksi asuransi bagi nasabah dan mitra IFG Life.",
+        "long_description": "IFG Life Space merupakan platform digital enterprise yang dikembangkan oleh IFG Life untuk mendukung ekosistem layanan asuransi secara terintegrasi. Platform ini memungkinkan nasabah, mitra, dan internal perusahaan mengakses informasi polis, layanan administrasi, serta aktivitas pendukung asuransi secara aman dan terpusat. IFG Life Space dirancang untuk meningkatkan efisiensi operasional, transparansi layanan, serta kualitas pengalaman pengguna melalui sistem digital yang andal dan sesuai standar tata kelola perusahaan asuransi.",
+        "features": [
+          "Akses terpusat ke informasi polis dan layanan asuransi",
+          "Pengelolaan dan pemantauan layanan secara digital",
+          "Integrasi layanan dalam ekosistem IFG Life",
+          "Keamanan data dan akses sesuai standar enterprise dan regulasi industri asuransi"
+        ]
+      },
+      "tembuni": {
+        "title": "Tembuni Birth Center",
+        "category": "Healthcare / Birth Center",
+        "description": "Tembuni Birth Center adalah layanan klinik persalinan pro-normal dengan pendekatan *gentle birth* yang menyediakan pengalaman melahirkan nyaman dan aman bagi ibu dan bayi.",
+        "long_description": "Tembuni Birth Center merupakan klinik kesehatan yang fokus pada layanan persalinan normal dengan pendekatan *gentle birth* serta dukungan komprehensif untuk ibu hamil, melahirkan, dan bayi baru lahir. Dengan suasana ruang persalinan yang dirancang senyaman di rumah dan seaman di rumah sakit, Tembuni memberikan perawatan holistik, termasuk kelas prenatal, konsultasi obstetri & laktasi, serta layanan anak. Layanan ini dirancang untuk meningkatkan kenyamanan, keamanan, dan kesejahteraan ibu dan bayi sepanjang proses kehamilan, persalinan, dan masa postpartum. Lingkungan klinik mendukung keterlibatan keluarga serta fokus pada inisiasi menyusu dini (IMD) dan bonding orang tua-anak.",
+        "features": [
+          "Persalinan normal dengan pendekatan *gentle birth* yang minim intervensi medis",
+          "Kelas senam hamil dan prenatal yoga untuk persiapan persalinan",
+          "Konsultasi dokter Obgyn, dokter laktasi, dan dokter anak",
+          "Homecare dan perawatan bayi baru lahir setelah persalinan",
+          "Fasilitas polisilan lengkap termasuk farmasi dan laboratorium"
+        ]
+      },
+      "accurate": {
+        "title": "PT Accurate Medica Solutions",
+        "category": "Healthcare / Medical Devices Distribution",
+        "description": "PT Accurate Medica Solutions adalah perusahaan distribusi peralatan medis berkualitas tinggi dan inovatif yang menyediakan solusi alat kesehatan untuk kebutuhan profesional medis dan lembaga kesehatan.",
+        "long_description": "PT Accurate Medica Solutions merupakan perusahaan yang fokus pada distribusi dan penyediaan peralatan medis terkemuka di Indonesia. Didirikan untuk memenuhi kebutuhan tenaga kesehatan dan institusi medis terhadap alat kesehatan yang andal, perusahaan ini menghadirkan berbagai produk medis penting seperti perforators, dura patches, speedy flaps, sistem fiksasi kranial, dan alat bedah lainnya yang dirancang untuk mendukung prosedur medis dengan presisi dan keamanan tinggi. Accurate Medica Solutions berkomitmen pada kualitas produk dan pelayanan untuk memperkuat layanan kesehatan dan meningkatkan hasil perawatan pasien.",
+        "features": [
+          "Distribusi berbagai peralatan medis berkualitas tinggi untuk rumah sakit dan klinik",
+          "Produk bedah dan neurobedah seperti perforators, dura patches, dan sistem fiksasi kranial",
+          "Solusi alat kesehatan inovatif yang mendukung prosedur klinis dan operasional medis",
+          "Komitmen pada layanan pelanggan profesional dan dukungan teknis berstandar tinggi"
         ]
       }
     }

@@ -108,7 +108,7 @@ export default function Projects() {
         </div>
       </div>
 
-      {/* Project Detail Modal */}
+      {/* Project Detail Modal - Modern Full Image Design */}
       <AnimatePresence>
         {selectedProject && (
           <>
@@ -119,100 +119,143 @@ export default function Projects() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
               onClick={() => setSelectedProjectId(null)}
-              className="fixed inset-0 bg-black/60 dark:bg-black/80 backdrop-blur-sm z-50"
+              className="fixed inset-0 bg-black/70 dark:bg-black/80 backdrop-blur-md z-50"
             />
 
-            {/* Modal Content */}
+            {/* Modal Container */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              initial={{ opacity: 0, scale: 0.85, y: 40 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              exit={{ opacity: 0, scale: 0.85, y: 40 }}
               transition={{ type: 'spring', stiffness: 300, damping: 25 }}
               className="fixed inset-0 flex items-center justify-center z-50 px-4"
               onClick={() => setSelectedProjectId(null)}
             >
               <div
-                className="glass-card overflow-hidden flex flex-col max-h-[90vh] w-full max-w-2xl"
+                className="relative w-full h-full max-w-4xl max-h-[85vh] rounded-3xl overflow-hidden shadow-2xl border border-white/10"
                 onClick={(e) => e.stopPropagation()}
               >
-                {/* Image Section - Top */}
-                <div className="relative w-full h-48 bg-gradient-to-br from-gray-800 to-gray-900 overflow-hidden flex-shrink-0">
+                {/* Full Background Image */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${selectedProject.gradient} overflow-hidden`}>
                   <img
                     src={selectedProject.image}
                     alt={t(`projects.items.${selectedProject.id}.title`)}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-center scale-105 blur-sm"
                   />
-                  {/* Fallback gradient if image fails to load */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${selectedProject.gradient} flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity`}>
-                    <Layers className="w-20 h-20 text-white/80" />
-                  </div>
+                  {/* Dark Gradient Overlay - Enhanced for better content contrast */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/60 to-black/90" />
 
-                  {/* Close Button */}
-                  <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() => setSelectedProjectId(null)}
-                    className="absolute top-4 right-4 p-2 rounded-full bg-black/20 hover:bg-black/40 text-white transition-colors z-10"
-                  >
-                    <X className="w-5 h-5" />
-                  </motion.button>
+                  {/* Side gradient overlays for edge enhancement */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
                 </div>
 
-                {/* Modal Body - Bottom */}
-                <div className="p-6 lg:p-8 overflow-y-auto flex-1">
-                  <span className="text-sm font-medium text-primary-500 uppercase tracking-wider">
-                    {t(`projects.items.${selectedProject.id}.category`)}
-                  </span>
-                  <h3 className="text-2xl md:text-3xl font-display font-bold text-[var(--text-primary)] mt-2 mb-4">
-                    {t(`projects.items.${selectedProject.id}.title`)}
-                  </h3>
+                {/* Close Button - Top Right */}
+                <motion.button
+                  whileHover={{ scale: 1.15, backgroundColor: 'rgba(255, 255, 255, 0.3)' }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => setSelectedProjectId(null)}
+                  className="absolute top-6 right-6 p-3 rounded-full bg-white/10 text-white backdrop-blur-xl transition-all z-20 border border-white/30 shadow-lg"
+                >
+                  <X className="w-6 h-6" />
+                </motion.button>
 
-                  <p className="text-[var(--text-secondary)] leading-relaxed mb-6">
-                    {t(`projects.items.${selectedProject.id}.long_description`)}
-                  </p>
+                {/* Content Overlay - Floating Glass Card */}
+                <div className="absolute inset-0 flex flex-col justify-end p-6 lg:p-10 overflow-y-auto">
+                  {/* Gradient fade for scrollable content */}
+                  <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
 
-                  {/* Key Features */}
-                  <div className="mb-6">
-                    <h4 className="text-lg font-semibold text-[var(--text-primary)] mb-3">
-                      {t('projects.key_features')}
-                    </h4>
-                    <ul className="space-y-2">
-                      {(t(`projects.items.${selectedProject.id}.features`, { returnObjects: true }) as string[]).map(
-                        (feature, i) => (
-                          <li key={i} className="flex items-start gap-3 text-[var(--text-secondary)]">
-                            <span className="w-1.5 h-1.5 rounded-full bg-primary-500 mt-2 flex-shrink-0" />
-                            <span>{feature}</span>
-                          </li>
-                        )
-                      )}
-                    </ul>
-                  </div>
-
-                  {/* Tech Stack */}
-                  <div>
-                    <h4 className="text-lg font-semibold text-[var(--text-primary)] mb-3">
-                      {t('projects.tech_stack')}
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedProject.techStack.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-4 py-2 text-sm font-medium rounded-full bg-dark-200/50 dark:bg-dark-700/50 text-[var(--text-secondary)] border border-dark-300/50 dark:border-dark-600/50"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Close Button */}
-                  <div className="mt-8 pt-6 border-t border-dark-200/50 dark:border-dark-700/50">
-                    <button
-                      onClick={() => setSelectedProjectId(null)}
-                      className="w-full py-3 rounded-xl bg-dark-200/50 dark:bg-dark-700/50 text-[var(--text-secondary)] hover:bg-dark-300/50 dark:hover:bg-dark-600/50 transition-colors font-medium"
+                  {/* Actual Content */}
+                  <div className="relative z-10">
+                    {/* Category Badge */}
+                    <motion.span
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 }}
+                      className="inline-flex items-center text-xs font-bold text-primary-300 uppercase tracking-widest px-4 py-2.5 rounded-full bg-gradient-to-r from-primary-500/30 to-primary-400/20 backdrop-blur-xl border border-primary-400/50 shadow-lg"
                     >
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary-400 mr-2 animate-pulse" />
+                      {t(`projects.items.${selectedProject.id}.category`)}
+                    </motion.span>
+
+                    {/* Title */}
+                    <motion.h3
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.15 }}
+                      className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mt-4 mb-4 leading-tight"
+                    >
+                      {t(`projects.items.${selectedProject.id}.title`)}
+                    </motion.h3>
+
+                    {/* Description */}
+                    <motion.p
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
+                      className="text-base md:text-lg text-gray-100 leading-relaxed mb-6 max-w-3xl"
+                    >
+                      {t(`projects.items.${selectedProject.id}.long_description`)}
+                    </motion.p>
+
+                    {/* Two Column Layout for Features and Tech Stack */}
+                    <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+                      {/* Key Features */}
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.25 }}
+                      >
+                        <h4 className="text-sm font-bold text-primary-300 uppercase tracking-wider mb-4">
+                          {t('projects.key_features')}
+                        </h4>
+                        <ul className="space-y-3">
+                          {(t(`projects.items.${selectedProject.id}.features`, { returnObjects: true }) as string[]).map(
+                            (feature, i) => (
+                              <li key={i} className="flex items-start gap-3 text-gray-100">
+                                <span className="w-2 h-2 rounded-full bg-primary-400 mt-2 flex-shrink-0" />
+                                <span className="text-sm">{feature}</span>
+                              </li>
+                            )
+                          )}
+                        </ul>
+                      </motion.div>
+
+                      {/* Tech Stack */}
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 }}
+                      >
+                        <h4 className="text-sm font-bold text-primary-300 uppercase tracking-wider mb-4">
+                          {t('projects.tech_stack')}
+                        </h4>
+                        <div className="flex flex-wrap gap-3">
+                          {selectedProject.techStack.map((tech) => (
+                            <motion.span
+                              key={tech}
+                              whileHover={{ scale: 1.08, backgroundColor: 'rgba(255, 255, 255, 0.25)' }}
+                              className="px-4 py-2 text-xs font-semibold rounded-full bg-white/10 backdrop-blur-xl text-gray-100 border border-white/30 hover:border-white/50 transition-all shadow-md"
+                            >
+                              {tech}
+                            </motion.span>
+                          ))}
+                        </div>
+                      </motion.div>
+                    </div>
+
+                    {/* Close Button */}
+                    <motion.button
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.35 }}
+                      whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.25)' }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setSelectedProjectId(null)}
+                      className="mt-8 px-8 py-3.5 rounded-2xl bg-white/10 text-white backdrop-blur-xl border border-white/30 transition-all font-semibold flex items-center justify-center gap-2 shadow-lg hover:border-white/50"
+                    >
+                      <X className="w-4 h-4" />
                       {t('projects.close')}
-                    </button>
+                    </motion.button>
                   </div>
                 </div>
               </div>
