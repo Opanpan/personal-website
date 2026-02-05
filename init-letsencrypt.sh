@@ -34,34 +34,27 @@ if [ -d "./certbot-conf/live/$DOMAIN" ]; then
     exit 0
 fi
 
-echo -e "${YELLOW}Step 1: Starting nginx container with dummy certificate...${NC}\n"
+echo -e "${YELLOW}Step 1: Ensuring no conflicts on port 80...${NC}\n"
 
-# Start only nginx with a dummy certificate to allow ACME challenge
-docker-compose -f docker-compose.yml up -d nginx 2>/dev/null || {
-    echo -e "${RED}Error: Could not start nginx container${NC}"
-    exit 1
-}
+# Stop any existing containers
+docker-compose --profile production down 2>/dev/null || true
 
-echo -e "${GREEN}✓ Nginx started${NC}\n"
+echo -e "${GREEN}✓ Ports cleared${NC}\n"
 
-# Wait for nginx to be ready
-echo -e "${YELLOW}Waiting for nginx to be ready...${NC}"
-sleep 5
+echo -e "${YELLOW}Step 2: Requesting SSL certificate from Let's Encrypt (standalone mode)...${NC}\n"
 
-echo -e "${YELLOW}Step 2: Requesting real SSL certificate from Let's Encrypt...${NC}\n"
-
-# Run certbot to get real certificate
+# Run certbot in standalone mode (doesn't need nginx running)
 docker run --rm \
     -v "$(pwd)/certbot-conf:/etc/letsencrypt" \
     -v "$(pwd)/certbot-www:/var/www/certbot" \
     -p 80:80 \
+    -p 443:443 \
     certbot/certbot:latest certonly \
-    --webroot -w /var/www/certbot \
+    --standalone \
     -d "$DOMAIN" \
     --email "$EMAIL" \
     --agree-tos \
-    --non-interactive \
-    --prefer-challenges=http
+    --non-interactive
 
 if [ $? -eq 0 ]; then
     echo -e "\n${GREEN}✓ SSL certificate successfully obtained!${NC}\n"
@@ -74,14 +67,7 @@ else
     exit 1
 fi
 
-echo -e "${YELLOW}Step 3: Reloading nginx with SSL certificate...${NC}\n"
-
-# Reload nginx to use the real certificate
-docker-compose -f docker-compose.yml exec -T nginx nginx -s reload
-
-echo -e "${GREEN}✓ Nginx reloaded with SSL certificate${NC}\n"
-
-echo -e "${YELLOW}Step 4: Starting full production stack...${NC}\n"
+echo -e "${YELLOW}Step 3: Starting full production stack with SSL certificate...${NC}\n"
 
 # Start the full production stack
 docker-compose --profile production up -d
