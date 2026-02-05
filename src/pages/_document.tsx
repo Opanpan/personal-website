@@ -15,10 +15,10 @@ export default function Document() {
         <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
         
         {/* Favicon */}
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#22c55e" />
         
@@ -29,9 +29,19 @@ export default function Document() {
         {/* Open Graph / Social Media */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Ifan Alriansyah Portfolio" />
-        
+        <meta property="og:title" content="Ifan Alriansyah - Senior Frontend Developer" />
+        <meta property="og:description" content="Senior Frontend Developer specializing in React, Next.js, Vue.js, and Angular. Based in Jakarta, Indonesia." />
+        <meta property="og:url" content="https://ifan.kinderheim511.com" />
+        <meta property="og:image" content="https://ifan.kinderheim511.com/og-image.webp" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Ifan Alriansyah - Senior Frontend Developer Portfolio" />
+
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Ifan Alriansyah - Senior Frontend Developer" />
+        <meta name="twitter:description" content="Senior Frontend Developer specializing in React, Next.js, Vue.js, and Angular." />
+        <meta name="twitter:image" content="https://ifan.kinderheim511.com/og-image.png" />
         
         {/* Structured Data */}
         <script

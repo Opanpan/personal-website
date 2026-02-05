@@ -1,4 +1,3 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect width="100" height="100" rx="20" fill="#09090b"/>
-  <text x="50" y="65" font-family="system-ui, sans-serif" font-size="45" font-weight="bold" text-anchor="middle" fill="#22c55e">IF</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 200"><rect width="200" height="200" fill="url('#gradient')"></rect><defs><linearGradient id="gradient" gradientTransform="rotate(19 0.5 0.5)"><stop offset="0%" stop-color="#22c55e"></stop><stop offset="100%" stop-color="#8b5cf6"></stop></linearGradient></defs><g><g fill="#ffffff" transform="matrix(6.356233561283535,0,0,6.356233561283535,32.686662902159796,145.19219633586027)" stroke="#d5d5d5" stroke-width="0.2"><path d="M4.73-14.22L4.73 0L1.31 0L1.31-14.22L4.73-14.22ZM16.19 0L15.36-2.66L10.66-2.66L9.84 0L6.18 0L11.40-14.22L14.62-14.22L19.87 0L16.19 0ZM13.01-10.23L11.48-5.30L14.54-5.30L13.01-10.23Z"></path></g></g></svg></svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
+@media (prefers-color-scheme: dark) { :root { filter: none; } }
+</style></svg>
