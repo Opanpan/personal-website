@@ -4,16 +4,50 @@ export default function Document() {
   return (
     <Html lang="en" className="scroll-smooth">
       <Head>
+        {/* Critical CSS for above-the-fold content */}
+        <style dangerouslySetInnerHTML={{ __html: `
+          :root {
+            --font-satoshi: system-ui, -apple-system, sans-serif;
+            --font-clash: system-ui, -apple-system, sans-serif;
+            --text-primary: #09090b;
+            --bg-primary: #fafafa;
+          }
+          .dark {
+            --text-primary: #fafafa;
+            --bg-primary: #09090b;
+          }
+          html { font-family: var(--font-satoshi); scroll-behavior: smooth; }
+          body { background-color: var(--bg-primary); color: var(--text-primary); }
+        ` }} />
+
         {/* Preconnect to external resources */}
         <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-        
+
+        {/* Preload fonts to avoid render-blocking */}
+        <link
+          rel="preload"
+          href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&f[]=satoshi@300,400,500,700&display=swap"
+          as="style"
+          onLoad={(e) => { if (e.target) (e.target as HTMLElement).onload = null; }}
+        />
+        <link
+          rel="preload"
+          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap"
+          as="style"
+          onLoad={(e) => { if (e.target) (e.target as HTMLElement).onload = null; }}
+        />
+        <noscript>
+          <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" />
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" />
+        </noscript>
+
         {/* DNS Prefetch */}
         <link rel="dns-prefetch" href="https://api.fontshare.com" />
         <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
-        
+
         {/* Favicon */}
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -21,11 +55,11 @@ export default function Document() {
         <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#22c55e" />
-        
+
         {/* SEO Meta Tags */}
         <meta name="robots" content="index, follow" />
         <meta name="googlebot" content="index, follow" />
-        
+
         {/* Open Graph / Social Media */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Ifan Alriansyah Portfolio" />
@@ -42,7 +76,7 @@ export default function Document() {
         <meta name="twitter:title" content="Ifan Alriansyah - Senior Frontend Developer" />
         <meta name="twitter:description" content="Senior Frontend Developer specializing in React, Next.js, Vue.js, and Angular." />
         <meta name="twitter:image" content="https://ifan.kinderheim511.com/og-image.png" />
-        
+
         {/* Structured Data */}
         <script
           type="application/ld+json"
