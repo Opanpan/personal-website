@@ -26,18 +26,31 @@ export default function Document() {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" />
 
-        {/* Preload fonts to avoid render-blocking */}
+        {/* Load fonts asynchronously to avoid render-blocking */}
+        {/* Satoshi font loaded first (primary body font) */}
         <link
           rel="preload"
-          href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&f[]=satoshi@300,400,500,700&display=swap"
+          href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap"
           as="style"
-          onLoad={(e) => { if (e.target) (e.target as HTMLElement).onload = null; }}
+          media="(min-width: 0px)"
+          crossOrigin="anonymous"
+          onLoad={(e) => { (e.target as any).media = 'all'; (e.target as HTMLElement).onload = null; }}
+        />
+        <link
+          rel="preload"
+          href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap"
+          as="style"
+          media="(min-width: 0px)"
+          crossOrigin="anonymous"
+          onLoad={(e) => { (e.target as any).media = 'all'; (e.target as HTMLElement).onload = null; }}
         />
         <link
           rel="preload"
           href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap"
           as="style"
-          onLoad={(e) => { if (e.target) (e.target as HTMLElement).onload = null; }}
+          media="(min-width: 0px)"
+          crossOrigin="anonymous"
+          onLoad={(e) => { (e.target as any).media = 'all'; (e.target as HTMLElement).onload = null; }}
         />
         <noscript>
           <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" />
