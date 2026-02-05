@@ -84,8 +84,8 @@ export default function Skills() {
             <pre className="text-[var(--text-secondary)]">
               <code>
 {`const skills = {
-  languages: [`}<span className="text-accent-amber">'JavaScript'</span>, <span className="text-accent-amber">'TypeScript'</span>, <span className="text-accent-amber">'Go'</span>{`],
-  frameworks: [`}<span className="text-accent-amber">'React'</span>, <span className="text-accent-amber">'Next.js'</span>, <span className="text-accent-amber">'Vue'</span>{`],
+  languages: [`}<span className="text-accent-amber">'JavaScript'</span>, <span className="text-accent-amber">'TypeScript'</span>, <span className="text-accent-amber">'Go'</span>, <span className="text-accent-amber">'C'</span>{`],
+  frameworks: [`}<span className="text-accent-amber">'React'</span>, <span className="text-accent-amber">'Next.js'</span>, <span className="text-accent-amber">'Vue'</span> , <span className="text-accent-amber">'Angular'</span>{`],
   passion: `}<span className="text-accent-amber">'Building great UX'</span>{`,
   learning: `}<span className="text-primary-500">true</span>{`
 };`}

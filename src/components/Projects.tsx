@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Layers, ArrowUpRight } from 'lucide-react';
+import { X, Layers, ArrowUpRight, ExternalLink } from 'lucide-react';
 import { projects } from '@/lib/projects';
 
 export default function Projects() {
@@ -42,6 +42,13 @@ export default function Projects() {
               <div className="relative glass-card overflow-hidden card-hover h-full flex flex-col">
                 {/* Project Image/Gradient */}
                 <div className={`relative h-48 bg-gradient-to-br ${project.gradient} overflow-hidden`}>
+                  {/* Project Image */}
+                  <img
+                    src={project.image}
+                    alt={t(`projects.items.${project.id}.title`)}
+                    className="w-full h-full object-cover object-center"
+                  />
+
                   {/* Overlay Pattern */}
                   <div className="absolute inset-0 opacity-20">
                     <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -54,8 +61,8 @@ export default function Projects() {
                     </svg>
                   </div>
 
-                  {/* Icon */}
-                  <div className="absolute inset-0 flex items-center justify-center">
+                  {/* Icon - Fallback */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <Layers className="w-16 h-16 text-white/80" />
                   </div>
 
@@ -154,13 +161,13 @@ export default function Projects() {
                   whileHover={{ scale: 1.15, backgroundColor: 'rgba(255, 255, 255, 0.3)' }}
                   whileTap={{ scale: 0.9 }}
                   onClick={() => setSelectedProjectId(null)}
-                  className="absolute top-6 right-6 p-3 rounded-full bg-white/10 text-white backdrop-blur-xl transition-all z-20 border border-white/30 shadow-lg"
+                  className="absolute top-4 right-4 md:top-6 md:right-6 p-2 md:p-3 rounded-full bg-white/10 text-white backdrop-blur-xl transition-all z-20 border border-white/30 shadow-lg flex items-center justify-center"
                 >
-                  <X className="w-6 h-6" />
+                  <X className="w-5 h-5 md:w-6 md:h-6" />
                 </motion.button>
 
                 {/* Content Overlay - Floating Glass Card */}
-                <div className="absolute inset-0 flex flex-col justify-end p-6 lg:p-10 overflow-y-auto">
+                <div className="absolute inset-0 flex flex-col justify-end p-4 md:p-6 lg:p-10 overflow-y-auto">
                   {/* Gradient fade for scrollable content */}
                   <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
 
@@ -171,7 +178,7 @@ export default function Projects() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.1 }}
-                      className="inline-flex items-center text-xs font-bold text-primary-300 uppercase tracking-widest px-4 py-2.5 rounded-full bg-gradient-to-r from-primary-500/30 to-primary-400/20 backdrop-blur-xl border border-primary-400/50 shadow-lg"
+                      className="inline-flex items-center text-xs md:text-sm font-bold text-primary-300 uppercase tracking-widest px-3 md:px-4 py-2 md:py-2.5 rounded-full bg-gradient-to-r from-primary-500/30 to-primary-400/20 backdrop-blur-xl border border-primary-400/50 shadow-lg"
                     >
                       <span className="w-1.5 h-1.5 rounded-full bg-primary-400 mr-2 animate-pulse" />
                       {t(`projects.items.${selectedProject.id}.category`)}
@@ -182,7 +189,7 @@ export default function Projects() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.15 }}
-                      className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mt-4 mb-4 leading-tight"
+                      className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-display font-bold text-white mt-2 sm:mt-3 mb-2 sm:mb-3 md:mt-4 md:mb-4 leading-snug sm:leading-tight"
                     >
                       {t(`projects.items.${selectedProject.id}.title`)}
                     </motion.h3>
@@ -192,28 +199,28 @@ export default function Projects() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 }}
-                      className="text-base md:text-lg text-gray-100 leading-relaxed mb-6 max-w-3xl"
+                      className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-100 leading-relaxed mb-3 sm:mb-4 md:mb-6 max-w-3xl"
                     >
                       {t(`projects.items.${selectedProject.id}.long_description`)}
                     </motion.p>
 
                     {/* Two Column Layout for Features and Tech Stack */}
-                    <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
                       {/* Key Features */}
                       <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.25 }}
                       >
-                        <h4 className="text-sm font-bold text-primary-300 uppercase tracking-wider mb-4">
+                        <h4 className="text-xs md:text-sm font-bold text-primary-300 uppercase tracking-wider mb-3 md:mb-4">
                           {t('projects.key_features')}
                         </h4>
-                        <ul className="space-y-3">
+                        <ul className="space-y-2 md:space-y-3">
                           {(t(`projects.items.${selectedProject.id}.features`, { returnObjects: true }) as string[]).map(
                             (feature, i) => (
-                              <li key={i} className="flex items-start gap-3 text-gray-100">
-                                <span className="w-2 h-2 rounded-full bg-primary-400 mt-2 flex-shrink-0" />
-                                <span className="text-sm">{feature}</span>
+                              <li key={i} className="flex items-start gap-2 md:gap-3 text-gray-100">
+                                <span className="w-2 h-2 rounded-full bg-primary-400 mt-1 md:mt-2 flex-shrink-0" />
+                                <span className="text-xs md:text-sm">{feature}</span>
                               </li>
                             )
                           )}
@@ -226,15 +233,15 @@ export default function Projects() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
                       >
-                        <h4 className="text-sm font-bold text-primary-300 uppercase tracking-wider mb-4">
+                        <h4 className="text-xs md:text-sm font-bold text-primary-300 uppercase tracking-wider mb-3 md:mb-4">
                           {t('projects.tech_stack')}
                         </h4>
-                        <div className="flex flex-wrap gap-3">
+                        <div className="flex flex-wrap gap-2 md:gap-3">
                           {selectedProject.techStack.map((tech) => (
                             <motion.span
                               key={tech}
                               whileHover={{ scale: 1.08, backgroundColor: 'rgba(255, 255, 255, 0.25)' }}
-                              className="px-4 py-2 text-xs font-semibold rounded-full bg-white/10 backdrop-blur-xl text-gray-100 border border-white/30 hover:border-white/50 transition-all shadow-md"
+                              className="px-3 md:px-4 py-1.5 md:py-2 text-xs font-semibold rounded-full bg-white/10 backdrop-blur-xl text-gray-100 border border-white/30 hover:border-white/50 transition-all shadow-md"
                             >
                               {tech}
                             </motion.span>
@@ -242,6 +249,24 @@ export default function Projects() {
                         </div>
                       </motion.div>
                     </div>
+
+                    {/* Open App Button */}
+                    {selectedProject.appUrl && (
+                      <motion.a
+                        href={selectedProject.appUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 }}
+                        whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.25)' }}
+                        whileTap={{ scale: 0.95 }}
+                        className="mt-6 md:mt-8 px-5 md:px-6 lg:px-8 py-2.5 md:py-3 lg:py-3.5 rounded-xl md:rounded-2xl bg-white/10 text-white backdrop-blur-xl border border-white/30 transition-all font-medium md:font-semibold text-sm md:text-base flex items-center justify-center gap-2 shadow-lg hover:border-white/50 cursor-pointer inline-flex"
+                      >
+                        <ExternalLink className="w-4 h-4 md:w-5 md:h-5" />
+                        {t('projects.open_app')}
+                      </motion.a>
+                    )}
 
                     {/* Close Button */}
                     <motion.button
@@ -251,9 +276,9 @@ export default function Projects() {
                       whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.25)' }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => setSelectedProjectId(null)}
-                      className="mt-8 px-8 py-3.5 rounded-2xl bg-white/10 text-white backdrop-blur-xl border border-white/30 transition-all font-semibold flex items-center justify-center gap-2 shadow-lg hover:border-white/50"
+                      className="mt-6 md:mt-8 px-5 md:px-6 lg:px-8 py-2.5 md:py-3 lg:py-3.5 rounded-xl md:rounded-2xl bg-white/10 text-white backdrop-blur-xl border border-white/30 transition-all font-medium md:font-semibold text-sm md:text-base flex items-center justify-center gap-2 shadow-lg hover:border-white/50"
                     >
-                      <X className="w-4 h-4" />
+                      <X className="w-4 h-4 md:w-5 md:h-5" />
                       {t('projects.close')}
                     </motion.button>
                   </div>

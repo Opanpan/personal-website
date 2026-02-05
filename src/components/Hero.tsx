@@ -127,26 +127,18 @@ export default function Hero() {
           {t('hero.subtitle')}
         </motion.p>
 
-        {/* CTA Buttons */}
+        {/* CTA Button */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
+          className="mb-12"
         >
           <a href="#projects" className="btn-primary group">
             <span className="relative z-10 flex items-center gap-2">
               {t('hero.cta_primary')}
               <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </span>
-          </a>
-          <a
-            href="/cv/Ifan_Alriansyah_CV.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-secondary"
-          >
-            {t('hero.cta_secondary')}
           </a>
         </motion.div>
 

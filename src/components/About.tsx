@@ -5,8 +5,8 @@ import AOS from 'aos';
 
 const stats = [
   { value: '5+', key: 'years' },
-  { value: '20+', key: 'projects' },
-  { value: '5+', key: 'clients' },
+  { value: '5+', key: 'projects' },
+  { value: '3+', key: 'clients' },
 ];
 
 export default function About() {
