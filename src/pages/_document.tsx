@@ -33,7 +33,6 @@ export default function Document() {
           href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap"
           as="style"
           media="(min-width: 0px)"
-          crossOrigin="anonymous"
           onLoad={(e) => { (e.target as any).media = 'all'; (e.target as HTMLElement).onload = null; }}
         />
         <link
@@ -41,7 +40,6 @@ export default function Document() {
           href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap"
           as="style"
           media="(min-width: 0px)"
-          crossOrigin="anonymous"
           onLoad={(e) => { (e.target as any).media = 'all'; (e.target as HTMLElement).onload = null; }}
         />
         <link
@@ -49,7 +47,6 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap"
           as="style"
           media="(min-width: 0px)"
-          crossOrigin="anonymous"
           onLoad={(e) => { (e.target as any).media = 'all'; (e.target as HTMLElement).onload = null; }}
         />
         <noscript>
