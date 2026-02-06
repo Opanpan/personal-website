@@ -13,20 +13,10 @@ export default function Footer() {
       <div className="absolute inset-0 bg-gradient-to-t from-dark-100/50 dark:from-dark-950/50 to-transparent pointer-events-none" />
 
       <div className="section-container relative">
-        <div className="flex flex-col md:flex-row items-end justify-between gap-6">
-          {/* Logo & Copyright */}
-          <div className="flex flex-col items-center md:items-start gap-2">
-            <a href="#home" className="font-display text-xl font-bold">
-              <span className="text-gradient">IF</span>
-              <span className="text-[var(--text-primary)]">AN</span>
-            </a>
-            <p className="text-sm text-[var(--text-muted)] text-center md:text-left">
-              © {currentYear} Ifan Alriansyah. All rights reserved.
-            </p>
-          </div>
-
+        {/* Top Row - Built With & Social Links */}
+        <div className="flex flex-col md:flex-row items-center justify-center md:justify-between gap-6 mb-8 pb-8 border-b border-dark-200/50 dark:border-dark-800/50">
           {/* Built With */}
-          <div className="flex items-center gap-1 text-sm text-[var(--text-muted)]">
+          <div className="flex items-center gap-1 text-sm text-[var(--text-muted)] order-2 md:order-1">
             <span>Built with</span>
             <span className="text-primary-500 font-medium">Next.js</span>
             <span>&</span>
@@ -35,7 +25,7 @@ export default function Footer() {
           </div>
 
           {/* Social Links */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 order-1 md:order-2">
             {[
               { icon: Github, href: 'https://github.com/Opanpan', label: 'GitHub' },
               { icon: Linkedin, href: 'https://www.linkedin.com/in/ifannnn/', label: 'LinkedIn' },
@@ -57,11 +47,22 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Bottom Row - Centered Logo & Copyright */}
+        <div className="flex flex-col items-center justify-center gap-2">
+          <a href="#home" className="font-display text-xl font-bold">
+            <span className="text-gradient">IF</span>
+            <span className="text-[var(--text-primary)]">AN</span>
+          </a>
+          <p className="text-sm text-[var(--text-muted)] text-center">
+            © {currentYear} Ifan Alriansyah. All rights reserved.
+          </p>
+        </div>
+
         {/* Back to Top */}
         <motion.a
           href="#home"
           whileHover={{ y: -4 }}
-          className="absolute right-4 md:right-8 -top-8 p-3 rounded-full bg-primary-500 text-white shadow-lg shadow-primary-500/25 hover:shadow-xl hover:shadow-primary-500/30 transition-shadow"
+          className="absolute right-4 md:right-8 -top-[60px] p-3 rounded-full bg-primary-500 text-white shadow-lg shadow-primary-500/25 hover:shadow-xl hover:shadow-primary-500/30 transition-shadow"
           aria-label="Back to top"
         >
           <svg

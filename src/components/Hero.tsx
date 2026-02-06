@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowDown, Github, Linkedin, Mail, ExternalLink } from 'lucide-react';
@@ -6,7 +6,15 @@ import { ArrowDown, Github, Linkedin, Mail, ExternalLink } from 'lucide-react';
 export default function Hero() {
   const { t } = useTranslation('common');
   const containerRef = useRef<HTMLDivElement>(null);
-  
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end start'],
@@ -25,72 +33,76 @@ export default function Hero() {
       {/* Background Elements */}
       <div className="absolute inset-0 grid-background z-0" />
 
-      {/* Animated Gradient Orbs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        <motion.div
-          animate={{
-            x: [0, 100, 0],
-            y: [0, -50, 0],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
-          className="absolute top-1/4 -left-32 w-96 h-96 bg-primary-500/20 rounded-full blur-[128px]"
-        />
-        <motion.div
-          animate={{
-            x: [0, -100, 0],
-            y: [0, 50, 0],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
-          className="absolute bottom-1/4 -right-32 w-96 h-96 bg-accent-cyan/20 rounded-full blur-[128px]"
-        />
-        <motion.div
-          animate={{
-            x: [0, 50, 0],
-            y: [0, 100, 0],
-          }}
-          transition={{
-            duration: 30,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent-violet/10 rounded-full blur-[150px]"
-        />
-      </div>
-
-      {/* Floating Geometric Shapes */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        {[...Array(5)].map((_, i) => (
+      {/* Animated Gradient Orbs - Desktop Only */}
+      {!isMobile && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
           <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-primary-500/30 rounded-full"
-            style={{
-              left: `${20 + i * 15}%`,
-              top: `${30 + (i % 3) * 20}%`,
-            }}
             animate={{
-              y: [-20, 20, -20],
-              opacity: [0.3, 0.8, 0.3],
+              x: [0, 100, 0],
+              y: [0, -50, 0],
             }}
             transition={{
-              duration: 3 + i,
+              duration: 20,
               repeat: Infinity,
-              delay: i * 0.5,
+              ease: 'linear',
             }}
+            className="absolute top-1/4 -left-32 w-96 h-96 bg-primary-500/20 rounded-full blur-[128px]"
           />
-        ))}
-      </div>
+          <motion.div
+            animate={{
+              x: [0, -100, 0],
+              y: [0, 50, 0],
+            }}
+            transition={{
+              duration: 25,
+              repeat: Infinity,
+              ease: 'linear',
+            }}
+            className="absolute bottom-1/4 -right-32 w-96 h-96 bg-accent-cyan/20 rounded-full blur-[128px]"
+          />
+          <motion.div
+            animate={{
+              x: [0, 50, 0],
+              y: [0, 100, 0],
+            }}
+            transition={{
+              duration: 30,
+              repeat: Infinity,
+              ease: 'linear',
+            }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent-violet/10 rounded-full blur-[150px]"
+          />
+        </div>
+      )}
+
+      {/* Floating Geometric Shapes - Reduced on Mobile */}
+      {!isMobile && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+          {[...Array(5)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 bg-primary-500/30 rounded-full"
+              style={{
+                left: `${20 + i * 15}%`,
+                top: `${30 + (i % 3) * 20}%`,
+              }}
+              animate={{
+                y: [-20, 20, -20],
+                opacity: [0.3, 0.8, 0.3],
+              }}
+              transition={{
+                duration: 3 + i,
+                repeat: Infinity,
+                delay: i * 0.5,
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Main Content */}
       <motion.div
-        style={{ y, opacity, scale }}
+        style={isMobile ? {} : { y, opacity, scale }}
         className="relative z-20 section-container text-center"
       >
         <motion.div
@@ -101,7 +113,7 @@ export default function Hero() {
         >
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-primary-500/10 text-primary-500 border border-primary-500/20">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
+              {!isMobile && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>}
               <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
             </span>
             {t('hero.greeting')}
@@ -170,7 +182,7 @@ export default function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Scroll Indicator */}
+      {/* Scroll Indicator - No animation on mobile */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -180,12 +192,16 @@ export default function Hero() {
         <span className="text-xs text-[var(--text-muted)] uppercase tracking-widest">
           {t('hero.scroll_text')}
         </span>
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-        >
+        {!isMobile ? (
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          >
+            <ArrowDown className="w-5 h-5 text-primary-500" />
+          </motion.div>
+        ) : (
           <ArrowDown className="w-5 h-5 text-primary-500" />
-        </motion.div>
+        )}
       </motion.div>
 
       {/* Decorative Corner Elements */}

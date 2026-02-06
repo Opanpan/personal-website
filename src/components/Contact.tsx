@@ -69,8 +69,8 @@ export default function Contact() {
 
         <div className="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
           {/* Contact Info */}
-          <div data-aos="fade-right" data-aos-delay="100">
-            <div className="space-y-6">
+          <div data-aos="fade-right" data-aos-delay="100" className="flex flex-col items-center md:items-start">
+            <div className="space-y-6 w-full">
               {contactInfo.map((item, index) => (
                 <motion.div
                   key={item.label}
@@ -117,11 +117,11 @@ export default function Contact() {
             </div>
 
             {/* Social Links */}
-            <div className="mt-8">
-              <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">
+            <div className="mt-8 w-full">
+              <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4 text-center md:text-left">
                 {t('contact.social')}
               </h3>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-3 justify-center md:justify-start">
                 {socialLinks.map((social, index) => (
                   <motion.a
                     key={social.label}
@@ -145,27 +145,27 @@ export default function Contact() {
           </div>
 
           {/* CTA Card */}
-          <div data-aos="fade-left" data-aos-delay="200">
+          <div data-aos="fade-left" data-aos-delay="200" className="flex items-center justify-center md:items-start md:justify-start">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               className="h-full"
             >
-              <div className="relative h-full glass-card p-8 overflow-hidden group">
+              <div className="relative h-full glass-card p-8 overflow-hidden group max-w-sm md:max-w-none">
                 {/* Gradient Background */}
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 via-transparent to-accent-cyan/5 group-hover:from-primary-500/10 group-hover:to-accent-cyan/10 transition-all duration-500" />
-                
+
                 {/* Decorative Elements */}
                 <div className="absolute top-4 right-4 w-32 h-32 bg-primary-500/10 rounded-full blur-3xl" />
                 <div className="absolute bottom-4 left-4 w-24 h-24 bg-accent-cyan/10 rounded-full blur-2xl" />
 
                 <div className="relative h-full flex flex-col justify-between">
-                  <div>
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-cyan flex items-center justify-center mb-6">
+                  <div className="text-center md:text-left">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-cyan flex items-center justify-center mb-6 mx-auto md:mx-0">
                       <Send className="w-6 h-6 text-white" />
                     </div>
-                    
+
                     <h3 className="text-2xl font-display font-bold text-[var(--text-primary)] mb-4">
                       Let&apos;s Work Together
                     </h3>
