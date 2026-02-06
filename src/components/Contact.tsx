@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Github, Linkedin, Globe, Send } from 'lucide-react';
+import { Mail, MapPin, Github, Linkedin, Globe, Send } from 'lucide-react';
 
 const contactInfo = [
   {
@@ -9,12 +9,6 @@ const contactInfo = [
     label: 'email',
     value: 'fanalriansyah@gmail.com',
     href: 'mailto:fanalriansyah@gmail.com',
-  },
-  {
-    icon: Phone,
-    label: 'phone',
-    value: '+62-813-8661-2966',
-    href: 'tel:+6281386612966',
   },
   {
     icon: MapPin,
