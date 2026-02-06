@@ -171,7 +171,16 @@
     "email": "Email",
     "phone": "Telepon",
     "location": "Lokasi",
-    "social": "Media Sosial"
+    "social": "Media Sosial",
+    "work_together_title": "Mari Bekerja Sama",
+    "work_together_description": "Saya sedang terbuka untuk peluang baru dan proyek yang menarik. Baik Anda membutuhkan ahli frontend untuk tim Anda atau ingin membangun sesuatu yang luar biasa bersama, saya ingin mendengarnya.",
+    "work_items": [
+      "Modern React & Next.js Development",
+      "Enterprise-scale Applications",
+      "Performance Optimization",
+      "UI/UX Implementation"
+    ],
+    "send_message": "Kirim Pesan"
   },
   "footer": {
     "copyright": "© 2025 Ifan Alriansyah. Dibuat dengan passion dan kode yang bersih.",

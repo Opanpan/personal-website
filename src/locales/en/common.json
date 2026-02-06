@@ -171,7 +171,16 @@
     "email": "Email",
     "phone": "Phone",
     "location": "Location",
-    "social": "Social Links"
+    "social": "Social Links",
+    "work_together_title": "Let's Work Together",
+    "work_together_description": "I'm currently open to new opportunities and exciting projects. Whether you need a frontend expert for your team or want to build something amazing together, I'd love to hear from you.",
+    "work_items": [
+      "Modern React & Next.js Development",
+      "Enterprise-scale Applications",
+      "Performance Optimization",
+      "UI/UX Implementation"
+    ],
+    "send_message": "Send Message"
   },
   "footer": {
     "copyright": "© 2025 Ifan Alriansyah. Crafted with passion and clean code.",

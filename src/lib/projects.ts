@@ -38,14 +38,14 @@ export const projects: Project[] = [
   {
     id: 'tembuni',
     image: '/images/projects/tembuni.webp',
-    techStack: ['React', 'Node.js', 'PostgreSQL', 'Docker', 'GraphQL'],
+    techStack: ['Laravel', 'Jquery', 'Docker'],
     gradient: 'from-pink-500 via-rose-500 to-red-500',
     appUrl: 'https://www.tembuni.com/',
   },
   {
     id: 'accurate',
     image: '/images/projects/accurate.webp',
-    techStack: ['React', 'TypeScript', 'Firebase', 'Material-UI', 'Redux'],
+    techStack: ['Laravel', 'AlpineJs', 'TailwindCSS', 'Docker'],
     gradient: 'from-indigo-500 via-blue-500 to-cyan-500',
     appUrl: 'https://accuratemedica.com/',
   },

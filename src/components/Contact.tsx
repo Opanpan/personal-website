@@ -161,22 +161,15 @@ export default function Contact() {
                     </div>
 
                     <h3 className="text-2xl font-display font-bold text-[var(--text-primary)] mb-4">
-                      Let&apos;s Work Together
+                      {t('contact.work_together_title')}
                     </h3>
-                    
+
                     <p className="text-[var(--text-secondary)] mb-6">
-                      I&apos;m currently open to new opportunities and exciting projects. 
-                      Whether you need a frontend expert for your team or want to build 
-                      something amazing together, I&apos;d love to hear from you.
+                      {t('contact.work_together_description')}
                     </p>
 
                     <ul className="space-y-3 mb-8">
-                      {[
-                        'Modern React & Next.js Development',
-                        'Enterprise-scale Applications',
-                        'Performance Optimization',
-                        'UI/UX Implementation',
-                      ].map((item, i) => (
+                      {(t('contact.work_items', { returnObjects: true }) as string[]).map((item, i) => (
                         <li key={i} className="flex items-center gap-2 text-sm text-[var(--text-muted)]">
                           <span className="w-1.5 h-1.5 rounded-full bg-primary-500" />
                           {item}
@@ -190,7 +183,7 @@ export default function Contact() {
                     className="btn-primary w-full justify-center group/btn"
                   >
                     <span className="relative z-10 flex items-center gap-2">
-                      Send Message
+                      {t('contact.send_message')}
                       <Mail className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                     </span>
                   </a>
