@@ -283,3 +283,27 @@ html {
 :focus-visible {
   @apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-[var(--bg-primary)];
 }
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to right, #22c55e, #06b6d4, #16a34a);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to right, #16a34a, #0891b2, #15803d);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-color: #22c55e #09090b;
+  scrollbar-width: thin;
+}

@@ -139,7 +139,7 @@ export default function Projects() {
               onClick={() => setSelectedProjectId(null)}
             >
               <div
-                className="relative w-full h-full max-w-4xl max-h-[85vh] rounded-3xl overflow-hidden shadow-2xl border border-white/10"
+                className="relative w-full h-full max-w-4xl max-h-[90vh] md:max-h-[85vh] rounded-3xl overflow-hidden shadow-2xl border border-white/10"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Full Background Image */}
@@ -166,13 +166,13 @@ export default function Projects() {
                   <X className="w-5 h-5 md:w-6 md:h-6" />
                 </motion.button>
 
-                {/* Content Overlay - Floating Glass Card */}
-                <div className="absolute inset-0 flex flex-col justify-end p-4 md:p-6 lg:p-10 overflow-y-auto">
-                  {/* Gradient fade for scrollable content */}
-                  <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
+                {/* Gradient fade for scrollable content */}
+                <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/90 via-black/50 to-transparent z-0" />
 
+                {/* Content Overlay - Scrollable */}
+                <div className="absolute inset-0 overflow-y-auto p-4 md:p-6 lg:p-10">
                   {/* Actual Content */}
-                  <div className="relative z-10">
+                  <div className="relative z-10 min-h-full flex flex-col justify-end">
                     {/* Category Badge */}
                     <motion.span
                       initial={{ opacity: 0, y: 10 }}
