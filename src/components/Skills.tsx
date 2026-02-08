@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { getLanguages, getFrameworks, getTools, TechItem } from '@/lib/techStack';
 
 const TechMarquee = ({ items }: { items: TechItem[] }) => {
@@ -11,7 +11,7 @@ const TechMarquee = ({ items }: { items: TechItem[] }) => {
       <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[var(--bg-primary)] to-transparent z-10 pointer-events-none" />
       <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[var(--bg-primary)] to-transparent z-10 pointer-events-none" />
 
-      <motion.div
+      <m.div
         className="flex gap-8"
         animate={{
           x: ['0%', '-33.33%'],
@@ -24,7 +24,7 @@ const TechMarquee = ({ items }: { items: TechItem[] }) => {
         style={{ width: 'fit-content' }}
       >
         {duplicatedItems.map((item, index) => (
-          <motion.div
+          <m.div
             key={`${item.name}-${index}`}
             whileHover={{ scale: 1.15, y: -5 }}
             className="flex items-center justify-center min-w-[100px] group/item cursor-pointer"
@@ -36,9 +36,9 @@ const TechMarquee = ({ items }: { items: TechItem[] }) => {
               loading="lazy"
               title={item.name}
             />
-          </motion.div>
+          </m.div>
         ))}
-      </motion.div>
+      </m.div>
     </div>
   );
 };
@@ -68,7 +68,7 @@ export default function Skills() {
           <TechMarquee items={[...languages, ...frameworks, ...tools]} />
         </div>
 
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -92,7 +92,7 @@ export default function Skills() {
               </code>
             </pre>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

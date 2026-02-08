@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { X, Layers, ArrowUpRight, ExternalLink } from 'lucide-react';
 import { projects } from '@/lib/projects';
+import Image from 'next/image';
 
 export default function Projects() {
   const { t } = useTranslation('common');
@@ -29,7 +30,7 @@ export default function Projects() {
         {/* Projects Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
-            <motion.div
+            <m.div
               key={project.id}
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -41,10 +42,13 @@ export default function Projects() {
                 {/* Project Image/Gradient */}
                 <div className={`relative h-48 bg-gradient-to-br ${project.gradient} overflow-hidden`}>
                   {/* Project Image */}
-                  <img
+                  <Image
                     src={project.image}
                     alt={t(`projects.items.${project.id}.title`)}
-                    className="w-full h-full object-cover object-center"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover object-center"
+                    loading="lazy"
                   />
 
                   {/* Overlay Pattern */}
@@ -66,7 +70,7 @@ export default function Projects() {
 
                   {/* Hover Overlay */}
                   <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <motion.button
+                    <m.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => setSelectedProjectId(project.id)}
@@ -74,7 +78,7 @@ export default function Projects() {
                     >
                       {t('projects.view_details')}
                       <ArrowUpRight className="w-4 h-4" />
-                    </motion.button>
+                    </m.button>
                   </div>
                 </div>
 
@@ -108,7 +112,7 @@ export default function Projects() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
@@ -118,7 +122,7 @@ export default function Projects() {
         {selectedProject && (
           <>
             {/* Backdrop */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -128,7 +132,7 @@ export default function Projects() {
             />
 
             {/* Modal Container */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, scale: 0.85, y: 40 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.85, y: 40 }}
@@ -142,10 +146,13 @@ export default function Projects() {
               >
                 {/* Full Background Image */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${selectedProject.gradient} overflow-hidden`}>
-                  <img
+                  <Image
                     src={selectedProject.image}
                     alt={t(`projects.items.${selectedProject.id}.title`)}
-                    className="w-full h-full object-cover object-center scale-105 blur-sm"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 896px"
+                    className="object-cover object-center scale-105 blur-sm"
+                    priority
                   />
                   {/* Dark Gradient Overlay - Enhanced for better content contrast */}
                   <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/60 to-black/90" />
@@ -155,14 +162,14 @@ export default function Projects() {
                 </div>
 
                 {/* Close Button - Top Right */}
-                <motion.button
+                <m.button
                   whileHover={{ scale: 1.15, backgroundColor: 'rgba(255, 255, 255, 0.3)' }}
                   whileTap={{ scale: 0.9 }}
                   onClick={() => setSelectedProjectId(null)}
                   className="absolute top-4 right-4 md:top-6 md:right-6 p-2 md:p-3 rounded-full bg-white/10 text-white backdrop-blur-xl transition-all z-20 border border-white/30 shadow-lg flex items-center justify-center"
                 >
                   <X className="w-5 h-5 md:w-6 md:h-6" />
-                </motion.button>
+                </m.button>
 
                 {/* Gradient fade for scrollable content */}
                 <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/90 via-black/50 to-transparent z-0" />
@@ -172,7 +179,7 @@ export default function Projects() {
                   {/* Actual Content */}
                   <div className="relative z-10 min-h-full flex flex-col justify-end">
                     {/* Category Badge */}
-                    <motion.span
+                    <m.span
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.1 }}
@@ -180,32 +187,32 @@ export default function Projects() {
                     >
                       <span className="w-1.5 h-1.5 rounded-full bg-primary-400 mr-2 animate-pulse" />
                       {t(`projects.items.${selectedProject.id}.category`)}
-                    </motion.span>
+                    </m.span>
 
                     {/* Title */}
-                    <motion.h3
+                    <m.h3
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.15 }}
                       className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-display font-bold text-white mt-2 sm:mt-3 mb-2 sm:mb-3 md:mt-4 md:mb-4 leading-snug sm:leading-tight"
                     >
                       {t(`projects.items.${selectedProject.id}.title`)}
-                    </motion.h3>
+                    </m.h3>
 
                     {/* Description */}
-                    <motion.p
+                    <m.p
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 }}
                       className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-100 leading-relaxed mb-3 sm:mb-4 md:mb-6 max-w-3xl"
                     >
                       {t(`projects.items.${selectedProject.id}.long_description`)}
-                    </motion.p>
+                    </m.p>
 
                     {/* Two Column Layout for Features and Tech Stack */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
                       {/* Key Features */}
-                      <motion.div
+                      <m.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.25 }}
@@ -223,10 +230,10 @@ export default function Projects() {
                             )
                           )}
                         </ul>
-                      </motion.div>
+                      </m.div>
 
                       {/* Tech Stack */}
-                      <motion.div
+                      <m.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
@@ -236,21 +243,21 @@ export default function Projects() {
                         </h4>
                         <div className="flex flex-wrap gap-2 md:gap-3">
                           {selectedProject.techStack.map((tech) => (
-                            <motion.span
+                            <m.span
                               key={tech}
                               whileHover={{ scale: 1.08, backgroundColor: 'rgba(255, 255, 255, 0.25)' }}
                               className="px-3 md:px-4 py-1.5 md:py-2 text-xs font-semibold rounded-full bg-white/10 backdrop-blur-xl text-gray-100 border border-white/30 hover:border-white/50 transition-all shadow-md"
                             >
                               {tech}
-                            </motion.span>
+                            </m.span>
                           ))}
                         </div>
-                      </motion.div>
+                      </m.div>
                     </div>
 
                     {/* Open App Button */}
                     {selectedProject.appUrl && (
-                      <motion.a
+                      <m.a
                         href={selectedProject.appUrl}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -263,11 +270,11 @@ export default function Projects() {
                       >
                         <ExternalLink className="w-4 h-4 md:w-5 md:h-5" />
                         {t('projects.open_app')}
-                      </motion.a>
+                      </m.a>
                     )}
 
                     {/* Close Button */}
-                    <motion.button
+                    <m.button
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.35 }}
@@ -278,11 +285,11 @@ export default function Projects() {
                     >
                       <X className="w-4 h-4 md:w-5 md:h-5" />
                       {t('projects.close')}
-                    </motion.button>
+                    </m.button>
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           </>
         )}
       </AnimatePresence>

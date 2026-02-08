@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Heart, Github, Linkedin, Mail } from 'lucide-react';
 
 export default function Footer() {
@@ -31,7 +31,7 @@ export default function Footer() {
               { icon: Linkedin, href: 'https://www.linkedin.com/in/ifannnn/', label: 'LinkedIn' },
               { icon: Mail, href: 'mailto:fanalriansyah@gmail.com', label: 'Email' },
             ].map((social) => (
-              <motion.a
+              <m.a
                 key={social.label}
                 href={social.href}
                 target="_blank"
@@ -42,7 +42,7 @@ export default function Footer() {
                 aria-label={social.label}
               >
                 <social.icon className="w-4 h-4" />
-              </motion.a>
+              </m.a>
             ))}
           </div>
         </div>
@@ -59,7 +59,7 @@ export default function Footer() {
         </div>
 
         {/* Back to Top */}
-        <motion.a
+        <m.a
           href="#home"
           whileHover={{ y: -4 }}
           className="absolute right-4 md:right-8 -top-[60px] p-3 rounded-full bg-primary-500 text-white shadow-lg shadow-primary-500/25 hover:shadow-xl hover:shadow-primary-500/30 transition-shadow"
@@ -78,7 +78,7 @@ export default function Footer() {
               d="M5 10l7-7m0 0l7 7m-7-7v18"
             />
           </svg>
-        </motion.a>
+        </m.a>
       </div>
     </footer>
   );

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import AOS from 'aos';
 
 const stats = [
@@ -81,7 +81,7 @@ export default function About() {
                 </div>
 
                 {/* Animated Cursor */}
-                <motion.div
+                <m.div
                   animate={{ opacity: [1, 0, 1] }}
                   transition={{ duration: 1, repeat: Infinity }}
                   className="mt-4 w-2 h-5 bg-primary-500"
@@ -118,7 +118,7 @@ export default function About() {
               className="grid grid-cols-3 gap-6 mt-10"
             >
               {stats.map((stat, index) => (
-                <motion.div
+                <m.div
                   key={stat.key}
                   initial={{ scale: 0.8, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
@@ -132,7 +132,7 @@ export default function About() {
                   <div className="text-sm text-[var(--text-muted)]">
                     {t(`about.stats.${stat.key}`)}
                   </div>
-                </motion.div>
+                </m.div>
               ))}
             </div>
           </div>

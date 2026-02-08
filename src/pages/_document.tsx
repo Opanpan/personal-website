@@ -20,43 +20,27 @@ export default function Document() {
           body { background-color: var(--bg-primary); color: var(--text-primary); }
         ` }} />
 
-        {/* Preconnect to external resources */}
+        {/* Preconnect - max 2 critical origins */}
         <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://cdn.jsdelivr.net" />
 
-        {/* Load fonts asynchronously to avoid render-blocking */}
-        {/* Satoshi font loaded first (primary body font) */}
+        {/* Load fonts - non-blocking */}
         <link
-          rel="preload"
-          href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap"
-          as="style"
-          media="(min-width: 0px)"
-          onLoad={(e) => { (e.target as any).media = 'all'; (e.target as HTMLElement).onload = null; }}
+          rel="stylesheet"
+          href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=clash-display@600,700&display=swap"
+          media="print"
+          onLoad={(e) => { (e.target as any).media = 'all'; }}
         />
         <link
-          rel="preload"
-          href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap"
-          as="style"
-          media="(min-width: 0px)"
-          onLoad={(e) => { (e.target as any).media = 'all'; (e.target as HTMLElement).onload = null; }}
-        />
-        <link
-          rel="preload"
-          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap"
-          as="style"
-          media="(min-width: 0px)"
-          onLoad={(e) => { (e.target as any).media = 'all'; (e.target as HTMLElement).onload = null; }}
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap"
+          media="print"
+          onLoad={(e) => { (e.target as any).media = 'all'; }}
         />
         <noscript>
-          <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" />
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" />
+          <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=clash-display@600,700&display=swap" />
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap" />
         </noscript>
-
-        {/* DNS Prefetch */}
-        <link rel="dns-prefetch" href="https://api.fontshare.com" />
-        <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
 
         {/* Favicon */}
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

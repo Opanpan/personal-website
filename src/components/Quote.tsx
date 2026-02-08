@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Code2 } from 'lucide-react';
 
 export default function Quote() {
@@ -32,7 +32,7 @@ export default function Quote() {
       </div>
 
       {/* Content */}
-      <motion.div
+      <m.div
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -40,25 +40,25 @@ export default function Quote() {
         className="relative section-container"
       >
         {/* Code bracket top */}
-        <motion.div variants={itemVariants} className="flex items-center gap-3 mb-8">
+        <m.div variants={itemVariants} className="flex items-center gap-3 mb-8">
           <Code2 className="w-6 h-6 text-primary-500" />
           <span className="text-primary-500 font-mono text-sm font-bold tracking-wider">
             PHILOSOPHY.EXECUTE()
           </span>
-        </motion.div>
+        </m.div>
 
         {/* Quote Container */}
         <div className="relative max-w-4xl mx-auto">
           {/* Left Quote Mark */}
-          <motion.div
+          <m.div
             variants={itemVariants}
             className="text-9xl md:text-[150px] font-bold text-primary-500/10 leading-none -ml-12 -mb-8"
           >
             "
-          </motion.div>
+          </m.div>
 
           {/* Quote Text */}
-          <motion.h2
+          <m.h2
             variants={itemVariants}
             className="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-center text-[var(--text-primary)] leading-tight mb-8"
           >
@@ -66,27 +66,27 @@ export default function Quote() {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 via-accent-cyan to-primary-500">
               Show me the code.
             </span>
-          </motion.h2>
+          </m.h2>
 
           {/* Author */}
-          <motion.div variants={itemVariants} className="flex flex-col items-center gap-2">
+          <m.div variants={itemVariants} className="flex flex-col items-center gap-2">
             <div className="h-1 w-20 bg-gradient-to-r from-transparent via-primary-500 to-transparent" />
             <p className="text-center text-[var(--text-secondary)] text-lg font-medium">
               <span className="text-primary-500">— Linus Torvalds</span>
             </p>
-          </motion.div>
+          </m.div>
 
           {/* Right Quote Mark */}
-          <motion.div
+          <m.div
             variants={itemVariants}
             className="text-9xl md:text-[150px] font-bold text-primary-500/10 leading-none -mt-8 flex justify-end"
           >
             "
-          </motion.div>
+          </m.div>
         </div>
 
         {/* Bottom code-like decorations */}
-        <motion.div
+        <m.div
           variants={itemVariants}
           className="mt-12 flex items-center justify-center gap-2 text-primary-500/60 font-mono text-sm"
         >
@@ -94,11 +94,11 @@ export default function Quote() {
           <span>actions</span>
           <span className="hidden md:inline">{'>'}</span>
           <span className="animate-pulse">_</span>
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
 
       {/* Animated background line */}
-      <motion.div
+      <m.div
         initial={{ scaleX: 0 }}
         whileInView={{ scaleX: 1 }}
         viewport={{ once: true }}

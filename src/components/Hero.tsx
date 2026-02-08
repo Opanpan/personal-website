@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { m, useScroll, useTransform } from 'framer-motion';
 import { ArrowDown, Github, Linkedin, Mail, ExternalLink } from 'lucide-react';
 
 export default function Hero() {
@@ -36,7 +36,7 @@ export default function Hero() {
       {/* Animated Gradient Orbs - Desktop Only */}
       {!isMobile && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-          <motion.div
+          <m.div
             animate={{
               x: [0, 100, 0],
               y: [0, -50, 0],
@@ -48,7 +48,7 @@ export default function Hero() {
             }}
             className="absolute top-1/4 -left-32 w-96 h-96 bg-primary-500/20 rounded-full blur-[128px]"
           />
-          <motion.div
+          <m.div
             animate={{
               x: [0, -100, 0],
               y: [0, 50, 0],
@@ -60,7 +60,7 @@ export default function Hero() {
             }}
             className="absolute bottom-1/4 -right-32 w-96 h-96 bg-accent-cyan/20 rounded-full blur-[128px]"
           />
-          <motion.div
+          <m.div
             animate={{
               x: [0, 50, 0],
               y: [0, 100, 0],
@@ -79,7 +79,7 @@ export default function Hero() {
       {!isMobile && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
           {[...Array(5)].map((_, i) => (
-            <motion.div
+            <m.div
               key={i}
               className="absolute w-2 h-2 bg-primary-500/30 rounded-full"
               style={{
@@ -101,11 +101,11 @@ export default function Hero() {
       )}
 
       {/* Main Content */}
-      <motion.div
+      <m.div
         style={isMobile ? {} : { y, opacity, scale }}
         className="relative z-20 section-container text-center"
       >
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -118,9 +118,9 @@ export default function Hero() {
             </span>
             {t('hero.greeting')}
           </span>
-        </motion.div>
+        </m.div>
 
-        <motion.h1
+        <m.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
@@ -128,19 +128,19 @@ export default function Hero() {
         >
           <span className="block text-[var(--text-primary)] relative z-20">{t('hero.name')}</span>
           <span className="block text-gradient-hero mt-2 relative z-20">{t('hero.title')}</span>
-        </motion.h1>
+        </m.h1>
 
-        <motion.p
+        <m.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
           className="paragraph max-w-2xl mx-auto mb-10"
         >
           {t('hero.subtitle')}
-        </motion.p>
+        </m.p>
 
         {/* CTA Button */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
@@ -152,10 +152,10 @@ export default function Hero() {
               <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </span>
           </a>
-        </motion.div>
+        </m.div>
 
         {/* Social Links */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1 }}
@@ -166,7 +166,7 @@ export default function Hero() {
             { icon: Linkedin, href: 'https://www.linkedin.com/in/ifannnn/', label: 'LinkedIn' },
             { icon: Mail, href: 'mailto:fanalriansyah@gmail.com', label: 'Email' },
           ].map((social, index) => (
-            <motion.a
+            <m.a
               key={social.label}
               href={social.href}
               target="_blank"
@@ -177,13 +177,13 @@ export default function Hero() {
               aria-label={social.label}
             >
               <social.icon className="w-5 h-5" />
-            </motion.a>
+            </m.a>
           ))}
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
 
       {/* Scroll Indicator - No animation on mobile */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
@@ -193,16 +193,16 @@ export default function Hero() {
           {t('hero.scroll_text')}
         </span>
         {!isMobile ? (
-          <motion.div
+          <m.div
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 1.5, repeat: Infinity }}
           >
             <ArrowDown className="w-5 h-5 text-primary-500" />
-          </motion.div>
+          </m.div>
         ) : (
           <ArrowDown className="w-5 h-5 text-primary-500" />
         )}
-      </motion.div>
+      </m.div>
 
       {/* Decorative Corner Elements */}
       <div className="absolute top-20 left-8 w-20 h-20 border-l-2 border-t-2 border-primary-500/20 rounded-tl-3xl hidden lg:block z-0 pointer-events-none" />

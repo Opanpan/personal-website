@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { useTheme } from '@/hooks/useTheme';
 import { Menu, X, Sun, Moon, Globe, ChevronDown } from 'lucide-react';
 
@@ -57,13 +57,13 @@ export default function Navigation() {
   return (
     <>
       <div className="fixed top-0 left-0 right-0 h-1 z-[60] bg-transparent">
-        <motion.div
+        <m.div
           className="h-full bg-gradient-to-r from-primary-500 via-accent-cyan to-primary-400"
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
 
-      <motion.header
+      <m.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
@@ -73,16 +73,16 @@ export default function Navigation() {
       >
         <div className="section-container">
           <nav className="flex items-center justify-between">
-            <motion.a href="#home" className="relative group" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <m.a href="#home" className="relative group" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <span className="font-display text-2xl font-bold tracking-tight">
                 <span className="text-gradient">IF</span>
                 <span className="text-[var(--text-primary)]">AN</span>
               </span>
-            </motion.a>
+            </m.a>
 
             <div className="hidden lg:flex items-center gap-1">
               {navItems.map((item, index) => (
-                <motion.a
+                <m.a
                   key={item.key}
                   href={item.href}
                   initial={{ opacity: 0, y: -20 }}
@@ -96,19 +96,19 @@ export default function Navigation() {
                 >
                   {t(`nav.${item.key}`)}
                   {activeSection === item.key && (
-                    <motion.span
+                    <m.span
                       layoutId="activeNav"
                       className="absolute inset-0 bg-primary-500/10 rounded-lg -z-10"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
-                </motion.a>
+                </m.a>
               ))}
             </div>
 
             <div className="flex items-center gap-2">
               <div className="relative">
-                <motion.button
+                <m.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
@@ -117,11 +117,11 @@ export default function Navigation() {
                   <Globe className="w-4 h-4" />
                   <span>{currentLang}</span>
                   <ChevronDown className={`w-3 h-3 transition-transform ${isLangMenuOpen ? 'rotate-180' : ''}`} />
-                </motion.button>
+                </m.button>
 
                 <AnimatePresence>
                   {isLangMenuOpen && (
-                    <motion.div
+                    <m.div
                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
@@ -144,12 +144,12 @@ export default function Navigation() {
                       >
                         🇮🇩 Indonesia
                       </button>
-                    </motion.div>
+                    </m.div>
                   )}
                 </AnimatePresence>
               </div>
 
-              <motion.button
+              <m.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={toggleTheme}
@@ -157,9 +157,9 @@ export default function Navigation() {
                 aria-label="Toggle theme"
               >
                 {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-              </motion.button>
+              </m.button>
 
-              <motion.button
+              <m.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -167,23 +167,23 @@ export default function Navigation() {
                 aria-label="Toggle mobile menu"
               >
                 {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              </motion.button>
+              </m.button>
             </div>
           </nav>
         </div>
-      </motion.header>
+      </m.header>
 
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
-            <motion.div
+            <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsMobileMenuOpen(false)}
               className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
             />
-            <motion.div
+            <m.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
@@ -193,7 +193,7 @@ export default function Navigation() {
               <div className="p-6 pt-24">
                 <nav className="flex flex-col gap-2">
                   {navItems.map((item, index) => (
-                    <motion.a
+                    <m.a
                       key={item.key}
                       href={item.href}
                       initial={{ opacity: 0, x: 20 }}
@@ -207,11 +207,11 @@ export default function Navigation() {
                       }`}
                     >
                       {t(`nav.${item.key}`)}
-                    </motion.a>
+                    </m.a>
                   ))}
                 </nav>
               </div>
-            </motion.div>
+            </m.div>
           </>
         )}
       </AnimatePresence>

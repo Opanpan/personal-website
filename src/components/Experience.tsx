@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { MapPin, Calendar, Building2, ChevronRight } from 'lucide-react';
 
 const experiences = ['pcs', 'lawencon', 'jojonomic'] as const;
@@ -31,7 +31,7 @@ export default function Experience() {
           <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary-500/50 to-transparent md:-translate-x-1/2" />
 
           {experiences.map((exp, index) => (
-            <motion.div
+            <m.div
               key={exp}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -109,12 +109,12 @@ export default function Experience() {
                   </ul>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
 
         {/* Education */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -136,7 +136,7 @@ export default function Experience() {
             </p>
             <p className="text-sm text-[var(--text-muted)]">2016 - 2020</p>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

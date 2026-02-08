@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Mail, MapPin, Github, Linkedin, Globe, Send } from 'lucide-react';
 
 const contactInfo = [
@@ -66,7 +66,7 @@ export default function Contact() {
           <div data-aos="fade-right" data-aos-delay="100" className="flex flex-col items-center md:items-start">
             <div className="space-y-6 w-full">
               {contactInfo.map((item, index) => (
-                <motion.div
+                <m.div
                   key={item.label}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -106,7 +106,7 @@ export default function Contact() {
                       </div>
                     </div>
                   )}
-                </motion.div>
+                </m.div>
               ))}
             </div>
 
@@ -117,7 +117,7 @@ export default function Contact() {
               </h3>
               <div className="flex flex-wrap gap-3 justify-center md:justify-start">
                 {socialLinks.map((social, index) => (
-                  <motion.a
+                  <m.a
                     key={social.label}
                     href={social.href}
                     target="_blank"
@@ -132,7 +132,7 @@ export default function Contact() {
                   >
                     <social.icon className="w-4 h-4" />
                     <span className="text-sm font-medium">{social.username}</span>
-                  </motion.a>
+                  </m.a>
                 ))}
               </div>
             </div>
@@ -140,7 +140,7 @@ export default function Contact() {
 
           {/* CTA Card */}
           <div data-aos="fade-left" data-aos-delay="200" className="flex items-center justify-center md:items-start md:justify-start">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -189,7 +189,7 @@ export default function Contact() {
                   </a>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           </div>
         </div>
       </div>
