@@ -34,6 +34,23 @@ function MyApp({ Component, pageProps }: AppProps) {
     };
   }, [router]);
 
+  // Recover from ChunkLoadError on first load (503 from cold start)
+  useEffect(() => {
+    const handleChunkError = (event: PromiseRejectionEvent) => {
+      if (event.reason?.name === 'ChunkLoadError') {
+        const reloaded = sessionStorage.getItem('chunk-retry');
+        if (!reloaded) {
+          sessionStorage.setItem('chunk-retry', '1');
+          window.location.reload();
+        }
+      }
+    };
+    // Clear retry flag on successful load
+    sessionStorage.removeItem('chunk-retry');
+    window.addEventListener('unhandledrejection', handleChunkError);
+    return () => window.removeEventListener('unhandledrejection', handleChunkError);
+  }, []);
+
   // Lazy load AOS JS after initial render to reduce TBT
   useEffect(() => {
     import('aos').then((AOS) => {
