@@ -11,6 +11,18 @@ export default function Projects() {
 
   const selectedProject = selectedProjectId ? projects.find((p) => p.id === selectedProjectId) : null;
 
+  // Lock body scroll when modal is open
+  React.useEffect(() => {
+    if (selectedProjectId) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedProjectId]);
+
   return (
     <section id="projects" className="section-padding relative overflow-hidden">
       {/* Background */}
