@@ -25,8 +25,9 @@ if [ "$EMAIL" = "your@email.com" ]; then
     exit 1
 fi
 
-# Create directories for certbot
+# Create directories for certbot with proper permissions
 mkdir -p ./certbot-conf ./certbot-www
+chmod 777 ./certbot-conf ./certbot-www
 
 # Check if certificate already exists
 if [ -d "./certbot-conf/live/$DOMAIN" ]; then
@@ -38,6 +39,11 @@ echo -e "${YELLOW}Step 1: Ensuring no conflicts on port 80...${NC}\n"
 
 # Stop any existing containers
 docker compose --profile production down 2>/dev/null || true
+
+# Fix permissions if directories were previously created by root (docker)
+if [ -f "./certbot-conf/.certbot.lock" ]; then
+    sudo rm -f ./certbot-conf/.certbot.lock
+fi
 
 echo -e "${GREEN}✓ Ports cleared${NC}\n"
 
