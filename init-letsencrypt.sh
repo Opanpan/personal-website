@@ -37,7 +37,7 @@ fi
 echo -e "${YELLOW}Step 1: Ensuring no conflicts on port 80...${NC}\n"
 
 # Stop any existing containers
-docker-compose --profile production down 2>/dev/null || true
+docker compose --profile production down 2>/dev/null || true
 
 echo -e "${GREEN}✓ Ports cleared${NC}\n"
 
@@ -70,7 +70,7 @@ fi
 echo -e "${YELLOW}Step 3: Starting full production stack with SSL certificate...${NC}\n"
 
 # Start the full production stack
-docker-compose --profile production up -d
+docker compose --profile production up -d
 
 sleep 3
 
@@ -79,19 +79,19 @@ echo -e "${GREEN}✓ Production stack started${NC}\n"
 # Verify deployment
 echo -e "${YELLOW}Verifying deployment...${NC}\n"
 
-if docker-compose ps | grep -q "portfolio.*running"; then
+if docker compose ps | grep -q "portfolio.*running"; then
     echo -e "${GREEN}✓ Portfolio service is running${NC}"
 else
     echo -e "${RED}✗ Portfolio service is not running${NC}"
 fi
 
-if docker-compose ps | grep -q "nginx.*running"; then
+if docker compose ps | grep -q "nginx.*running"; then
     echo -e "${GREEN}✓ Nginx service is running${NC}"
 else
     echo -e "${RED}✗ Nginx service is not running${NC}"
 fi
 
-if docker-compose ps | grep -q "certbot.*running"; then
+if docker compose ps | grep -q "certbot.*running"; then
     echo -e "${GREEN}✓ Certbot service is running${NC}"
 else
     echo -e "${RED}✗ Certbot service is not running${NC}"
@@ -100,6 +100,6 @@ fi
 echo -e "\n${GREEN}=== Initialization Complete ===${NC}\n"
 echo -e "${YELLOW}Next steps:${NC}"
 echo -e "  1. Visit https://$DOMAIN to verify the certificate"
-echo -e "  2. Check logs: docker-compose logs -f"
-echo -e "  3. Monitor certificate renewal: docker-compose exec certbot certbot certificates"
+echo -e "  2. Check logs: docker compose logs -f"
+echo -e "  3. Monitor certificate renewal: docker compose exec certbot certbot certificates"
 echo -e "\n${YELLOW}Your website should be live at https://$DOMAIN${NC}\n"
