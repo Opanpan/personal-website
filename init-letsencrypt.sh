@@ -1,111 +1,58 @@
 #!/bin/bash
 
-# Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
-NC='\033[0m' # No Color
+NC='\033[0m'
 
-# Configuration
-DOMAIN="ifan.kinderheim511.com"
-EMAIL="your@email.com"
+echo -e "${YELLOW}=== Portfolio Production Deployment ===${NC}\n"
 
-echo -e "${YELLOW}=== Let's Encrypt SSL Certificate Initialization ===${NC}\n"
-
-# Check if .env exists and source it
-if [ -f .env ]; then
-    export $(cat .env | grep -v '#' | xargs)
-    DOMAIN=${DOMAIN:-ifan.kinderheim511.com}
-    EMAIL=${EMAIL:-your@email.com}
-fi
-
-# Validate inputs
-if [ "$EMAIL" = "your@email.com" ]; then
-    echo -e "${RED}Error: Please update EMAIL in .env file before running this script${NC}"
+if [ ! -f .env ]; then
+    echo -e "${RED}Error: .env not found. Create one with DOMAIN and EMAIL set.${NC}"
     exit 1
 fi
 
-# Create directories for certbot with proper permissions
-mkdir -p ./certbot-conf ./certbot-www
-chmod 777 ./certbot-conf ./certbot-www
+export $(cat .env | grep -v '#' | xargs)
 
-# Check if certificate already exists
-if [ -d "./certbot-conf/live/$DOMAIN" ]; then
-    echo -e "${YELLOW}Certificate for $DOMAIN already exists. Skipping initialization.${NC}"
-    exit 0
+DOMAIN=${DOMAIN:-ifan.kinderheim511.com}
+EMAIL=${EMAIL:-fanalriansyah@gmail.com}
+
+if [ -z "$EMAIL" ] || [ "$EMAIL" = "your@email.com" ]; then
+    echo -e "${RED}Error: Set a valid EMAIL in .env${NC}"
+    exit 1
 fi
 
-echo -e "${YELLOW}Step 1: Ensuring no conflicts on port 80...${NC}\n"
+echo -e "Domain: ${GREEN}$DOMAIN${NC}"
+echo -e "Email:  ${GREEN}$EMAIL${NC}\n"
 
-# Stop any existing containers
-docker compose --profile production down 2>/dev/null || true
-
-# Fix permissions if directories were previously created by root (docker)
-if [ -f "./certbot-conf/.certbot.lock" ]; then
-    sudo rm -f ./certbot-conf/.certbot.lock
+# Step 1: Ensure shared proxy is running
+if ! docker ps --format '{{.Names}}' | grep -q '^nginx-proxy$'; then
+    echo -e "${YELLOW}nginx-proxy is not running. Start it from the kultura-app/proxy-network directory first:${NC}"
+    echo -e "  cd /path/to/kultura-app && bash init-letsencrypt.sh"
+    echo -e "${RED}Aborting.${NC}"
+    exit 1
+else
+    echo -e "${GREEN}✓ nginx-proxy is running${NC}\n"
 fi
 
-echo -e "${GREEN}✓ Ports cleared${NC}\n"
+if ! docker ps --format '{{.Names}}' | grep -q '^acme-companion$'; then
+    echo -e "${RED}Error: acme-companion is not running. SSL certificates won't be issued.${NC}"
+    exit 1
+else
+    echo -e "${GREEN}✓ acme-companion is running${NC}\n"
+fi
 
-echo -e "${YELLOW}Step 2: Requesting SSL certificate from Let's Encrypt (standalone mode)...${NC}\n"
+# Step 2: Deploy portfolio (acme-companion handles SSL automatically via LETSENCRYPT_HOST)
+echo -e "${YELLOW}Deploying portfolio service...${NC}\n"
 
-# Run certbot in standalone mode (doesn't need nginx running)
-docker run --rm \
-    -v "$(pwd)/certbot-conf:/etc/letsencrypt" \
-    -v "$(pwd)/certbot-www:/var/www/certbot" \
-    -p 80:80 \
-    -p 443:443 \
-    certbot/certbot:latest certonly \
-    --standalone \
-    -d "$DOMAIN" \
-    --email "$EMAIL" \
-    --agree-tos \
-    --non-interactive
+docker compose up -d --build
 
 if [ $? -eq 0 ]; then
-    echo -e "\n${GREEN}✓ SSL certificate successfully obtained!${NC}\n"
+    echo -e "\n${GREEN}✓ Portfolio deployed successfully!${NC}\n"
+    echo -e "${YELLOW}SSL certificate will be issued automatically by acme-companion.${NC}"
+    echo -e "${YELLOW}Check progress with: docker logs acme-companion -f${NC}\n"
+    echo -e "${YELLOW}Your website will be live at https://$DOMAIN once the cert is ready.${NC}\n"
 else
-    echo -e "\n${RED}Error: Failed to obtain SSL certificate${NC}"
-    echo -e "${RED}Possible causes:${NC}"
-    echo -e "  1. Domain is not pointing to your VPS IP"
-    echo -e "  2. Port 80 is not accessible from the internet"
-    echo -e "  3. DNS has not propagated yet (try waiting 5-30 minutes)"
+    echo -e "\n${RED}Error: Deployment failed. Check logs with: docker compose logs${NC}"
     exit 1
 fi
-
-echo -e "${YELLOW}Step 3: Starting full production stack with SSL certificate...${NC}\n"
-
-# Start the full production stack
-docker compose --profile production up -d
-
-sleep 3
-
-echo -e "${GREEN}✓ Production stack started${NC}\n"
-
-# Verify deployment
-echo -e "${YELLOW}Verifying deployment...${NC}\n"
-
-if docker compose ps | grep -q "portfolio.*running"; then
-    echo -e "${GREEN}✓ Portfolio service is running${NC}"
-else
-    echo -e "${RED}✗ Portfolio service is not running${NC}"
-fi
-
-if docker compose ps | grep -q "nginx.*running"; then
-    echo -e "${GREEN}✓ Nginx service is running${NC}"
-else
-    echo -e "${RED}✗ Nginx service is not running${NC}"
-fi
-
-if docker compose ps | grep -q "certbot.*running"; then
-    echo -e "${GREEN}✓ Certbot service is running${NC}"
-else
-    echo -e "${RED}✗ Certbot service is not running${NC}"
-fi
-
-echo -e "\n${GREEN}=== Initialization Complete ===${NC}\n"
-echo -e "${YELLOW}Next steps:${NC}"
-echo -e "  1. Visit https://$DOMAIN to verify the certificate"
-echo -e "  2. Check logs: docker compose logs -f"
-echo -e "  3. Monitor certificate renewal: docker compose exec certbot certbot certificates"
-echo -e "\n${YELLOW}Your website should be live at https://$DOMAIN${NC}\n"
