@@ -152,6 +152,18 @@
           "Solusi alat kesehatan inovatif yang mendukung prosedur klinis dan operasional medis",
           "Komitmen pada layanan pelanggan profesional dan dukungan teknis berstandar tinggi"
         ]
+      },
+      "kultura": {
+        "title": "Kultura Properties",
+        "category": "Properti / Pengembang Perumahan",
+        "description": "Kultura Properties adalah website pengembang properti yang menampilkan proyek perumahan, membantu calon pemilik rumah menjelajahi lokasi, testimoni, dan menghubungi langsung via WhatsApp.",
+        "long_description": "Kultura Properties adalah website marketing yang dibangun untuk pengembang properti perumahan, menghadirkan pengalaman brand yang aspiratif bagi calon pembeli rumah. Situs ini menonjolkan proyek perumahan yang sedang berjalan dengan visual sinematik, lokasi proyek, testimoni pelanggan, dan ulasan, disertai bagian profil perusahaan. Pengunjung dapat dengan cepat menghubungi tim sales melalui tombol kontak WhatsApp yang terintegrasi, dan situs ini mendukung bahasa Indonesia maupun Inggris dengan pilihan tema terang/gelap untuk pengalaman menjelajah yang modern.",
+        "features": [
+          "Showcase proyek perumahan dengan visual imersif dan detail proyek",
+          "Bagian khusus untuk lokasi, testimoni, dan ulasan pelanggan",
+          "Integrasi kontak WhatsApp langsung untuk pertanyaan penjualan",
+          "Dukungan dwibahasa (Indonesia/Inggris) dengan toggle mode gelap/terang"
+        ]
       }
     }
   },

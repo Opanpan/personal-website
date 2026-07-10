@@ -49,4 +49,11 @@ export const projects: Project[] = [
     gradient: 'from-indigo-500 via-blue-500 to-cyan-500',
     appUrl: 'https://accuratemedica.com/',
   },
+  {
+    id: 'kultura',
+    image: '/images/projects/kultura.webp',
+    techStack: ['Next.js', 'React', 'TypeScript', 'TailwindCSS'],
+    gradient: 'from-teal-500 via-emerald-500 to-green-600',
+    appUrl: 'https://www.kulturaproperties.com/id',
+  },
 ];

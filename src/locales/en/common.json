@@ -152,6 +152,18 @@
           "Innovative health device solutions supporting clinical and medical operational procedures",
           "Commitment to professional customer service and high-standard technical support"
         ]
+      },
+      "kultura": {
+        "title": "Kultura Properties",
+        "category": "Real Estate / Property Developer",
+        "description": "Kultura Properties is a property developer website showcasing residential projects, helping prospective homeowners explore locations, testimonials, and get in touch directly via WhatsApp.",
+        "long_description": "Kultura Properties is a marketing website built for a residential property developer, presenting an aspirational brand experience for prospective homebuyers. The site highlights ongoing housing projects with cinematic visuals, project locations, customer testimonials, and reviews, alongside a company profile section. Visitors can quickly reach the sales team through an integrated WhatsApp contact button, and the site supports both Indonesian and English languages with light/dark theme options for a polished, modern browsing experience.",
+        "features": [
+          "Showcase of residential projects with immersive visuals and project details",
+          "Dedicated sections for location, testimonials, and customer reviews",
+          "Direct WhatsApp contact integration for sales inquiries",
+          "Bilingual support (Indonesian/English) with dark/light mode toggle"
+        ]
       }
     }
   },
