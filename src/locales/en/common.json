@@ -164,6 +164,19 @@
           "Direct WhatsApp contact integration for sales inquiries",
           "Bilingual support (Indonesian/English) with dark/light mode toggle"
         ]
+      },
+      "olew": {
+        "title": "Olew Group",
+        "category": "Manufacturing / Packaging Catalog",
+        "description": "Olew Group is a product catalog website for PT. Olew Plasindo Jaya, a premium plastic packaging manufacturer, featuring interactive 3D bottle and pot previews and a quote request flow.",
+        "long_description": "Olew Group is the company website and product catalog for PT. Olew Plasindo Jaya, a manufacturer of customizable premium bottles, caps, and pots. The catalog is powered by a backend API with filtering and sorting across bottle, cap, and pot families. A companion admin dashboard (React + Vite) lets the team manage products and site content, and configure each product's 3D presentation: upload the .glb model, tune its scale and position, and link compatible caps and pot components into assembly slots, all checked in a live 3D combined preview before publishing. Each product can be previewed in interactive 3D, and pots can be configured by stacking compatible components (inner pot, plug, inner and outer caps) to see the final assembly. Visitors can compare products side by side and send a quote request directly, with full Indonesian/English support and dark/light themes.",
+        "features": [
+          "Interactive 3D product viewer built with Three.js (React Three Fiber)",
+          "Admin dashboard to upload 3D models and configure scale, position, and assembly slots with a live 3D preview",
+          "Pot configurator for assembling compatible components layer by layer",
+          "Catalog filtering, sorting, and side-by-side product comparison",
+          "Quote request flow with bilingual support (Indonesian/English) and dark/light mode"
+        ]
       }
     }
   },

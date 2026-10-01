@@ -56,4 +56,11 @@ export const projects: Project[] = [
     gradient: 'from-teal-500 via-emerald-500 to-green-600',
     appUrl: 'https://www.kulturaproperties.com/id',
   },
+  {
+    id: 'olew',
+    image: '/images/projects/olew.webp',
+    techStack: ['Next.js', 'React', 'TypeScript', 'TailwindCSS', 'Three.js', 'Docker'],
+    gradient: 'from-blue-600 via-blue-500 to-sky-400',
+    appUrl: 'https://olew-app.alriansyah.my.id',
+  },
 ];

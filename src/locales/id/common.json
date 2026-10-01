@@ -164,6 +164,19 @@
           "Integrasi kontak WhatsApp langsung untuk pertanyaan penjualan",
           "Dukungan dwibahasa (Indonesia/Inggris) dengan toggle mode gelap/terang"
         ]
+      },
+      "olew": {
+        "title": "Olew Group",
+        "category": "Manufaktur / Katalog Kemasan",
+        "description": "Olew Group adalah website katalog produk untuk PT. Olew Plasindo Jaya, produsen kemasan plastik premium, dengan pratinjau 3D interaktif untuk botol dan pot serta alur permintaan penawaran.",
+        "long_description": "Olew Group adalah website perusahaan sekaligus katalog produk untuk PT. Olew Plasindo Jaya, produsen botol, tutup, dan pot premium yang dapat dikustomisasi. Katalog ini terhubung ke API backend dengan fitur filter dan pengurutan untuk kategori botol, tutup, dan pot. Dashboard admin pendamping (React + Vite) memungkinkan tim mengelola produk dan konten situs, serta mengatur tampilan 3D setiap produk: mengunggah model .glb, menyesuaikan skala dan posisinya, dan menghubungkan tutup serta komponen pot yang kompatibel ke slot rakitan, semuanya dicek lewat pratinjau 3D gabungan secara langsung sebelum dipublikasikan. Setiap produk dapat dilihat dalam tampilan 3D interaktif, dan pot dapat dikonfigurasi dengan menyusun komponen yang kompatibel (inner pot, sumbat, tutup dalam dan tutup luar) untuk melihat hasil rakitannya. Pengunjung dapat membandingkan produk secara berdampingan dan langsung mengirim permintaan penawaran, dengan dukungan penuh bahasa Indonesia/Inggris serta tema gelap/terang.",
+        "features": [
+          "Penampil produk 3D interaktif dengan Three.js (React Three Fiber)",
+          "Dashboard admin untuk mengunggah model 3D serta mengatur skala, posisi, dan slot rakitan dengan pratinjau 3D langsung",
+          "Konfigurator pot untuk merakit komponen yang kompatibel lapis demi lapis",
+          "Filter katalog, pengurutan, dan perbandingan produk berdampingan",
+          "Alur permintaan penawaran dengan dukungan dwibahasa (Indonesia/Inggris) dan mode gelap/terang"
+        ]
       }
     }
   },
