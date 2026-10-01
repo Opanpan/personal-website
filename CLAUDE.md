@@ -38,9 +38,8 @@ No test framework is configured.
 
 ## Deployment
 
-Dockerized multi-stage build (Node 20-alpine, standalone output). Docker Compose includes:
-- `portfolio` service (Next.js on port 3000)
-- `nginx` reverse proxy with SSL (production profile)
-- `certbot` for Let's Encrypt (production profile)
+Dockerized multi-stage build (Node 20-alpine, standalone output). `docker-compose.yml` runs only the `portfolio` service on the external `proxy-network` Docker network; routing and SSL come from `VIRTUAL_HOST` / `LETSENCRYPT_HOST` (`ifan.alriansyah.my.id`).
+
+`proxy-network/` holds the shared reverse proxy used by all apps on the server (this site, kultura-app, olew-app, olew-admin): `nginx-proxy` + `acme-companion` (Let's Encrypt). Global nginx settings are in `proxy-network/proxy.conf`; per-host overrides are `proxy-network/<host>_location` files mounted into `vhost.d`. `init-letsencrypt.sh` starts the proxy if it isn't running, then deploys the portfolio.
 
 Environment variables in `.env`: `DOMAIN`, `EMAIL`, `NODE_ENV`.

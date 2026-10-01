@@ -25,12 +25,13 @@ fi
 echo -e "Domain: ${GREEN}$DOMAIN${NC}"
 echo -e "Email:  ${GREEN}$EMAIL${NC}\n"
 
-# Step 1: Ensure shared proxy is running
+# Step 1: Start shared proxy if not running
 if ! docker ps --format '{{.Names}}' | grep -q '^nginx-proxy$'; then
-    echo -e "${YELLOW}nginx-proxy is not running. Start it from the kultura-app/proxy-network directory first:${NC}"
-    echo -e "  cd /path/to/kultura-app && bash init-letsencrypt.sh"
-    echo -e "${RED}Aborting.${NC}"
-    exit 1
+    echo -e "${YELLOW}Starting shared reverse proxy...${NC}\n"
+    cp .env proxy-network/.env 2>/dev/null || true
+    docker compose -f proxy-network/docker-compose.yml up -d
+    sleep 3
+    echo -e "${GREEN}✓ Reverse proxy started${NC}\n"
 else
     echo -e "${GREEN}✓ nginx-proxy is running${NC}\n"
 fi
