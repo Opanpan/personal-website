@@ -59,8 +59,8 @@ export default function Document() {
         <meta property="og:site_name" content="Ifan Alriansyah Portfolio" />
         <meta property="og:title" content="Ifan Alriansyah - Senior Frontend Developer" />
         <meta property="og:description" content="Senior Frontend Developer specializing in React, Next.js, Vue.js, and Angular. Based in Jakarta, Indonesia." />
-        <meta property="og:url" content="https://ifan.kinderheim511.com" />
-        <meta property="og:image" content="https://ifan.kinderheim511.com/og-image.webp" />
+        <meta property="og:url" content="https://ifan.alriansyah.my.id" />
+        <meta property="og:image" content="https://ifan.alriansyah.my.id/og-image.webp" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Ifan Alriansyah - Senior Frontend Developer Portfolio" />
@@ -69,7 +69,7 @@ export default function Document() {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Ifan Alriansyah - Senior Frontend Developer" />
         <meta name="twitter:description" content="Senior Frontend Developer specializing in React, Next.js, Vue.js, and Angular." />
-        <meta name="twitter:image" content="https://ifan.kinderheim511.com/og-image.png" />
+        <meta name="twitter:image" content="https://ifan.alriansyah.my.id/og-image.png" />
 
         {/* Structured Data */}
         <script
@@ -80,7 +80,7 @@ export default function Document() {
               '@type': 'Person',
               name: 'Ifan Alriansyah',
               jobTitle: 'Senior Frontend Developer',
-              url: 'https://my-profile.kinderheim511.com',
+              url: 'https://ifan.alriansyah.my.id',
               sameAs: [
                 'https://github.com/Opanpan',
                 'https://www.linkedin.com/in/ifannnn/',

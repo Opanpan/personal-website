@@ -34,7 +34,7 @@ const socialLinks = [
   {
     icon: Globe,
     label: 'Website',
-    href: 'https://my-profile.kinderheim511.com',
+    href: 'https://ifan.alriansyah.my.id',
     username: 'Portfolio',
   },
 ];

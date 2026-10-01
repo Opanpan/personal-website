@@ -35,7 +35,7 @@ export default function Home() {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
-        <link rel="canonical" href="https://my-profile.kinderheim511.com" />
+        <link rel="canonical" href="https://ifan.alriansyah.my.id" />
       </Head>
 
       <div className="noise-overlay" />

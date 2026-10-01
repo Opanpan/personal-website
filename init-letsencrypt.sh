@@ -14,7 +14,7 @@ fi
 
 export $(cat .env | grep -v '#' | xargs)
 
-DOMAIN=${DOMAIN:-ifan.kinderheim511.com}
+DOMAIN=${DOMAIN:-ifan.alriansyah.my.id}
 EMAIL=${EMAIL:-fanalriansyah@gmail.com}
 
 if [ -z "$EMAIL" ] || [ "$EMAIL" = "your@email.com" ]; then
