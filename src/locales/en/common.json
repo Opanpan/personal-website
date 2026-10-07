@@ -5,7 +5,8 @@
     "experience": "Experience",
     "projects": "Projects",
     "skills": "Skills",
-    "contact": "Contact"
+    "contact": "Contact",
+    "play_3d": "Play 3D"
   },
   "hero": {
     "greeting": "Hello, I'm",
@@ -210,5 +211,261 @@
   "footer": {
     "copyright": "© 2025 Ifan Alriansyah. Crafted with passion and clean code.",
     "built_with": "Built with Next.js, Tailwind CSS, and ❤️"
+  },
+  "world": {
+    "title": "Ifan's Island",
+    "tagline": "An explorable portfolio",
+    "intro": "Wander an Indonesian island to discover my story. Visit the glowing markers to learn about my work, projects and skills.",
+    "start": "Start exploring",
+    "continue": "Continue ({{count}}/{{total}} found)",
+    "classic": "Classic site",
+    "language": "Switch language",
+    "theme_day": "Switch to day",
+    "theme_night": "Switch to night",
+    "no_webgl": "Your browser can't display the 3D world. No worries, the classic version has everything.",
+    "close": "Close",
+    "controls": {
+      "move": "Move",
+      "run": "Run",
+      "click": "Click to walk",
+      "interact": "Interact",
+      "map": "Map",
+      "quest": "Journey log",
+      "touch_move": "Joystick to move",
+      "touch_tap": "Tap to walk there",
+      "touch_interact": "Tap markers to interact",
+      "rotate": "Rotate camera",
+      "touch_rotate": "Swipe to look around, pinch to zoom",
+      "reset_view": "Reset camera",
+      "jump": "Jump",
+      "emotes": "Wave, dance, sit"
+    },
+    "prompt": {
+      "talk": "Talk:",
+      "read": "Read:",
+      "look": "Look:"
+    },
+    "places": {
+      "welcome": {
+        "name": "Monas Plaza",
+        "sub": "Start here"
+      },
+      "about": {
+        "name": "Rumah Joglo",
+        "sub": "About me"
+      },
+      "experience": {
+        "name": "Candi of Journeys",
+        "sub": "Experience & education"
+      },
+      "projects": {
+        "name": "Pasar Projects",
+        "sub": "Things I've built"
+      },
+      "skills": {
+        "name": "Sawah Saung",
+        "sub": "Skills & tools"
+      },
+      "quote": {
+        "name": "Banyan Tree",
+        "sub": "Words to live by"
+      },
+      "contact": {
+        "name": "Phinisi Pier",
+        "sub": "Get in touch"
+      }
+    },
+    "items": {
+      "welcome": "Ifan at Monas",
+      "about": "Rumah Joglo",
+      "education": "Temple inscription",
+      "skills": "The saung",
+      "quote": "Stone tablet",
+      "contact": "The phinisi captain"
+    },
+    "quests": {
+      "welcome": "Say hello at the monument",
+      "about": "Visit the Javanese house",
+      "experience": "Follow the stupas to the temple",
+      "projects": "Browse every market stall",
+      "skills": "Rest at the rice-field hut",
+      "quote": "Read under the banyan tree",
+      "contact": "Board the phinisi at the pier"
+    },
+    "quest_title": "Journey Log",
+    "reset": "Reset progress",
+    "discovered": "Discovered: {{name}}",
+    "more_here": "{{count}} more to discover nearby",
+    "next": "Travel to {{place}}",
+    "map_title": "Island Map",
+    "map_hint": "Click a place to fast travel there",
+    "complete_title": "Island fully explored!",
+    "complete_text": "You've seen everything there is to know about me. Thanks for exploring! Let's build something together.",
+    "complete_cta": "Send me an email",
+    "keep_exploring": "Keep exploring",
+    "panel": {
+      "welcome_intro": "Selamat datang! Welcome to my island.",
+      "welcome_hint": "Every glowing marker holds part of my story. Follow the paths: my journey is to the north, the market to the east, the rice fields to the west and the pier to the south.",
+      "about_flavor": "You step onto the veranda of the Joglo. The host pours you a cup of teh manis...",
+      "experience_flavor": "The stupa's inscription tells of a chapter in the journey...",
+      "achievements": "Achievements",
+      "education_flavor": "Carved into the temple stairs is where the journey began...",
+      "education_hint": "Climb further: the three stupas along the path tell the story of my career, in order.",
+      "skills_flavor": "From the saung you watch the tools of the trade float over the rice fields like lanterns...",
+      "quote_flavor": "In the shade of the old beringin, a stone tablet reads:",
+      "contact_flavor": "The phinisi is ready to sail. Where should we go together?",
+      "internal_app": "Internal company app",
+      "visit_site": "Visit the live site",
+      "how_i_help": "How I can help",
+      "collected": "{{count}}/{{total}} lontar collected"
+    },
+    "loading": "Loading the island…",
+    "quality_high": "Switch to high quality graphics",
+    "quality_low": "Switch to lite graphics (faster)",
+    "npc": {
+      "seller_biztrip": {
+        "name": "Bu Sri",
+        "lines": [
+          "Mampir! This stall is CIMB Biztrip: staff book flights and hotels through Traveloka.",
+          "No personal money needed for official trips. The company pays directly!",
+          "Built with Vue and Tailwind, shipped with Docker and Jenkins."
+        ]
+      },
+      "seller_cash_management": {
+        "name": "Pak Budi",
+        "lines": [
+          "LAJU by Mandiri! Big companies order cash pickup and delivery online here.",
+          "Every order is tracked in real time. Ifan built it with React and Redux.",
+          "And tested with Jest, of course. Cash is serious business!"
+        ]
+      },
+      "seller_super_app": {
+        "name": "Mbak Ayu",
+        "lines": [
+          "KOPRA by Mandiri: the same cash services, inside Mandiri's corporate platform.",
+          "React and Angular working together in one app. Micro frontends, they call it!"
+        ]
+      },
+      "seller_ifg": {
+        "name": "Mas Joko",
+        "lines": [
+          "IFG Life Space puts insurance policies and services in one place.",
+          "Next.js and TypeScript, running on AWS. Very modern stall, this one."
+        ]
+      },
+      "seller_tembuni": {
+        "name": "Bu Wati",
+        "lines": [
+          "Tembuni is a gentle-birth clinic. Ifan made their website.",
+          "Prenatal classes, doctor consultations, homecare… all on the site!"
+        ]
+      },
+      "seller_accurate": {
+        "name": "Pak Made",
+        "lines": [
+          "Accurate Medica distributes medical and surgical devices to hospitals.",
+          "Their site runs on Laravel, Alpine.js and Tailwind."
+        ]
+      },
+      "seller_kultura": {
+        "name": "Mbak Rina",
+        "lines": [
+          "Kultura Properties shows off homes with cinematic visuals.",
+          "Bilingual, light and dark mode, and a WhatsApp button to chat with sales!"
+        ]
+      },
+      "seller_olew": {
+        "name": "Pak Yanto",
+        "lines": [
+          "Olew sells premium bottles and pots. You can spin them around in 3D!",
+          "It uses Three.js, the same magic this whole island is made of."
+        ]
+      },
+      "bakso": {
+        "name": "Mang Ujang",
+        "lines": [
+          "Bakso, bakso! Hot meatball soup to fuel your exploring!",
+          "Each stall in the market to the east shows one of Ifan's projects.",
+          "Lost? Press M for the map. Cheaper than asking for directions!"
+        ]
+      },
+      "farmer": {
+        "name": "Bu Tani",
+        "lines": [
+          "Selamat siang! Rice takes patience, just like good code.",
+          "See the icons floating over the field? Those are Ifan's tools. Visit the saung!",
+          "The ducks follow their leader, like a tidy component tree."
+        ]
+      },
+      "fisherman": {
+        "name": "Pak Darto",
+        "lines": [
+          "Shh… something's biting. Oh, it's just a bug.",
+          "Want to work with Ifan? The phinisi right here can carry your message.",
+          "I've been fishing all day. Ifan's been shipping code for 5+ years."
+        ]
+      },
+      "gamelan": {
+        "name": "Bu Laras",
+        "lines": [
+          "Hear that? It's the saron. I play it every afternoon.",
+          "Step up to the Joglo door. Ifan's story is inside.",
+          "Gamelan is many players in harmony, like a good team."
+        ]
+      },
+      "walker_pier": {
+        "name": "Putri",
+        "lines": [
+          "Lovely day for a walk to the pier!",
+          "Did you see the kites over the beach? The red one is mine."
+        ]
+      },
+      "walker_pasar": {
+        "name": "Dimas",
+        "lines": [
+          "I'm off to the market. Each stall shows one of Ifan's projects.",
+          "My favourite is the stall with the 3D bottles!"
+        ]
+      },
+      "walker_plaza": {
+        "name": "Pak RT",
+        "lines": [
+          "Welcome to the island! Monas is the heart of it all.",
+          "Tip: follow the glowing diamonds. Each one holds part of Ifan's story."
+        ]
+      },
+      "walker_joglo": {
+        "name": "Nadia",
+        "lines": [
+          "The Joglo roof is built in layers, like good software architecture.",
+          "Ifan has over 5 years in fintech and enterprise apps, did you know?"
+        ]
+      }
+    },
+    "tour": {
+      "take": "Take the guided tour",
+      "take_short": "Guided tour",
+      "stop": "Stop {{n}} of {{total}}",
+      "next": "Next stop",
+      "finish": "Finish tour",
+      "end": "End tour",
+      "continue": "Continue tour",
+      "heading_to": "Heading to {{place}}",
+      "paused": "Tour paused at {{place}}"
+    },
+    "mute": "Mute sound",
+    "unmute": "Turn sound on",
+    "props": {
+      "gong": "Strike the gong",
+      "swing": "Push the swing",
+      "bakso": "Ring the bakso bowl"
+    },
+    "emotes": {
+      "label": "Emotes",
+      "wave": "Wave",
+      "dance": "Dance",
+      "sit": "Sit down",
+      "jump": "Jump"
+    }
   }
 }

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { m, AnimatePresence } from 'framer-motion';
 import { useTheme } from '@/hooks/useTheme';
-import { Menu, X, Sun, Moon, Globe, ChevronDown } from 'lucide-react';
+import Link from 'next/link';
+import { Menu, X, Sun, Moon, Globe, ChevronDown, Gamepad2 } from 'lucide-react';
 
 const navItems = [
   { key: 'home', href: '#home' },
@@ -107,6 +108,14 @@ export default function Navigation() {
             </div>
 
             <div className="flex items-center gap-2">
+              <Link
+                href="/"
+                className="flex items-center gap-1.5 px-3 py-2 rounded-full text-sm font-medium text-primary-500 bg-primary-500/10 hover:bg-primary-500/20 transition-all"
+                title={t('nav.play_3d')}
+              >
+                <Gamepad2 className="w-4 h-4" />
+                <span className="hidden sm:inline">{t('nav.play_3d')}</span>
+              </Link>
               <div className="relative">
                 <m.button
                   whileHover={{ scale: 1.05 }}
