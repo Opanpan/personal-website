@@ -79,15 +79,18 @@ const nextConfig = {
           },
         ],
       },
-      {
-        source: '/',
+      // Page HTML must revalidate on every visit: it references hashed chunks that are
+      // deleted on each deploy, so a cached page would load files that no longer exist.
+      // Revalidation is cheap (ETag → 304 Not Modified).
+      ...['/', '/classic'].map((source) => ({
+        source,
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=3600, s-maxage=86400',
+            value: 'public, max-age=0, must-revalidate',
           },
         ],
-      },
+      })),
     ];
   },
 };
