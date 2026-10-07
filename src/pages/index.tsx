@@ -1,25 +1,28 @@
 import React from 'react';
 import Head from 'next/head';
-import { useTranslation } from 'react-i18next';
+import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import { useTranslation } from 'react-i18next';
 
-const Navigation = dynamic(() => import('@/components/Navigation'), { ssr: false });
-const Hero = dynamic(() => import('@/components/Hero'), { ssr: false });
-const About = dynamic(() => import('@/components/About'), { ssr: false });
-const Experience = dynamic(() => import('@/components/Experience'), { ssr: false });
-const Projects = dynamic(() => import('@/components/Projects'), { ssr: false });
-const Quote = dynamic(() => import('@/components/Quote'), { ssr: false });
-const Skills = dynamic(() => import('@/components/Skills'), { ssr: false });
-const Contact = dynamic(() => import('@/components/Contact'), { ssr: false });
-const Footer = dynamic(() => import('@/components/Footer'), { ssr: false });
+function Loading() {
+  return (
+    <div className="fixed inset-0 flex flex-col items-center justify-center gap-4 bg-[#0d1b33] text-white">
+      <div className="h-12 w-12 rounded-full border-4 border-amber-300/30 border-t-amber-300 animate-spin" />
+      <p className="font-display text-lg tracking-wide">Ifan&apos;s Island</p>
+    </div>
+  );
+}
+
+const Game = dynamic(() => import('@/world/Game'), { ssr: false, loading: Loading });
 
 export default function Home() {
   const { i18n } = useTranslation();
 
   const title = 'Ifan Alriansyah | Senior Frontend Developer';
-  const description = i18n.language === 'id'
-    ? 'Frontend developer dengan pengalaman 5+ tahun di fintech dan sistem enterprise. Spesialisasi React, Next.js, Vue, Angular.'
-    : 'Frontend developer with 5+ years experience in fintech and enterprise systems. Specialized in React, Next.js, Vue, Angular.';
+  const description =
+    i18n.language === 'id'
+      ? 'Jelajahi portofolio 3D interaktif Ifan Alriansyah, frontend developer dengan pengalaman 5+ tahun di fintech dan sistem enterprise.'
+      : 'Explore the interactive 3D portfolio of Ifan Alriansyah, a frontend developer with 5+ years experience in fintech and enterprise systems.';
 
   return (
     <>
@@ -27,7 +30,7 @@ export default function Home() {
         <title>{title}</title>
         <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-        <meta name="keywords" content="Ifan Alriansyah, Frontend Developer, React Developer, Next.js, Vue.js, Angular, TypeScript, JavaScript, Indonesia, Jakarta" />
+        <meta name="keywords" content="Ifan Alriansyah, Frontend Developer, React Developer, Next.js, Three.js, 3D Portfolio, TypeScript, Indonesia, Jakarta" />
         <meta name="author" content="Ifan Alriansyah" />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
@@ -38,21 +41,19 @@ export default function Home() {
         <link rel="canonical" href="https://ifan.alriansyah.my.id" />
       </Head>
 
-      <div className="noise-overlay" />
-      
-      <Navigation />
-      
-      <main>
-        <Hero />
-        <About />
-        <Experience />
-        <Projects />
-        <Quote />
-        <Skills />
-        <Contact />
-      </main>
+      {/* Text summary for crawlers and screen readers; the 3D world is purely visual */}
+      <div className="sr-only">
+        <h1>Ifan Alriansyah, Senior Frontend Developer</h1>
+        <p>Frontend developer with 5+ years experience in fintech and enterprise systems, specialized in React, Next.js, Vue and Angular.</p>
+        <Link href="/classic">View the classic portfolio</Link>
+      </div>
+      <noscript>
+        <p style={{ padding: 24 }}>
+          JavaScript is required for the 3D portfolio. <a href="/classic">View the classic portfolio</a>.
+        </p>
+      </noscript>
 
-      <Footer />
+      <Game />
     </>
   );
 }

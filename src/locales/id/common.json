@@ -5,7 +5,8 @@
     "experience": "Pengalaman",
     "projects": "Proyek",
     "skills": "Keahlian",
-    "contact": "Kontak"
+    "contact": "Kontak",
+    "play_3d": "Main 3D"
   },
   "hero": {
     "greeting": "Halo, Saya",
@@ -86,10 +87,10 @@
         "description": "Aplikasi internal CIMB untuk pemesanan tiket pesawat dan hotel yang terintegrasi dengan Traveloka, digunakan untuk perjalanan dinas tanpa menggunakan dana pribadi karyawan serta mendukung pengajuan petty cash.",
         "long_description": "Aplikasi internal CIMB untuk pemesanan tiket penerbangan dan hotel yang terintegrasi dengan Traveloka. Aplikasi ini digunakan khusus untuk perjalanan dinas, sehingga seluruh transaksi dilakukan langsung melalui sistem perusahaan tanpa menggunakan dana pribadi karyawan. Selain itu, aplikasi ini juga mendukung pengajuan petty cash serta pengelolaan kebutuhan perjalanan dinas secara terpusat dan terdokumentasi.",
         "features": [
-  "Integrasi pemesanan tiket pesawat dan hotel dengan Traveloka",
-  "Transaksi perjalanan dinas tanpa penggunaan dana pribadi karyawan",
-  "Pengajuan dan pengelolaan petty cash secara terpusat",
-  "Pencatatan dan monitoring perjalanan dinas untuk kebutuhan administrasi dan audit"
+          "Integrasi pemesanan tiket pesawat dan hotel dengan Traveloka",
+          "Transaksi perjalanan dinas tanpa penggunaan dana pribadi karyawan",
+          "Pengajuan dan pengelolaan petty cash secara terpusat",
+          "Pencatatan dan monitoring perjalanan dinas untuk kebutuhan administrasi dan audit"
         ]
       },
       "cash_management": {
@@ -210,5 +211,261 @@
   "footer": {
     "copyright": "© 2025 Ifan Alriansyah. Dibuat dengan passion dan kode yang bersih.",
     "built_with": "Dibangun dengan Next.js, Tailwind CSS, dan ❤️"
+  },
+  "world": {
+    "title": "Pulau Ifan",
+    "tagline": "Portofolio yang bisa dijelajahi",
+    "intro": "Jelajahi pulau khas Indonesia untuk mengenal kisah saya. Kunjungi penanda yang bersinar untuk melihat pengalaman, proyek, dan keahlian saya.",
+    "start": "Mulai menjelajah",
+    "continue": "Lanjutkan ({{count}}/{{total}} ditemukan)",
+    "classic": "Versi klasik",
+    "language": "Ganti bahasa",
+    "theme_day": "Ganti ke siang",
+    "theme_night": "Ganti ke malam",
+    "no_webgl": "Browser kamu belum bisa menampilkan dunia 3D. Tenang, versi klasik punya semua informasinya.",
+    "close": "Tutup",
+    "controls": {
+      "move": "Bergerak",
+      "run": "Lari",
+      "click": "Klik untuk berjalan",
+      "interact": "Interaksi",
+      "map": "Peta",
+      "quest": "Catatan perjalanan",
+      "touch_move": "Joystick untuk bergerak",
+      "touch_tap": "Ketuk untuk berjalan",
+      "touch_interact": "Ketuk penanda untuk interaksi",
+      "rotate": "Putar kamera",
+      "touch_rotate": "Usap untuk melihat sekitar, cubit untuk zoom",
+      "reset_view": "Reset kamera",
+      "jump": "Lompat",
+      "emotes": "Lambai, joget, duduk"
+    },
+    "prompt": {
+      "talk": "Bicara:",
+      "read": "Baca:",
+      "look": "Lihat:"
+    },
+    "places": {
+      "welcome": {
+        "name": "Plaza Monas",
+        "sub": "Mulai di sini"
+      },
+      "about": {
+        "name": "Rumah Joglo",
+        "sub": "Tentang saya"
+      },
+      "experience": {
+        "name": "Candi Perjalanan",
+        "sub": "Pengalaman & pendidikan"
+      },
+      "projects": {
+        "name": "Pasar Proyek",
+        "sub": "Karya yang saya buat"
+      },
+      "skills": {
+        "name": "Saung Sawah",
+        "sub": "Keahlian & tools"
+      },
+      "quote": {
+        "name": "Pohon Beringin",
+        "sub": "Kata-kata pegangan"
+      },
+      "contact": {
+        "name": "Dermaga Phinisi",
+        "sub": "Hubungi saya"
+      }
+    },
+    "items": {
+      "welcome": "Ifan di Monas",
+      "about": "Rumah Joglo",
+      "education": "Prasasti candi",
+      "skills": "Saung",
+      "quote": "Prasasti batu",
+      "contact": "Nakhoda phinisi"
+    },
+    "quests": {
+      "welcome": "Sapa di depan monumen",
+      "about": "Kunjungi rumah Jawa",
+      "experience": "Ikuti stupa menuju candi",
+      "projects": "Kunjungi semua lapak pasar",
+      "skills": "Mampir ke saung di sawah",
+      "quote": "Baca di bawah pohon beringin",
+      "contact": "Naik phinisi di dermaga"
+    },
+    "quest_title": "Catatan Perjalanan",
+    "reset": "Ulangi dari awal",
+    "discovered": "Ditemukan: {{name}}",
+    "more_here": "Masih ada {{count}} lagi di sekitar sini",
+    "next": "Pergi ke {{place}}",
+    "map_title": "Peta Pulau",
+    "map_hint": "Klik sebuah tempat untuk langsung ke sana",
+    "complete_title": "Pulau sudah dijelajahi semua!",
+    "complete_text": "Kamu sudah melihat semua tentang saya. Terima kasih sudah menjelajah! Yuk, kita bangun sesuatu bersama.",
+    "complete_cta": "Kirim email",
+    "keep_exploring": "Lanjut menjelajah",
+    "panel": {
+      "welcome_intro": "Selamat datang di pulau saya!",
+      "welcome_hint": "Setiap penanda yang bersinar menyimpan bagian dari kisah saya. Ikuti jalannya: perjalanan karier di utara, pasar di timur, sawah di barat, dan dermaga di selatan.",
+      "about_flavor": "Kamu naik ke pendopo Joglo. Tuan rumah menuangkan secangkir teh manis...",
+      "experience_flavor": "Prasasti di stupa ini menceritakan satu babak perjalanan...",
+      "achievements": "Pencapaian",
+      "education_flavor": "Terukir di tangga candi, di sinilah perjalanan dimulai...",
+      "education_hint": "Terus naik: tiga stupa di sepanjang jalan menceritakan perjalanan karier saya, secara berurutan.",
+      "skills_flavor": "Dari saung, kamu melihat perkakas kerja melayang di atas sawah seperti lampion...",
+      "quote_flavor": "Di bawah rindangnya beringin tua, tertulis di prasasti batu:",
+      "contact_flavor": "Phinisi siap berlayar. Ke mana kita akan pergi bersama?",
+      "internal_app": "Aplikasi internal perusahaan",
+      "visit_site": "Kunjungi situsnya",
+      "how_i_help": "Yang bisa saya bantu",
+      "collected": "{{count}}/{{total}} lontar terkumpul"
+    },
+    "loading": "Memuat pulau…",
+    "quality_high": "Ganti ke grafis kualitas tinggi",
+    "quality_low": "Ganti ke grafis ringan (lebih cepat)",
+    "npc": {
+      "seller_biztrip": {
+        "name": "Bu Sri",
+        "lines": [
+          "Mampir! Lapak ini CIMB Biztrip: karyawan pesan tiket pesawat dan hotel lewat Traveloka.",
+          "Perjalanan dinas tanpa pakai uang pribadi. Perusahaan langsung yang bayar!",
+          "Dibuat pakai Vue dan Tailwind, dirilis dengan Docker dan Jenkins."
+        ]
+      },
+      "seller_cash_management": {
+        "name": "Pak Budi",
+        "lines": [
+          "LAJU by Mandiri! Perusahaan besar pesan antar-jemput uang tunai secara online di sini.",
+          "Setiap pesanan bisa dipantau real-time. Ifan membangunnya dengan React dan Redux.",
+          "Dan dites pakai Jest, tentu saja. Urusan uang itu serius!"
+        ]
+      },
+      "seller_super_app": {
+        "name": "Mbak Ayu",
+        "lines": [
+          "KOPRA by Mandiri: layanan uang tunai yang sama, di dalam platform korporat Mandiri.",
+          "React dan Angular kerja bareng dalam satu aplikasi. Namanya micro frontend!"
+        ]
+      },
+      "seller_ifg": {
+        "name": "Mas Joko",
+        "lines": [
+          "IFG Life Space menyatukan polis dan layanan asuransi dalam satu tempat.",
+          "Next.js dan TypeScript, jalan di AWS. Lapak modern, nih."
+        ]
+      },
+      "seller_tembuni": {
+        "name": "Bu Wati",
+        "lines": [
+          "Tembuni itu klinik persalinan gentle birth. Ifan yang bikin websitenya.",
+          "Kelas hamil, konsultasi dokter, homecare… semuanya ada di situsnya!"
+        ]
+      },
+      "seller_accurate": {
+        "name": "Pak Made",
+        "lines": [
+          "Accurate Medica mendistribusikan alat medis dan bedah ke rumah sakit.",
+          "Situsnya pakai Laravel, Alpine.js, dan Tailwind."
+        ]
+      },
+      "seller_kultura": {
+        "name": "Mbak Rina",
+        "lines": [
+          "Kultura Properties memamerkan rumah dengan visual sinematik.",
+          "Dua bahasa, mode terang dan gelap, plus tombol WhatsApp buat ngobrol dengan sales!"
+        ]
+      },
+      "seller_olew": {
+        "name": "Pak Yanto",
+        "lines": [
+          "Olew jual botol dan pot premium. Bisa diputar-putar dalam 3D!",
+          "Pakai Three.js, sihir yang sama dengan pulau ini."
+        ]
+      },
+      "bakso": {
+        "name": "Mang Ujang",
+        "lines": [
+          "Bakso, bakso! Bakso panas buat bekal menjelajah!",
+          "Tiap lapak di pasar sebelah timur menampilkan satu proyek Ifan.",
+          "Nyasar? Tekan M buat buka peta. Lebih cepat daripada tanya jalan!"
+        ]
+      },
+      "farmer": {
+        "name": "Bu Tani",
+        "lines": [
+          "Selamat siang! Menanam padi butuh sabar, sama kayak nulis kode yang bagus.",
+          "Lihat ikon yang melayang di atas sawah? Itu perkakas Ifan. Mampir ke saung!",
+          "Bebek-bebek itu ikut pemimpinnya, rapi kayak component tree."
+        ]
+      },
+      "fisherman": {
+        "name": "Pak Darto",
+        "lines": [
+          "Sst… ada yang nyangkut. Oh, cuma bug.",
+          "Mau kerja bareng Ifan? Phinisi di sini bisa antar pesanmu.",
+          "Saya mancing seharian. Ifan sudah ngoding lebih dari 5 tahun."
+        ]
+      },
+      "gamelan": {
+        "name": "Bu Laras",
+        "lines": [
+          "Dengar? Itu saron. Saya memainkannya tiap sore.",
+          "Silakan ke pintu Joglo. Kisah Ifan ada di dalam.",
+          "Gamelan itu banyak pemain yang selaras, kayak tim yang solid."
+        ]
+      },
+      "walker_pier": {
+        "name": "Putri",
+        "lines": [
+          "Hari yang cerah buat jalan-jalan ke dermaga!",
+          "Lihat layangan di atas pantai? Yang merah punyaku."
+        ]
+      },
+      "walker_pasar": {
+        "name": "Dimas",
+        "lines": [
+          "Aku mau ke pasar. Tiap lapak menampilkan satu proyek Ifan.",
+          "Favoritku lapak yang ada botol 3D-nya!"
+        ]
+      },
+      "walker_plaza": {
+        "name": "Pak RT",
+        "lines": [
+          "Selamat datang di pulau! Monas itu jantungnya.",
+          "Tips: ikuti berlian yang bersinar. Masing-masing menyimpan bagian kisah Ifan."
+        ]
+      },
+      "walker_joglo": {
+        "name": "Nadia",
+        "lines": [
+          "Atap Joglo dibangun berlapis, seperti arsitektur software yang baik.",
+          "Ifan sudah lebih dari 5 tahun di fintech dan aplikasi enterprise, tahu nggak?"
+        ]
+      }
+    },
+    "tour": {
+      "take": "Ikuti tur terpandu",
+      "take_short": "Tur terpandu",
+      "stop": "Perhentian {{n}} dari {{total}}",
+      "next": "Perhentian berikutnya",
+      "finish": "Selesaikan tur",
+      "end": "Akhiri tur",
+      "continue": "Lanjutkan tur",
+      "heading_to": "Menuju {{place}}",
+      "paused": "Tur dijeda di {{place}}"
+    },
+    "mute": "Matikan suara",
+    "unmute": "Nyalakan suara",
+    "props": {
+      "gong": "Pukul gong",
+      "swing": "Dorong ayunan",
+      "bakso": "Bunyikan mangkok bakso"
+    },
+    "emotes": {
+      "label": "Emote",
+      "wave": "Melambai",
+      "dance": "Joget",
+      "sit": "Duduk",
+      "jump": "Lompat"
+    }
   }
 }
