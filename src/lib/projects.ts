@@ -44,7 +44,7 @@ export const projects: Project[] = [
   },
   {
     id: 'accurate',
-    image: '/images/projects/accurate.webp',
+    image: '/images/projects/accurate-medica.webp',
     techStack: ['Laravel', 'AlpineJs', 'TailwindCSS', 'Docker'],
     gradient: 'from-indigo-500 via-blue-500 to-cyan-500',
     appUrl: 'https://accuratemedica.com/',
