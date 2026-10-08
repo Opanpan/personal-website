@@ -46,8 +46,8 @@ export default function MapOverlay() {
           >
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h2 className="font-display text-2xl font-bold text-white">{t('world.map_title')}</h2>
-                <p className="text-xs text-white/60">{t('world.map_hint')}</p>
+                <h2 className="font-display text-2xl font-bold text-[var(--ui-text)]">{t('world.map_title')}</h2>
+                <p className="text-xs text-[var(--ui-muted)]">{t('world.map_hint')}</p>
               </div>
               <button onClick={() => setState({ mapOpen: false })} className="rpg-icon-button" aria-label={t('world.close')}>
                 <X className="w-4 h-4" />
@@ -68,7 +68,7 @@ export default function MapOverlay() {
                   const p = TRAVEL_POINTS[g];
                   return (
                     <g key={g} transform={`translate(${p.x} ${p.z - 4})`} className="cursor-pointer" onClick={() => travelTo(g)}>
-                      <circle r={5.5} fill="rgba(0,0,0,0.45)" stroke="#f2c94c" strokeWidth={0.6} />
+                      <circle r={5.5} fill="rgba(255,255,255,0.92)" stroke="#22c55e" strokeWidth={0.6} />
                       <text textAnchor="middle" dominantBaseline="central" fontSize={6}>
                         {ICONS[g]}
                       </text>
@@ -86,16 +86,16 @@ export default function MapOverlay() {
                   const done = items.filter((i) => visited.includes(i.id)).length;
                   return (
                     <li key={g}>
-                      <button onClick={() => travelTo(g)} className="w-full flex items-center gap-3 rounded-xl px-3 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-left transition">
+                      <button onClick={() => travelTo(g)} className="w-full flex items-center gap-3 rounded-xl px-3 py-2.5 bg-[var(--ui-soft)] hover:bg-[var(--ui-soft-strong)] border border-[var(--ui-line)] text-left transition">
                         <span className="text-xl">{ICONS[g]}</span>
                         <span className="flex-1 min-w-0">
-                          <span className="block text-sm font-semibold text-white">{t(`world.places.${g}.name`)}</span>
-                          <span className="block text-[11px] text-white/55 truncate">{t(`world.places.${g}.sub`)}</span>
+                          <span className="block text-sm font-semibold text-[var(--ui-text)]">{t(`world.places.${g}.name`)}</span>
+                          <span className="block text-[11px] text-[var(--ui-muted)] truncate">{t(`world.places.${g}.sub`)}</span>
                         </span>
                         {done === items.length ? (
-                          <Check className="w-4 h-4 text-green-400" />
+                          <Check className="w-4 h-4 text-[var(--ui-accent)]" />
                         ) : (
-                          <span className="text-xs font-mono text-amber-300/80">
+                          <span className="text-xs font-mono text-[var(--ui-accent)]">
                             {done}/{items.length}
                           </span>
                         )}

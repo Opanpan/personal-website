@@ -37,8 +37,8 @@ export default function TourBar() {
           exit={{ opacity: 0, y: 16, transition: { duration: 0.15 } }}
           className={`lontar absolute top-[4.75rem] md:top-auto md:bottom-6 inset-x-0 mx-auto z-20 ${covered ? 'max-md:hidden' : ''} w-[min(30rem,calc(100vw-1.5rem))]`}
         >
-          <div className="lontar-frame !p-[6px] !rounded-[14px]">
-            <div className="lontar-page flex items-center gap-3 px-4 py-3">
+          <div className="lontar-frame !rounded-full">
+            <div className="lontar-page !rounded-full flex items-center gap-3 py-2 pl-5 pr-2">
               <Route className="h-5 w-5 shrink-0 text-[var(--soga)]" aria-hidden="true" />
               <div className="min-w-0 flex-1">
                 <p className="lontar-label">{t('world.tour.stop', { n: tour.index + 1, total: TOUR_ORDER.length })}</p>

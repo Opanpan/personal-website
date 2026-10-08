@@ -312,134 +312,182 @@ html {
 /* 3D world (src/world) — RPG-style UI                                 */
 /* ------------------------------------------------------------------ */
 @layer components {
+  /* Game UI tokens: the classic site's palette — light glass by day, zinc by night (html.dark) */
   .world-root {
-    background: #0d1b33;
+    --ui-glass: rgba(255, 255, 255, 0.78);
+    --ui-glass-strong: rgba(255, 255, 255, 0.95);
+    --ui-text: #09090b;
+    --ui-text-2: #3f3f46;
+    --ui-muted: #71717a;
+    --ui-line: rgba(9, 9, 11, 0.08);
+    --ui-line-strong: rgba(9, 9, 11, 0.16);
+    --ui-soft: rgba(9, 9, 11, 0.04);
+    --ui-soft-strong: rgba(9, 9, 11, 0.08);
+    --ui-accent: #15803d; /* green-700: 5:1 on white for small text */
+    --ui-accent-bright: #22c55e;
+    --ui-accent-soft: rgba(34, 197, 94, 0.14);
+    --ui-shadow: 0 12px 32px rgba(9, 9, 11, 0.12);
+    /* shown for a moment before the first 3D frame: match the loading screen */
+    background: var(--bg-primary);
     font-family: var(--font-satoshi);
+    color: var(--ui-text);
+  }
+  .dark .world-root {
+    --ui-glass: rgba(24, 24, 27, 0.78);
+    --ui-glass-strong: rgba(24, 24, 27, 0.95);
+    --ui-text: #fafafa;
+    --ui-text-2: #d4d4d8;
+    --ui-muted: #a1a1aa;
+    --ui-line: rgba(255, 255, 255, 0.08);
+    --ui-line-strong: rgba(255, 255, 255, 0.16);
+    --ui-soft: rgba(255, 255, 255, 0.05);
+    --ui-soft-strong: rgba(255, 255, 255, 0.1);
+    --ui-accent: #4ade80;
+    --ui-accent-soft: rgba(34, 197, 94, 0.18);
+    --ui-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
   }
 
   .rpg-panel {
-    @apply rounded-[1.25rem] text-white shadow-2xl;
-    background:
-      linear-gradient(180deg, rgba(58, 36, 20, 0.94), rgba(26, 18, 11, 0.96)),
-      repeating-linear-gradient(45deg, rgba(242, 201, 76, 0.04) 0 2px, transparent 2px 12px);
-    border: 1px solid rgba(242, 201, 76, 0.35);
-    box-shadow: 0 0 0 4px rgba(26, 18, 11, 0.55), 0 25px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(8px);
+    @apply rounded-3xl;
+    color: var(--ui-text);
+    background: var(--ui-glass-strong);
+    border: 1px solid var(--ui-line);
+    box-shadow: var(--ui-shadow);
+    backdrop-filter: blur(16px);
   }
 
   .rpg-chip {
-    @apply rounded-2xl px-3 py-2;
-    background: rgba(26, 18, 11, 0.72);
-    border: 1px solid rgba(242, 201, 76, 0.3);
-    backdrop-filter: blur(8px);
+    @apply rounded-full py-1.5 pl-1.5 pr-4;
+    background: var(--ui-glass);
+    border: 1px solid var(--ui-line);
+    box-shadow: var(--ui-shadow);
+    backdrop-filter: blur(12px);
   }
 
   .rpg-avatar {
-    @apply flex h-9 w-9 items-center justify-center rounded-xl font-display text-sm font-bold text-[#1a120b];
-    background: linear-gradient(135deg, #f2c94c, #4ade80);
+    @apply flex h-9 w-9 items-center justify-center rounded-full font-display text-sm font-bold text-white;
+    background: linear-gradient(135deg, #22c55e, #06b6d4);
   }
 
   .rpg-speaker {
-    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-bold uppercase tracking-widest text-[#1a120b];
-    background: linear-gradient(90deg, #f2c94c, #f59e0b);
+    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-bold uppercase tracking-widest text-white;
+    background: linear-gradient(90deg, #16a34a, #22c55e);
   }
 
   .rpg-tag {
     @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold;
-    background: rgba(242, 201, 76, 0.12);
-    color: #fcd34d;
-    border: 1px solid rgba(242, 201, 76, 0.3);
+    background: var(--ui-accent-soft);
+    color: var(--ui-accent);
   }
 
   .rpg-button {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-semibold text-white transition-all;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-semibold transition-all duration-300;
+    color: var(--ui-text);
+    background: var(--ui-soft);
+    border: 1px solid var(--ui-line-strong);
   }
   .rpg-button:hover {
-    background: rgba(255, 255, 255, 0.16);
-    transform: translateY(-1px);
+    color: var(--ui-accent);
+    border-color: var(--ui-accent-bright);
+    transform: translateY(-2px);
   }
   .rpg-button-primary {
-    @apply text-[#1a120b];
-    background: linear-gradient(135deg, #f2c94c, #f59e0b);
-    border-color: rgba(255, 236, 170, 0.6);
-    box-shadow: 0 8px 24px rgba(245, 158, 11, 0.35);
+    @apply text-white;
+    background: linear-gradient(90deg, #16a34a, #22c55e);
+    border-color: transparent;
+    box-shadow: 0 10px 28px rgba(34, 197, 94, 0.35);
   }
   .rpg-button-primary:hover {
-    background: linear-gradient(135deg, #f7d76b, #f8ae2d);
+    @apply text-white;
+    background: linear-gradient(90deg, #22c55e, #06b6d4);
+    border-color: transparent;
   }
 
   .rpg-icon-button {
-    @apply inline-flex h-10 min-w-10 items-center justify-center gap-1 rounded-xl px-2.5 text-white transition-all;
-    background: rgba(26, 18, 11, 0.72);
-    border: 1px solid rgba(242, 201, 76, 0.3);
-    backdrop-filter: blur(8px);
+    @apply inline-flex h-10 min-w-10 items-center justify-center gap-1 rounded-full px-2.5 transition-all;
+    color: var(--ui-text);
+    background: var(--ui-glass);
+    border: 1px solid var(--ui-line);
+    box-shadow: var(--ui-shadow);
+    backdrop-filter: blur(12px);
   }
   .rpg-icon-button:hover,
   .rpg-icon-button.is-active {
-    background: rgba(242, 201, 76, 0.25);
+    color: var(--ui-accent);
+    background: var(--ui-glass-strong);
+    border-color: var(--ui-accent-bright);
   }
 
   .rpg-key {
-    @apply inline-flex min-w-[1.6rem] items-center justify-center rounded-md px-1.5 py-0.5 font-mono text-[11px] font-bold text-[#1a120b];
-    background: #f3e6c8;
-    box-shadow: 0 2px 0 #a68a64;
+    @apply inline-flex min-w-[1.6rem] items-center justify-center rounded-md px-1.5 py-0.5 font-mono text-[11px] font-bold;
+    color: var(--ui-text);
+    background: var(--ui-soft-strong);
+    box-shadow: inset 0 -2px 0 var(--ui-line-strong);
   }
 
   .rpg-prompt {
-    @apply flex items-center gap-2 whitespace-nowrap rounded-2xl px-4 py-3 text-sm md:text-base;
-    background: rgba(26, 18, 11, 0.85);
-    border: 1px solid rgba(242, 201, 76, 0.55);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 24px rgba(242, 201, 76, 0.25);
+    @apply flex items-center gap-2 whitespace-nowrap rounded-full px-5 py-3 text-sm md:text-base;
+    color: var(--ui-text);
+    background: var(--ui-glass-strong);
+    border: 1.5px solid var(--ui-accent-bright);
+    box-shadow: var(--ui-shadow), 0 0 0 6px var(--ui-accent-soft);
     max-width: calc(100vw - 2rem);
   }
 
   .rpg-toast {
-    @apply flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold text-white;
-    background: rgba(26, 18, 11, 0.85);
-    border: 1px solid rgba(74, 222, 128, 0.5);
+    @apply flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold;
+    color: var(--ui-text);
+    background: var(--ui-glass-strong);
+    border: 1px solid var(--ui-accent-bright);
+    box-shadow: var(--ui-shadow);
   }
 
   .rpg-hint {
-    @apply rounded-xl px-3 py-2;
-    background: rgba(26, 18, 11, 0.55);
+    @apply rounded-full px-4 py-2;
+    color: var(--ui-text-2);
+    background: var(--ui-glass);
+    border: 1px solid var(--ui-line);
+    backdrop-filter: blur(12px);
   }
 
   .rpg-minimap {
     @apply relative block overflow-hidden rounded-full;
     width: 150px;
     height: 150px;
-    border: 3px solid rgba(242, 201, 76, 0.6);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    border: 3px solid var(--ui-glass-strong);
+    box-shadow: var(--ui-shadow);
   }
 
   .rpg-joystick {
     @apply rounded-full;
-    background: rgba(26, 18, 11, 0.35);
-    border: 2px solid rgba(242, 201, 76, 0.45);
+    background: var(--ui-glass);
+    border: 1px solid var(--ui-line-strong);
+    backdrop-filter: blur(8px);
     display: flex;
     align-items: center;
     justify-content: center;
   }
   .rpg-joystick-knob {
     @apply h-14 w-14 rounded-full;
-    background: linear-gradient(135deg, #f2c94c, #f59e0b);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, #22c55e, #06b6d4);
+    box-shadow: 0 6px 16px rgba(34, 197, 94, 0.4);
     pointer-events: none;
   }
 
   .world-label {
-    @apply flex flex-col items-center whitespace-nowrap rounded-xl px-3 py-1.5 text-center transition-opacity duration-200;
-    background: rgba(26, 18, 11, 0.78);
-    border: 1px solid rgba(242, 201, 76, 0.45);
+    @apply flex flex-col items-center whitespace-nowrap rounded-2xl px-3 py-1.5 text-center transition-opacity duration-200;
+    background: var(--ui-glass-strong);
+    border: 1px solid var(--ui-line);
+    box-shadow: var(--ui-shadow);
     transform: translateY(-50%);
   }
   .world-label-place {
-    @apply font-display text-sm font-bold text-white;
+    @apply font-display text-sm font-semibold;
+    color: var(--ui-text);
   }
   .world-label-sub {
-    @apply text-[10px] uppercase tracking-widest text-amber-300/90;
+    @apply text-[10px] font-semibold uppercase tracking-widest;
+    color: var(--ui-accent);
   }
   .world-label-small .world-label-place {
     @apply text-xs;
@@ -447,62 +495,62 @@ html {
 
   .world-orb {
     @apply flex flex-col items-center gap-1 rounded-2xl px-2 py-1.5 transition-opacity duration-300;
-    background: rgba(255, 255, 255, 0.82);
-    box-shadow: 0 0 18px rgba(255, 214, 102, 0.7);
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 18px rgba(34, 197, 94, 0.55);
   }
   .world-orb span {
-    @apply text-[9px] font-bold text-[#1a120b];
+    @apply text-[9px] font-bold text-[#09090b];
   }
 }
 
 /* ------------------------------------------------------------------ */
-/* Lontar manuscript panel (src/world/ui/Panel.tsx)                    */
-/* Skeuomorphic: parchment page in a carved teak frame, brass fittings */
+/* Content panel (src/world/ui/Panel.tsx, TourBar) — classic-site card */
+/* (class names kept from the old lontar manuscript skin)              */
 /* ------------------------------------------------------------------ */
 .lontar {
-  --lontar: #f3e7cc;
-  --lontar-deep: #e8d6b0;
-  --ink: #2a1b10;
-  --ink-muted: #5b4632; /* 7.4:1 on --lontar */
-  --soga: #8a3b1e; /* batik soga brown-red, 6.6:1 on --lontar */
-  --brass: #b8892f;
-  --teak: #3a2414;
+  --lontar: #ffffff;
+  --lontar-deep: #f4f4f5;
+  --ink: #09090b;
+  --ink-muted: #52525b; /* zinc-600: 7.7:1 on white */
+  --soga: #15803d; /* accent text, green-700 */
+  --brass: #22c55e;
+  --teak: #e4e4e7;
   color: var(--ink);
+}
+.dark .lontar {
+  --lontar: #18181b;
+  --lontar-deep: #27272a;
+  --ink: #fafafa;
+  --ink-muted: #a1a1aa;
+  --soga: #4ade80;
+  --teak: #3f3f46;
 }
 
 .lontar-frame {
   position: relative;
-  background: linear-gradient(160deg, #4a2e1a 0%, var(--teak) 45%, #2b1a0e 100%);
-  padding: 10px;
-  border-radius: 18px;
-  box-shadow:
-    0 30px 80px rgba(10, 6, 2, 0.55),
-    0 2px 0 rgba(255, 220, 160, 0.15) inset,
-    0 0 0 1px rgba(0, 0, 0, 0.6);
+  background: var(--lontar);
+  padding: 0;
+  border-radius: 28px;
+  border: 1px solid var(--teak);
+  box-shadow: 0 30px 80px rgba(9, 9, 11, 0.25);
 }
 
 .lontar-page {
   position: relative;
-  background-color: var(--lontar);
-  background-image:
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.24 0 0 0 0 0.12 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
-    radial-gradient(120% 90% at 50% 0%, transparent 60%, rgba(120, 80, 30, 0.18) 100%);
-  border-radius: 10px;
-  box-shadow: inset 0 0 0 1px rgba(184, 137, 47, 0.55), inset 0 0 40px rgba(120, 80, 30, 0.18);
+  background: var(--lontar);
+  border-radius: 28px;
 }
 
-/* kawung batik band across the top of the page */
+/* gradient ribbon across the top (the classic hero gradient) */
 .lontar-band {
-  height: 14px;
-  background-color: var(--soga);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='14' viewBox='0 0 28 14'%3E%3Cg fill='%23f3e7cc' fill-opacity='0.85'%3E%3Cellipse cx='7' cy='3.6' rx='2.2' ry='3.4'/%3E%3Cellipse cx='7' cy='10.4' rx='2.2' ry='3.4'/%3E%3Cellipse cx='3.6' cy='7' rx='3.4' ry='2.2'/%3E%3Cellipse cx='10.4' cy='7' rx='3.4' ry='2.2'/%3E%3Ccircle cx='21' cy='7' r='1.3'/%3E%3C/g%3E%3C/svg%3E");
-  background-size: 28px 14px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  height: 6px;
+  background: linear-gradient(90deg, #22c55e, #06b6d4, #8b5cf6);
+  border-top-left-radius: 28px;
+  border-top-right-radius: 28px;
 }
 
 .lontar-title {
-  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-family: var(--font-clash);
   font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 1.08;
@@ -527,14 +575,14 @@ html {
 .lontar-rule {
   height: 1px;
   border: 0;
-  background: linear-gradient(90deg, transparent, rgba(138, 59, 30, 0.45) 15%, rgba(138, 59, 30, 0.45) 85%, transparent);
+  background: var(--teak);
 }
 
 .lontar-dropcap::first-letter {
   float: left;
-  font-family: 'Playfair Display', Georgia, serif;
-  font-weight: 800;
-  font-size: 3.4em;
+  font-family: var(--font-clash);
+  font-weight: 700;
+  font-size: 3.2em;
   line-height: 0.85;
   padding: 0.08em 0.12em 0 0;
   color: var(--soga);
@@ -544,14 +592,13 @@ html {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.3rem 0.65rem;
-  border: 1.5px dashed rgba(138, 59, 30, 0.6);
-  border-radius: 6px;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
   font-family: var(--font-jetbrains);
   font-size: 0.75rem;
   font-weight: 500;
   color: var(--soga);
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(34, 197, 94, 0.12);
 }
 
 .lontar-btn {
@@ -560,21 +607,21 @@ html {
   justify-content: center;
   gap: 0.5rem;
   min-height: 44px;
-  padding: 0.65rem 1.15rem;
-  border-radius: 10px;
+  padding: 0.65rem 1.35rem;
+  border-radius: 9999px;
   font-weight: 700;
-  color: #fbf3e1; /* 6.9:1 on --soga */
-  background: linear-gradient(180deg, #9c4625, var(--soga));
-  box-shadow: 0 2px 0 #5a230f, 0 6px 14px rgba(90, 35, 15, 0.3), inset 0 1px 0 rgba(255, 220, 180, 0.35);
-  transition: transform 150ms ease, box-shadow 150ms ease, filter 150ms ease;
+  color: #fff;
+  background: linear-gradient(90deg, #16a34a, #22c55e);
+  box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3);
+  transition: transform 150ms ease, box-shadow 150ms ease, background 300ms ease;
   cursor: pointer;
 }
 .lontar-btn:hover {
-  filter: brightness(1.07);
+  background: linear-gradient(90deg, #22c55e, #06b6d4);
+  transform: translateY(-1px);
 }
 .lontar-btn:active {
-  transform: translateY(2px);
-  box-shadow: 0 0 0 #5a230f, 0 3px 8px rgba(90, 35, 15, 0.3), inset 0 1px 0 rgba(255, 220, 180, 0.35);
+  transform: translateY(1px);
 }
 
 .lontar-btn-ghost {
@@ -582,22 +629,22 @@ html {
   align-items: center;
   gap: 0.5rem;
   min-height: 44px;
-  padding: 0.6rem 1rem;
-  border-radius: 10px;
+  padding: 0.6rem 1.1rem;
+  border-radius: 9999px;
   font-weight: 600;
   color: var(--ink);
-  border: 1.5px solid rgba(58, 36, 20, 0.35);
-  background: rgba(255, 255, 255, 0.3);
-  transition: background 150ms ease, border-color 150ms ease;
+  border: 1px solid var(--teak);
+  background: transparent;
+  transition: border-color 150ms ease, color 150ms ease;
   cursor: pointer;
 }
 .lontar-btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.6);
-  border-color: rgba(58, 36, 20, 0.6);
+  color: var(--soga);
+  border-color: var(--brass);
 }
 
 .lontar :is(a, button):focus-visible {
-  outline: 2.5px solid var(--soga);
+  outline: 2.5px solid var(--brass);
   outline-offset: 3px;
 }
 
@@ -608,14 +655,14 @@ html {
   width: 44px;
   height: 44px;
   border-radius: 9999px;
-  color: #3a2414;
-  background: radial-gradient(circle at 35% 30%, #f3d58a, var(--brass) 55%, #7a5718 100%);
-  box-shadow: 0 2px 0 #5c4010, 0 4px 10px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.5);
-  transition: transform 150ms ease;
+  color: var(--ink);
+  background: var(--lontar-deep);
+  transition: transform 150ms ease, background 150ms ease;
   cursor: pointer;
 }
 .lontar-knob:hover {
   transform: rotate(90deg);
+  background: rgba(34, 197, 94, 0.15);
 }
 
 .lontar-coin {
@@ -625,20 +672,22 @@ html {
   justify-content: center;
   aspect-ratio: 1;
   border-radius: 9999px;
-  background: radial-gradient(circle at 35% 30%, #fff4d6, #f0d9a0 60%, #d8b96f 100%);
-  box-shadow: inset 0 0 0 3px rgba(184, 137, 47, 0.7), inset 0 0 0 6px rgba(255, 244, 214, 0.8), inset 0 0 0 7px rgba(138, 59, 30, 0.35), 0 3px 8px rgba(80, 50, 10, 0.2);
+  background: rgba(34, 197, 94, 0.1);
+  box-shadow: inset 0 0 0 1.5px rgba(34, 197, 94, 0.35);
   text-align: center;
 }
 
 .lontar-photo {
-  background: #fffaf0;
+  background: var(--lontar);
   padding: 8px 8px 0;
-  border-radius: 4px;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08), 0 10px 24px rgba(60, 35, 10, 0.22);
+  border-radius: 14px;
+  border: 1px solid var(--teak);
+  box-shadow: 0 10px 24px rgba(9, 9, 11, 0.12);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .lontar-knob:hover,
+  .lontar-btn:hover,
   .lontar-btn:active {
     transform: none;
   }
@@ -654,9 +703,9 @@ html {
   max-width: 230px;
   padding: 8px 12px 9px;
   border-radius: 14px;
-  background: #fbf3e1;
-  color: #2a1b10;
-  box-shadow: 0 0 0 1.5px rgba(138, 59, 30, 0.55), 0 8px 20px rgba(20, 12, 6, 0.3);
+  background: var(--ui-glass-strong);
+  color: var(--ui-text);
+  box-shadow: 0 0 0 1px var(--ui-line-strong), 0 8px 20px rgba(9, 9, 11, 0.18);
   transform: translateY(-50%);
   animation: npc-pop 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -667,9 +716,9 @@ html {
   bottom: -7px;
   width: 14px;
   height: 14px;
-  background: #fbf3e1;
+  background: var(--ui-glass-strong);
   transform: translateX(-50%) rotate(45deg);
-  box-shadow: 1.5px 1.5px 0 rgba(138, 59, 30, 0.55);
+  box-shadow: 1px 1px 0 var(--ui-line-strong);
 }
 .npc-bubble-name {
   font-family: var(--font-jetbrains);
@@ -677,7 +726,7 @@ html {
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #8a3b1e;
+  color: var(--ui-accent);
 }
 .npc-bubble-text {
   position: relative;
@@ -710,48 +759,50 @@ html {
   justify-content: center;
   width: 44px;
   height: 44px;
-  border-radius: 12px;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.06);
-  transition: background 150ms ease, transform 150ms ease;
+  border-radius: 9999px;
+  color: var(--ui-text);
+  background: var(--ui-soft);
+  transition: background 150ms ease, color 150ms ease, transform 150ms ease;
   cursor: pointer;
 }
 .rpg-emote:hover {
-  background: rgba(242, 201, 76, 0.25);
+  color: var(--ui-accent);
+  background: var(--ui-accent-soft);
 }
 .rpg-emote:active {
-  transform: scale(0.92);
+  transform: scale(0.9);
 }
 .rpg-emote:focus-visible {
-  outline: 2px solid #f2c94c;
+  outline: 2px solid var(--ui-accent-bright);
   outline-offset: 2px;
 }
 .rpg-emote-key {
   position: absolute;
-  right: 2px;
+  right: 3px;
   bottom: 1px;
   font-family: var(--font-jetbrains);
   font-size: 9px;
   font-weight: 700;
   line-height: 1;
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--ui-muted);
 }
 .rpg-emote-jump {
   width: 52px;
   height: 52px;
-  border-radius: 9999px;
-  color: #1a120b;
-  background: linear-gradient(135deg, #f2c94c, #f59e0b);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  color: #fff;
+  background: linear-gradient(135deg, #22c55e, #06b6d4);
+  box-shadow: 0 8px 20px rgba(34, 197, 94, 0.4);
 }
 .rpg-emote-jump:hover {
-  background: linear-gradient(135deg, #f7d76b, #f8ae2d);
+  color: #fff;
+  background: linear-gradient(135deg, #16a34a, #0891b2);
 }
 .rpg-emote-jump .rpg-emote-key {
   right: 50%;
   bottom: -14px;
   transform: translateX(50%);
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 @media (prefers-reduced-motion: reduce) {
   .rpg-emote:active {

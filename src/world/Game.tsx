@@ -285,7 +285,7 @@ export default function Game() {
       {/* fade-to-black used by the guided tour between distant stops */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-20 bg-[#0d0905] transition-opacity duration-300 motion-reduce:duration-0"
+        className="pointer-events-none absolute inset-0 z-20 bg-[#09090b] transition-opacity duration-300 motion-reduce:duration-0"
         style={{ opacity: fading ? 1 : 0 }}
       />
       {touch && <Joystick />}

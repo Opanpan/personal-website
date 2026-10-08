@@ -37,8 +37,8 @@ function Prompt({ touch }: { touch: boolean }) {
           className="rpg-prompt pointer-events-auto"
         >
           {!touch && <kbd className="rpg-key">E</kbd>}
-          <span className="shrink-0 text-white/70">{t(`world.prompt.${verb}`)}</span>
-          <span className="min-w-0 truncate font-semibold text-white">{interactableTitle(it, t)}</span>
+          <span className="shrink-0 text-[var(--ui-text-2)]">{t(`world.prompt.${verb}`)}</span>
+          <span className="min-w-0 truncate font-semibold text-[var(--ui-text)]">{interactableTitle(it, t)}</span>
         </m.button>
       )}
       {prop && !panel && (
@@ -51,7 +51,7 @@ function Prompt({ touch }: { touch: boolean }) {
           className="rpg-prompt pointer-events-auto"
         >
           {!touch && <kbd className="rpg-key">E</kbd>}
-          <span className="min-w-0 truncate font-semibold text-white">{t(`world.props.${prop.kind}`)}</span>
+          <span className="min-w-0 truncate font-semibold text-[var(--ui-text)]">{t(`world.props.${prop.kind}`)}</span>
         </m.button>
       )}
     </AnimatePresence>
@@ -115,7 +115,7 @@ function Toast() {
           exit={{ opacity: 0, y: -20 }}
           className="rpg-toast absolute top-[9.5rem] md:top-6 inset-x-0 mx-auto w-fit max-w-[calc(100vw-1.5rem)]"
         >
-          <Sparkles className="w-4 h-4 text-amber-300" />
+          <Sparkles className="w-4 h-4 text-[var(--ui-accent)]" />
           {visible.text}
         </m.div>
       )}
@@ -137,8 +137,8 @@ function QuestLog() {
           className="rpg-panel absolute top-[5.5rem] left-3 md:left-4 w-[min(20rem,calc(100vw-1.5rem))] p-4 z-20"
         >
           <div className="flex items-center justify-between mb-3">
-            <h3 className="font-display text-lg font-bold text-white">{t('world.quest_title')}</h3>
-            <button onClick={() => setState({ questOpen: false })} className="text-white/60 hover:text-white" aria-label={t('world.close')}>
+            <h3 className="font-display text-lg font-bold text-[var(--ui-text)]">{t('world.quest_title')}</h3>
+            <button onClick={() => setState({ questOpen: false })} className="text-[var(--ui-muted)] hover:text-[var(--ui-text)]" aria-label={t('world.close')}>
               <X className="w-4 h-4" />
             </button>
           </div>
@@ -151,17 +151,17 @@ function QuestLog() {
                 <li key={g}>
                   <button
                     onClick={() => setState({ mapOpen: true, questOpen: false })}
-                    className="w-full flex items-center gap-3 text-left rounded-lg px-2 py-1.5 hover:bg-white/5"
+                    className="w-full flex items-center gap-3 text-left rounded-lg px-2 py-1.5 hover:bg-[var(--ui-soft)]"
                   >
-                    <span className={`flex h-5 w-5 items-center justify-center rounded-full border ${complete ? 'bg-green-500 border-green-400' : 'border-white/30'}`}>
-                      {complete && <Check className="w-3 h-3 text-white" />}
+                    <span className={`flex h-5 w-5 items-center justify-center rounded-full border ${complete ? 'bg-primary-500 border-primary-500' : 'border-[var(--ui-line-strong)]'}`}>
+                      {complete && <Check className="w-3 h-3 text-[var(--ui-text)]" />}
                     </span>
                     <span className="flex-1 min-w-0">
-                      <span className={`block text-sm ${complete ? 'text-white/50 line-through' : 'text-white'}`}>{t(`world.places.${g}.name`)}</span>
-                      <span className="block text-[11px] text-white/50">{t(`world.quests.${g}`)}</span>
+                      <span className={`block text-sm ${complete ? 'text-[var(--ui-muted)] line-through' : 'text-[var(--ui-text)]'}`}>{t(`world.places.${g}.name`)}</span>
+                      <span className="block text-[11px] text-[var(--ui-muted)]">{t(`world.quests.${g}`)}</span>
                     </span>
                     {items.length > 1 && (
-                      <span className="text-xs text-amber-300/80 font-mono">
+                      <span className="text-xs text-[var(--ui-accent)] font-mono">
                         {done}/{items.length}
                       </span>
                     )}
@@ -171,7 +171,7 @@ function QuestLog() {
             })}
           </ul>
           {visited.length > 0 && (
-            <button onClick={resetProgress} className="mt-3 flex items-center gap-1.5 text-xs text-white/40 hover:text-white/70">
+            <button onClick={resetProgress} className="mt-3 flex items-center gap-1.5 text-xs text-[var(--ui-muted)] hover:text-[var(--ui-text)]/70">
               <RotateCcw className="w-3 h-3" />
               {t('world.reset')}
             </button>
@@ -204,8 +204,8 @@ function Completion() {
         >
           <div className="rpg-panel max-w-md p-6 text-center">
             <div className="text-5xl mb-2">🏆</div>
-            <h3 className="font-display text-2xl font-bold text-white">{t('world.complete_title')}</h3>
-            <p className="mt-2 text-sm text-white/75">{t('world.complete_text')}</p>
+            <h3 className="font-display text-2xl font-bold text-[var(--ui-text)]">{t('world.complete_title')}</h3>
+            <p className="mt-2 text-sm text-[var(--ui-text-2)]">{t('world.complete_text')}</p>
             <div className="mt-5 flex flex-col sm:flex-row gap-3 justify-center">
               <a href="mailto:fanalriansyah@gmail.com" className="rpg-button rpg-button-primary">
                 {t('world.complete_cta')}
@@ -252,17 +252,17 @@ export default function HUD({ touch }: { touch: boolean }) {
         <button onClick={() => setState({ questOpen: !questOpen, menuOpen: false })} className="flex items-center gap-2 md:gap-3 text-left" aria-label={t('world.quest_title')}>
           <span className="rpg-avatar">IA</span>
           <span className="min-w-0">
-            <span className="block max-w-[8.5rem] md:max-w-none truncate font-display text-sm font-bold text-white leading-tight">{t('hero.name')}</span>
+            <span className="block max-w-[8.5rem] md:max-w-none truncate font-display text-sm font-bold text-[var(--ui-text)] leading-tight">{t('hero.name')}</span>
             <span className="flex items-center gap-2 mt-1">
-              <span className="block h-1.5 w-16 md:w-28 rounded-full bg-white/15 overflow-hidden">
-                <span className="block h-full rounded-full bg-gradient-to-r from-amber-300 to-green-400 transition-all duration-700" style={{ width: `${(visited / total) * 100}%` }} />
+              <span className="block h-1.5 w-16 md:w-28 rounded-full bg-[var(--ui-soft-strong)] overflow-hidden">
+                <span className="block h-full rounded-full bg-gradient-to-r from-primary-500 to-accent-cyan transition-all duration-700" style={{ width: `${(visited / total) * 100}%` }} />
               </span>
-              <span className="text-[11px] font-mono text-white/70">
+              <span className="text-[11px] font-mono text-[var(--ui-text-2)]">
                 {visited}/{total}
               </span>
             </span>
           </span>
-          <ScrollText className="hidden sm:block w-4 h-4 text-amber-300 ml-1" />
+          <ScrollText className="hidden sm:block w-4 h-4 text-[var(--ui-accent)] ml-1" />
         </button>
       </div>
 
@@ -287,7 +287,7 @@ export default function HUD({ touch }: { touch: boolean }) {
 
       {/* bottom-left: controls hint (desktop) */}
       {!touch && (
-        <div className="absolute bottom-4 left-4 hidden md:flex items-center gap-3 text-[11px] text-white/80 rpg-hint">
+        <div className="absolute bottom-4 left-4 hidden md:flex items-center gap-3 text-[11px] text-[var(--ui-text-2)] rpg-hint">
           <span>
             <kbd className="rpg-key">WASD</kbd> {t('world.controls.move')}
           </span>

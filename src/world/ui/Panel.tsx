@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
-import { m, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { m, animate, AnimatePresence, useDragControls, useMotionValue, useReducedMotion, useTransform } from 'framer-motion';
 import { X, ArrowUpRight, ArrowRight, MapPin, Mail, Github, Linkedin, Compass, ScrollText, Flag } from 'lucide-react';
 import { projects } from '@/lib/projects';
 import { getFrameworks, getLanguages, getTools } from '@/lib/techStack';
@@ -12,6 +12,23 @@ import { endTour, nextStop, TOUR_ORDER } from '../tour';
 import { interactableTitle } from './text';
 
 const TITLE_ID = 'lontar-title';
+
+/** pull the sheet down further than this (px), or flick it faster than SHEET_CLOSE_VELOCITY, to close */
+const SHEET_CLOSE_DISTANCE = 120;
+const SHEET_CLOSE_VELOCITY = 500;
+
+/** Phones get a bottom sheet you can drag down to dismiss; wider screens a centred dialog. */
+function useIsSheet() {
+  const [sheet, setSheet] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)');
+    const update = () => setSheet(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+  return sheet;
+}
 
 const SOCIALS = [
   { icon: Mail, label: 'Email', href: 'mailto:fanalriansyah@gmail.com', handle: 'fanalriansyah@gmail.com' },
@@ -24,23 +41,6 @@ const SOCIALS = [
 // ---------------------------------------------------------------------------
 
 /** Brass corner fitting, drawn once and rotated into each corner of the frame. */
-function Corner({ className }: { className: string }) {
-  return (
-    <svg viewBox="0 0 40 40" className={`pointer-events-none absolute h-9 w-9 ${className}`} aria-hidden="true">
-      <defs>
-        <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#f3d58a" />
-          <stop offset="0.5" stopColor="#b8892f" />
-          <stop offset="1" stopColor="#6e4e14" />
-        </linearGradient>
-      </defs>
-      <path d="M2 2h22a4 4 0 0 1-4 4H6v14a4 4 0 0 1-4 4z" fill="url(#brass)" />
-      <circle cx="9.5" cy="9.5" r="3.2" fill="url(#brass)" stroke="#5c4010" strokeWidth="0.8" />
-      <circle cx="9.5" cy="9.5" r="1" fill="#5c4010" />
-    </svg>
-  );
-}
-
 function Title({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
     <h2 id={TITLE_ID} className={`lontar-title text-[1.9rem] sm:text-4xl text-[var(--ink)] ${className}`}>
@@ -69,7 +69,7 @@ function Numbered({ items }: { items: string[] }) {
 
 function SocialRows() {
   return (
-    <ul className="divide-y divide-[rgba(58,36,20,0.15)] border-y border-[rgba(58,36,20,0.15)]">
+    <ul className="divide-y divide-[var(--teak)] border-y border-[var(--teak)]">
       {SOCIALS.map((s) => (
         <li key={s.label}>
           <a
@@ -240,7 +240,7 @@ function Content({ it }: { it: Interactable }) {
               <h3 className="lontar-label mb-3">{t(`skills.categories.${key}`)}</h3>
               <ul className="grid grid-cols-3 sm:grid-cols-5 gap-2.5">
                 {items.map((item) => (
-                  <li key={item.name} className="flex flex-col items-center gap-2 rounded-lg border border-[rgba(58,36,20,0.18)] bg-[rgba(255,255,255,0.45)] px-2 py-3">
+                  <li key={item.name} className="flex flex-col items-center gap-2 rounded-2xl border border-[var(--teak)] bg-[var(--lontar-deep)] px-2 py-3">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={item.icon} alt="" className="h-8 w-8 object-contain" loading="lazy" />
                     <span className="text-xs font-semibold text-[var(--ink)] text-center leading-tight">{item.name}</span>
@@ -340,10 +340,17 @@ export default function Panel() {
   const closeRef = useRef<HTMLButtonElement>(null);
   const it = interactables.find((i) => i.id === panel);
   const close = () => setState({ panel: null });
+  const isSheet = useIsSheet();
+  const dragControls = useDragControls();
+  // how far the sheet is pulled down (px). Kept separate from the sheet's own `y`, which is a
+  // '100%' string during the slide in/out and can't be mapped to an opacity.
+  const pull = useMotionValue(0);
+  const dim = useTransform(pull, [0, 420], [1, 0]);
 
   // move keyboard focus into the dialog when it opens, and back out when it closes
   useEffect(() => {
     if (!panel) return;
+    pull.set(0);
     const previous = document.activeElement as HTMLElement | null;
     const id = setTimeout(() => {
       if (!document.activeElement || document.activeElement === document.body) closeRef.current?.focus();
@@ -354,7 +361,11 @@ export default function Panel() {
     };
   }, [panel]);
 
-  const entry = reduce ? { opacity: 0 } : { opacity: 0, y: 28, scaleY: 0.96 };
+  const entry = reduce ? { opacity: 0 } : isSheet ? { y: '100%' } : { opacity: 0, y: 28, scaleY: 0.96 };
+  const enter = reduce || !isSheet ? { duration: 0.28, ease: [0.22, 1, 0.36, 1] } : { type: 'spring' as const, stiffness: 340, damping: 34 };
+  const startDrag = (e: React.PointerEvent) => {
+    if (isSheet) dragControls.start(e);
+  };
 
   return (
     <AnimatePresence>
@@ -364,49 +375,62 @@ export default function Panel() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0, transition: { duration: 0.15 } }}
-          className="absolute inset-0 z-30 flex items-end md:items-center justify-center bg-[rgba(20,12,6,0.55)] md:p-6"
+          className="absolute inset-0 z-30 flex items-end md:items-center justify-center md:p-6"
           onClick={close}
         >
+          <m.div aria-hidden="true" className="absolute inset-0 bg-[rgba(9,9,11,0.45)] backdrop-blur-[2px]" style={{ opacity: dim }} />
           <m.div
             key={it.id}
             initial={entry}
             animate={{ opacity: 1, y: 0, scaleY: 1 }}
-            exit={{ ...entry, transition: { duration: 0.16, ease: 'easeIn' } }}
-            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            exit={{ ...entry, transition: { duration: isSheet ? 0.22 : 0.16, ease: 'easeIn' } }}
+            transition={enter}
             style={{ transformOrigin: 'top center' }}
+            // bottom sheet: drag down from the handle/header; past the threshold it closes, else springs back
+            drag={isSheet ? 'y' : false}
+            dragListener={false}
+            dragControls={dragControls}
+            dragConstraints={{ top: 0, bottom: 0 }}
+            dragElastic={{ top: 0.04, bottom: 1 }}
+            dragTransition={{ bounceStiffness: 420, bounceDamping: 34 }}
+            onDrag={(_, info) => pull.set(Math.max(0, info.offset.y))}
+            onDragEnd={(_, info) => {
+              if (info.offset.y > SHEET_CLOSE_DISTANCE || info.velocity.y > SHEET_CLOSE_VELOCITY) close();
+              else animate(pull, 0, { type: 'spring', stiffness: 420, damping: 34 });
+            }}
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
             aria-labelledby={TITLE_ID}
-            className="lontar lontar-frame w-full md:max-w-[44rem] max-h-[92vh] md:max-h-[86vh] flex !rounded-b-none md:!rounded-b-[18px]"
+            className="lontar lontar-frame w-full md:max-w-[44rem] max-h-[92vh] md:max-h-[86vh] flex !rounded-b-none md:!rounded-b-[28px]"
           >
-            <Corner className="-left-1 -top-1" />
-            <Corner className="-right-1 -top-1 rotate-90" />
-            <Corner className="-left-1 -bottom-1 -rotate-90 hidden md:block" />
-            <Corner className="-right-1 -bottom-1 rotate-180 hidden md:block" />
 
             <div className="lontar-page flex min-h-0 w-full flex-col overflow-hidden">
-              <div className="lontar-band shrink-0" aria-hidden="true" />
+              {/* drag zone on phones: band + grab handle + header */}
+              <div onPointerDown={startDrag} className="shrink-0 touch-none md:touch-auto cursor-grab active:cursor-grabbing md:cursor-auto">
+                <div className="lontar-band" aria-hidden="true" />
+                <div className="mx-auto mt-2 h-1.5 w-10 rounded-full bg-[var(--ink-muted)] opacity-30 md:hidden" aria-hidden="true" />
 
-              <header className="flex shrink-0 items-center justify-between gap-4 px-5 sm:px-8 pt-4 pb-3">
-                <div className="flex min-w-0 items-center gap-2.5">
-                  <ScrollText className="h-4 w-4 shrink-0 text-[var(--soga)]" aria-hidden="true" />
-                  <p className="lontar-label truncate">
-                    {t(`world.places.${it.group}.name`)}
-                    <span className="text-[var(--ink-muted)]"> · {interactableTitle(it, t)}</span>
-                  </p>
-                </div>
-                <button ref={closeRef} onClick={close} className="lontar-knob shrink-0" aria-label={t('world.close')}>
-                  <X className="h-5 w-5" strokeWidth={2.5} />
-                </button>
-              </header>
+                <header className="flex items-center justify-between gap-4 px-5 sm:px-8 pt-2 md:pt-4 pb-3">
+                  <div className="flex min-w-0 items-center gap-2.5">
+                    <ScrollText className="h-4 w-4 shrink-0 text-[var(--soga)]" aria-hidden="true" />
+                    <p className="lontar-label truncate">
+                      {t(`world.places.${it.group}.name`)}
+                      <span className="text-[var(--ink-muted)]"> · {interactableTitle(it, t)}</span>
+                    </p>
+                  </div>
+                  <button ref={closeRef} onClick={close} onPointerDown={(e) => e.stopPropagation()} className="lontar-knob shrink-0" aria-label={t('world.close')}>
+                    <X className="h-5 w-5" strokeWidth={2.5} />
+                  </button>
+                </header>
+              </div>
               <hr className="lontar-rule mx-5 sm:mx-8 shrink-0" />
 
               <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 sm:px-8 py-6">
                 <Content it={it} />
               </div>
 
-              <footer className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-[rgba(58,36,20,0.15)] bg-[rgba(232,214,176,0.55)] px-5 sm:px-8 py-3">
+              <footer className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-[var(--teak)] bg-[var(--lontar-deep)] px-5 sm:px-8 py-3">
                 {touring ? (
                   <TourControls />
                 ) : (
@@ -417,7 +441,7 @@ export default function Panel() {
                     {t('world.panel.collected', { count: visitedCount, total: interactables.length })}
                   </span>
                   <span className="hidden sm:inline">
-                    <kbd className="rounded border border-[rgba(58,36,20,0.3)] bg-white/50 px-1.5 py-0.5 font-mono text-[0.7rem] text-[var(--ink)]">Esc</kbd>{' '}
+                    <kbd className="rounded-md border border-[var(--teak)] bg-[var(--lontar)] px-1.5 py-0.5 font-mono text-[0.7rem] text-[var(--ink)]">Esc</kbd>{' '}
                     {t('world.close')}
                   </span>
                 </p>
