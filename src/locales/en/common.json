@@ -298,6 +298,7 @@
     "more_here": "{{count}} more to discover nearby",
     "next": "Travel to {{place}}",
     "map_title": "Island Map",
+    "menu": "Settings",
     "map_hint": "Click a place to fast travel there",
     "complete_title": "Island fully explored!",
     "complete_text": "You've seen everything there is to know about me. Thanks for exploring! Let's build something together.",

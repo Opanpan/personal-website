@@ -96,7 +96,8 @@ const layout = (() => {
 
   palms.forEach((p) => addCircleCollider(p.x, p.z, 0.4 * p.scale));
   trees.forEach((p) => addCircleCollider(p.x, p.z, 0.55 * p.scale));
-  rocks.forEach((p) => addCircleCollider(p.x, p.z, 0.75 * p.scale));
+  // rock top: flattened dodecahedron (radius 0.8, y × 0.6) raised 0.1 — low ones can be jumped onto
+  rocks.forEach((p) => addCircleCollider(p.x, p.z, 0.75 * p.scale, 0.1 + 0.48 * p.scale));
   bananas.forEach((p) => addCircleCollider(p.x, p.z, 0.3 * p.scale));
   return { palms, trees, bushes, rocks, flowers, bananas, ferns };
 })();

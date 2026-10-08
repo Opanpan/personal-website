@@ -38,8 +38,14 @@ export default function Joystick() {
   return (
     <div
       ref={base}
-      className="rpg-joystick absolute z-20 bottom-8 left-6"
-      style={{ width: RADIUS * 2 + 24, height: RADIUS * 2 + 24, touchAction: 'none' }}
+      className="rpg-joystick absolute z-20"
+      style={{
+        width: RADIUS * 2 + 24,
+        height: RADIUS * 2 + 24,
+        left: 'calc(1rem + env(safe-area-inset-left))',
+        bottom: 'calc(1.5rem + env(safe-area-inset-bottom))',
+        touchAction: 'none',
+      }}
       onPointerDown={(e) => {
         pointer.current = e.pointerId;
         (e.target as HTMLElement).setPointerCapture(e.pointerId);

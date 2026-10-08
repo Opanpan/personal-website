@@ -13,6 +13,8 @@ export default function TourBar() {
   const { t } = useTranslation('common');
   const tour = useGame((s) => s.tour);
   const panel = useGame((s) => s.panel);
+  // on small screens the bar sits at the top, where these overlays open
+  const covered = useGame((s) => s.menuOpen || s.questOpen);
   const show = tour.active && !panel;
   // en-route state lives in the per-frame runtime, so re-check it a few times a second
   const [, tick] = useState(0);
@@ -33,7 +35,7 @@ export default function TourBar() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 16, transition: { duration: 0.15 } }}
-          className="lontar absolute bottom-24 md:bottom-6 left-1/2 z-20 w-[min(30rem,calc(100vw-1.5rem))] -translate-x-1/2"
+          className={`lontar absolute top-[4.75rem] md:top-auto md:bottom-6 inset-x-0 mx-auto z-20 ${covered ? 'max-md:hidden' : ''} w-[min(30rem,calc(100vw-1.5rem))]`}
         >
           <div className="lontar-frame !p-[6px] !rounded-[14px]">
             <div className="lontar-page flex items-center gap-3 px-4 py-3">
@@ -47,9 +49,9 @@ export default function TourBar() {
                 </p>
               </div>
               {!enRoute && (
-                <button onClick={continueTour} className="lontar-btn !min-h-[40px] !px-3 text-sm">
+                <button onClick={continueTour} className="lontar-btn !min-h-[40px] !px-3 text-sm" aria-label={t('world.tour.continue')}>
                   <Play className="h-4 w-4" aria-hidden="true" />
-                  {t('world.tour.continue')}
+                  <span className="hidden sm:inline">{t('world.tour.continue')}</span>
                 </button>
               )}
               <button onClick={endTour} className="lontar-btn-ghost !min-h-[40px] !px-2.5" aria-label={t('world.tour.end')} title={t('world.tour.end')}>

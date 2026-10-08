@@ -1,9 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import { Html } from '@react-three/drei';
 import { useTranslation } from 'react-i18next';
-import { interactables, Interactable } from '../config';
+import { interactables, Interactable, obstacleClearance } from '../config';
 import { runtime } from '../runtime';
 import { getState, setState, useGame } from '../store';
 import { C, mat } from '../materials';
@@ -40,13 +40,17 @@ export function Label({
 }
 
 const diamondGeo = new THREE.OctahedronGeometry(0.42, 0);
-const ringGeo = new THREE.RingGeometry(0.9, 1.15, 32);
+const RING_OUTER = 0.7;
+const RING_PULSE = 0.35;
+const ringGeo = new THREE.RingGeometry(0.55, RING_OUTER, 32);
 
 function Marker({ it }: { it: Interactable }) {
   const gem = useRef<THREE.Mesh>(null);
   const ring = useRef<THREE.Mesh>(null);
   const visited = useGame((s) => s.visited.includes(it.id));
   const nearby = useGame((s) => s.nearby === it.id);
+  // shrink the ring where it would otherwise spread under a stall, stupa or wall
+  const ringScale = useMemo(() => THREE.MathUtils.clamp((obstacleClearance(it.x, it.z) - 0.1) / (RING_OUTER * (1 + RING_PULSE)), 0.5, 1), [it.x, it.z]);
 
   useFrame((s) => {
     const t = s.clock.elapsedTime + it.x;
@@ -57,8 +61,8 @@ function Marker({ it }: { it: Interactable }) {
       gem.current.scale.lerp(new THREE.Vector3(sc, sc * 1.4, sc), 0.15);
     }
     if (ring.current) {
-      const pulse = 1 + ((t * 0.8) % 1) * 0.35;
-      ring.current.scale.setScalar(pulse);
+      const pulse = 1 + ((t * 0.8) % 1) * RING_PULSE;
+      ring.current.scale.setScalar(pulse * ringScale);
       (ring.current.material as THREE.MeshBasicMaterial).opacity = (nearby ? 0.9 : 0.5) * (1 - ((t * 0.8) % 1));
     }
   });

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { m, AnimatePresence } from 'framer-motion';
-import { Map as MapIcon, ScrollText, LayoutList, Check, Sparkles, X, RotateCcw, Hand, Music2, Armchair, ChevronsUp } from 'lucide-react';
+import { Map as MapIcon, ScrollText, LayoutList, Check, Sparkles, X, RotateCcw, Hand, Music2, Armchair, ChevronsUp, Settings2 } from 'lucide-react';
 import { activateProp, doEmote, jump, propById } from '../props';
 import type { Emote } from '../runtime';
 import { interactables, QUEST_GROUPS } from '../config';
@@ -20,7 +20,12 @@ function Prompt({ touch }: { touch: boolean }) {
   const it = interactables.find((i) => i.id === nearby);
   const prop = it ? undefined : propById(nearbyProp);
   const verb = it ? (['welcome', 'about', 'experience'].includes(it.kind) ? 'talk' : it.kind === 'quote' || it.kind === 'education' ? 'read' : 'look') : 'look';
+  // on touch the lane sits above the joystick and left of the emote column
+  const lane = touch
+    ? 'left-3 right-[5.5rem] bottom-[calc(10.5rem+env(safe-area-inset-bottom))]'
+    : 'inset-x-4 bottom-8';
   return (
+    <div className={`absolute ${lane} flex justify-center !pointer-events-none`}>
     <AnimatePresence>
       {it && !panel && (
         <m.button
@@ -29,11 +34,11 @@ function Prompt({ touch }: { touch: boolean }) {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.9 }}
           onClick={() => setState({ panel: it.id })}
-          className={`rpg-prompt absolute left-1/2 -translate-x-1/2 ${touch ? 'bottom-10 right-auto' : 'bottom-8'}`}
+          className="rpg-prompt pointer-events-auto"
         >
           {!touch && <kbd className="rpg-key">E</kbd>}
-          <span className="text-white/70">{t(`world.prompt.${verb}`)}</span>
-          <span className="font-semibold text-white">{interactableTitle(it, t)}</span>
+          <span className="shrink-0 text-white/70">{t(`world.prompt.${verb}`)}</span>
+          <span className="min-w-0 truncate font-semibold text-white">{interactableTitle(it, t)}</span>
         </m.button>
       )}
       {prop && !panel && (
@@ -43,13 +48,14 @@ function Prompt({ touch }: { touch: boolean }) {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.9 }}
           onClick={() => activateProp(prop.id)}
-          className={`rpg-prompt absolute left-1/2 -translate-x-1/2 ${touch ? 'bottom-10 right-auto' : 'bottom-8'}`}
+          className="rpg-prompt pointer-events-auto"
         >
           {!touch && <kbd className="rpg-key">E</kbd>}
-          <span className="font-semibold text-white">{t(`world.props.${prop.kind}`)}</span>
+          <span className="min-w-0 truncate font-semibold text-white">{t(`world.props.${prop.kind}`)}</span>
         </m.button>
       )}
     </AnimatePresence>
+    </div>
   );
 }
 
@@ -65,8 +71,16 @@ function EmoteDock({ touch }: { touch: boolean }) {
   const panel = useGame((s) => s.panel);
   if (panel) return null;
   return (
-    <div className="absolute bottom-6 right-3 md:right-4 flex items-end gap-2" role="toolbar" aria-label={t('world.emotes.label')}>
-      <div className="rpg-chip !p-1.5 flex gap-1.5">
+    <div
+      className={`absolute flex gap-2 ${
+        touch
+          ? 'flex-col items-center bottom-[calc(1.5rem+env(safe-area-inset-bottom))] right-[calc(0.75rem+env(safe-area-inset-right))]'
+          : 'items-end bottom-6 right-4'
+      }`}
+      role="toolbar"
+      aria-label={t('world.emotes.label')}
+    >
+      <div className={`rpg-chip !p-1.5 flex gap-1.5 ${touch ? 'flex-col' : ''}`}>
         {EMOTES.map((e) => (
           <button key={e.kind} onClick={() => doEmote(e.kind)} className="rpg-emote" aria-label={t(`world.emotes.${e.kind}`)} title={t(`world.emotes.${e.kind}`)}>
             <e.icon className="h-5 w-5" aria-hidden="true" />
@@ -74,7 +88,7 @@ function EmoteDock({ touch }: { touch: boolean }) {
           </button>
         ))}
       </div>
-      <button onClick={jump} className={`rpg-emote rpg-emote-jump ${touch ? '!h-16 !w-16' : ''}`} aria-label={t('world.emotes.jump')} title={t('world.emotes.jump')}>
+      <button onClick={jump} className={`rpg-emote rpg-emote-jump ${touch ? '!h-14 !w-14' : ''}`} aria-label={t('world.emotes.jump')} title={t('world.emotes.jump')}>
         <ChevronsUp className="h-6 w-6" aria-hidden="true" />
         {!touch && <span className="rpg-emote-key">Space</span>}
       </button>
@@ -99,7 +113,7 @@ function Toast() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          className="rpg-toast absolute top-20 md:top-6 left-1/2 -translate-x-1/2"
+          className="rpg-toast absolute top-[9.5rem] md:top-6 inset-x-0 mx-auto w-fit max-w-[calc(100vw-1.5rem)]"
         >
           <Sparkles className="w-4 h-4 text-amber-300" />
           {visible.text}
@@ -213,20 +227,34 @@ export default function HUD({ touch }: { touch: boolean }) {
   const visited = useGame((s) => s.visited.length);
   const questOpen = useGame((s) => s.questOpen);
   const mapOpen = useGame((s) => s.mapOpen);
+  const menuOpen = useGame((s) => s.menuOpen);
   const total = interactables.length;
 
   if (!started) return null;
+
+  const settings = (
+    <>
+      <TourToggle />
+      <MuteToggle />
+      <LanguageToggle />
+      <ThemeToggle />
+      <QualityToggle />
+      <Link href="/classic" className="rpg-icon-button" title={t('world.classic')} aria-label={t('world.classic')}>
+        <LayoutList className="w-4 h-4" />
+      </Link>
+    </>
+  );
 
   return (
     <div className="absolute inset-0 pointer-events-none z-10 [&>*]:pointer-events-auto">
       {/* top-left: identity + progress */}
       <div className="absolute top-3 left-3 md:top-4 md:left-4 rpg-chip">
-        <button onClick={() => setState({ questOpen: !questOpen })} className="flex items-center gap-3 text-left" aria-label={t('world.quest_title')}>
+        <button onClick={() => setState({ questOpen: !questOpen, menuOpen: false })} className="flex items-center gap-2 md:gap-3 text-left" aria-label={t('world.quest_title')}>
           <span className="rpg-avatar">IA</span>
           <span className="min-w-0">
-            <span className="block font-display text-sm font-bold text-white leading-tight">{t('hero.name')}</span>
+            <span className="block max-w-[8.5rem] md:max-w-none truncate font-display text-sm font-bold text-white leading-tight">{t('hero.name')}</span>
             <span className="flex items-center gap-2 mt-1">
-              <span className="block h-1.5 w-20 md:w-28 rounded-full bg-white/15 overflow-hidden">
+              <span className="block h-1.5 w-16 md:w-28 rounded-full bg-white/15 overflow-hidden">
                 <span className="block h-full rounded-full bg-gradient-to-r from-amber-300 to-green-400 transition-all duration-700" style={{ width: `${(visited / total) * 100}%` }} />
               </span>
               <span className="text-[11px] font-mono text-white/70">
@@ -234,25 +262,24 @@ export default function HUD({ touch }: { touch: boolean }) {
               </span>
             </span>
           </span>
-          <ScrollText className="w-4 h-4 text-amber-300 ml-1" />
+          <ScrollText className="hidden sm:block w-4 h-4 text-amber-300 ml-1" />
         </button>
       </div>
 
-      {/* top-right: actions */}
-      <div className="absolute top-3 right-3 md:top-4 md:right-4 flex flex-col items-end gap-3">
+      {/* top-right: actions (small screens: map + a menu holding the rest) */}
+      <div className="absolute top-3 right-3 md:top-4 md:right-4 flex flex-col items-end gap-2 md:gap-3">
         <div className="flex items-center gap-2">
-          <TourToggle />
-          <IconButton onClick={() => setState({ mapOpen: !mapOpen })} label={t('world.map_title')} active={mapOpen}>
+          <IconButton onClick={() => setState({ mapOpen: !mapOpen, menuOpen: false })} label={t('world.map_title')} active={mapOpen}>
             <MapIcon className="w-4 h-4" />
           </IconButton>
-          <MuteToggle />
-          <LanguageToggle />
-          <ThemeToggle />
-          <QualityToggle />
-          <Link href="/classic" className="rpg-icon-button" title={t('world.classic')} aria-label={t('world.classic')}>
-            <LayoutList className="w-4 h-4" />
-          </Link>
+          <div className="hidden md:flex items-center gap-2">{settings}</div>
+          <span className="md:hidden">
+            <IconButton onClick={() => setState({ menuOpen: !menuOpen, questOpen: false })} label={t('world.menu')} active={menuOpen}>
+              {menuOpen ? <X className="w-4 h-4" /> : <Settings2 className="w-4 h-4" />}
+            </IconButton>
+          </span>
         </div>
+        {menuOpen && <div className="md:hidden flex flex-col items-end gap-2">{settings}</div>}
         <div className="hidden md:block">
           <Minimap />
         </div>

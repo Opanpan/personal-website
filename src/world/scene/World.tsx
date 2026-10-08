@@ -8,6 +8,7 @@ import Player from './Player';
 import SkillOrbs from './SkillOrbs';
 import Life from './Life';
 import Effects from './Effects';
+import { FadeController } from './Fade';
 import { Quality } from '../store';
 
 export default function World({ night, quality }: { night: boolean; quality: Quality }) {
@@ -22,6 +23,7 @@ export default function World({ night, quality }: { night: boolean; quality: Qua
       <Markers />
       <ZoneLabels />
       <Player />
+      <FadeController />
       {quality === 'high' && <Effects night={night} />}
     </>
   );

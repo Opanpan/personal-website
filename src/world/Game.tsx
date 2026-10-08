@@ -84,7 +84,7 @@ function useKeyboard() {
           doEmote('sit');
           break;
         case 'Escape':
-          setState({ panel: null, mapOpen: false, questOpen: false });
+          setState({ panel: null, mapOpen: false, questOpen: false, menuOpen: false });
           break;
         case 'KeyM':
           if (!s.panel) setState({ mapOpen: !s.mapOpen });
@@ -217,11 +217,16 @@ export default function Game() {
 
   useEffect(() => {
     setSupported(hasWebGL());
-    setTouch(window.matchMedia('(pointer: coarse)').matches);
+    // touch layout (joystick, big buttons) on touch screens and on narrow viewports
+    const mq = window.matchMedia('(any-pointer: coarse), (max-width: 767px)');
+    const onTouchChange = () => setTouch(mq.matches);
+    onTouchChange();
+    mq.addEventListener('change', onTouchChange);
     initVisited();
     initQuality();
     document.documentElement.style.overflow = 'hidden';
     return () => {
+      mq.removeEventListener('change', onTouchChange);
       document.documentElement.style.overflow = '';
     };
   }, []);

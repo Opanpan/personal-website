@@ -22,6 +22,8 @@ export interface GameState {
   visited: string[];
   mapOpen: boolean;
   questOpen: boolean;
+  /** collapsed settings menu on small screens */
+  menuOpen: boolean;
   toast: { id: number; text: string } | null;
   completed: boolean;
   /** guided tour progress (index into TOUR_ORDER) */
@@ -57,6 +59,7 @@ let state: GameState = {
   visited: [],
   mapOpen: false,
   questOpen: false,
+  menuOpen: false,
   toast: null,
   completed: false,
   tour: { active: false, index: 0, seen: false },

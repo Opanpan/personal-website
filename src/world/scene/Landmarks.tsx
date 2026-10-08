@@ -8,6 +8,12 @@ import {
   interactables,
   BAKSO_CART,
   BEACH_SPOTS,
+  CANDI_GATE,
+  CANDI_LEVEL_H,
+  CANDI_LEVELS,
+  CANDI_STAIR_HALF_WIDTH,
+  CANDI_STEPS,
+  CANDI_STUPAS,
   DWARAPALA,
   EXPERIENCE_ORDER,
   GAPURA,
@@ -22,6 +28,7 @@ import {
 import { batikTexture as batikPattern, C, mat, nonIndexed, texMat } from '../materials';
 import { glowTexture, reliefTexture, roofTexture, stoneTexture, thatchTexture, woodTexture } from '../textures';
 import { Label } from './Markers';
+import { Fade } from './Fade';
 import { runtime } from '../runtime';
 import { getState, setState, useGame } from '../store';
 import { now } from '../runtime';
@@ -312,32 +319,14 @@ function Joglo({ night }: { night: boolean }) {
 // ---------------------------------------------------------------------------
 // Candi — Borobudur-style temple (Education) + journey stupas (Experience)
 // ---------------------------------------------------------------------------
-const CANDI_LEVELS = [17, 14.4, 11.8, 9.2, 6.6];
-const LEVEL_H = 1.5;
+const LEVEL_H = CANDI_LEVEL_H;
 
 function Candi() {
   const { x, z } = ZONES.candi;
-  const small = useMemo(() => {
-    const spots: THREE.Matrix4[] = [];
-    [2, 3, 4].forEach((lvl) => {
-      const size = CANDI_LEVELS[lvl] - 1.4;
-      const y = (lvl + 1) * LEVEL_H;
-      const n = Math.max(2, Math.floor(size / 2.4));
-      for (let i = 0; i <= n; i++) {
-        const u = -size / 2 + (size * i) / n;
-        for (const [sx, sz] of [
-          [u, -size / 2],
-          [u, size / 2],
-          [-size / 2, u],
-          [size / 2, u],
-        ]) {
-          if (sz === size / 2 && Math.abs(sx) < 1.6) continue; // leave the stairway clear
-          spots.push(new THREE.Matrix4().compose(new THREE.Vector3(sx, y, sz), new THREE.Quaternion(), new THREE.Vector3(0.5, 0.5, 0.5)));
-        }
-      }
-    });
-    return spots;
-  }, []);
+  const small = useMemo(
+    () => CANDI_STUPAS.map((st) => new THREE.Matrix4().compose(new THREE.Vector3(st.x, st.y, st.z), new THREE.Quaternion(), new THREE.Vector3(0.5, 0.5, 0.5))),
+    []
+  );
   const instRef = useRef<THREE.InstancedMesh>(null);
   React.useLayoutEffect(() => {
     small.forEach((m, i) => instRef.current?.setMatrixAt(i, m));
@@ -361,25 +350,31 @@ function Candi() {
       ))}
       <instancedMesh ref={instRef} args={[stupaGeometry, texMat(stoneTexture(), '#cfc8ba'), small.length]} castShadow receiveShadow />
       <Stupa position={[0, topY, 0]} scale={2.3} color={C.stoneLight} />
-      {/* stairway running up the south face */}
-      {Array.from({ length: 10 }).map((_, i) => (
+      {/* stairway running up the south face — same steps as the colliders, so it can be climbed */}
+      {CANDI_STEPS.map((st) => (
         <Box
-          key={i}
-          args={[2.6, (i + 1) * (topY / 10), 0.95]}
-          position={[0, ((i + 1) * (topY / 10)) / 2, 8.5 + 1.3 - i * 0.95 - 0.5]}
+          key={st.z1}
+          args={[CANDI_STAIR_HALF_WIDTH * 2, st.top, st.z1 - st.z0]}
+          position={[0, st.top / 2, (st.z0 + st.z1) / 2]}
           color={C.stoneLight}
           material={texMat(stoneTexture(), '#c4bdaf', [1, 0.5])}
         />
       ))}
-      {/* kala head watching over the stairway */}
-      <group position={[0, LEVEL_H * 2.6, 6.5]}>
-        <Box args={[2.4, 1.3, 0.5]} position={[0, 0, 0]} color={C.stoneDark} />
-        {[-0.5, 0.5].map((x) => (
-          <mesh key={x} position={[x, 0.2, 0.27]} material={mat('#3f3a33')}>
-            <sphereGeometry args={[0.2, 6, 4]} />
-          </mesh>
+      {/* kori gateway at the foot of the stairs, kala head watching from the lintel */}
+      <group position={[0, 0, CANDI_GATE.z]}>
+        {[-1, 1].map((sx) => (
+          <Box key={sx} args={[0.6, 2.9, 0.6]} position={[sx * CANDI_GATE.halfSpan, 1.45, 0]} color={C.stone} />
         ))}
-        <Box args={[1.2, 0.25, 0.1]} position={[0, -0.35, 0.27]} color="#3f3a33" cast={false} />
+        <Box args={[CANDI_GATE.halfSpan * 2 + 0.8, 0.3, 0.7]} position={[0, 3.05, 0]} color={C.stoneDark} />
+        <group position={[0, 3.75, 0]}>
+          <Box args={[2.4, 1.1, 0.5]} position={[0, 0, 0]} color={C.stoneDark} />
+          {[-0.5, 0.5].map((ex) => (
+            <mesh key={ex} position={[ex, 0.15, 0.27]} material={mat('#3f3a33')}>
+              <sphereGeometry args={[0.2, 6, 4]} />
+            </mesh>
+          ))}
+          <Box args={[1.2, 0.25, 0.1]} position={[0, -0.3, 0.27]} color="#3f3a33" cast={false} />
+        </group>
       </group>
       {/* stone guardians (dwarapala) */}
       {DWARAPALA.map((d) => (
@@ -404,23 +399,25 @@ function JourneyStupas() {
       {EXPERIENCE_ORDER.map((key, i) => {
         const s = stupaSpot(key);
         return (
-          <group key={key} position={[s.x, 0, s.z]}>
-            <Box args={[2.6, 0.7, 2.6]} position={[0, 0.35, 0]} color={C.stoneDark} />
-            <Box args={[2.2, 0.4, 2.2]} position={[0, 0.9, 0]} color={C.stone} />
-            <Stupa position={[0, 1.1, 0]} scale={1.15} color={C.stoneLight} />
-            {/* sash tied around the bell, coloured per company */}
-            <mesh position={[0, 1.95, 0]} material={mat(COMPANY_COLORS[key])}>
-              <torusGeometry args={[0.98, 0.07, 6, 16]} />
-            </mesh>
-            {/* numbered step stone */}
-            <Box args={[0.7, 0.7, 0.12]} position={[s.x < 0 ? 1.36 : -1.36, 0.6, 0]} rotation={[0, Math.PI / 2, 0]} color={COMPANY_COLORS[key]} cast={false} />
-            <Label position={[0, 6.4, 0]} range={16}>
-              <span className="world-label-place">
-                {i + 1}. {t(`experience.positions.${key}.company`)}
-              </span>
-              <span className="world-label-sub">{t(`experience.positions.${key}.period`)}</span>
-            </Label>
-          </group>
+          <Fade key={key}>
+            <group position={[s.x, 0, s.z]}>
+              <Box args={[2.6, 0.7, 2.6]} position={[0, 0.35, 0]} color={C.stoneDark} />
+              <Box args={[2.2, 0.4, 2.2]} position={[0, 0.9, 0]} color={C.stone} />
+              <Stupa position={[0, 1.1, 0]} scale={1.15} color={C.stoneLight} />
+              {/* sash tied around the bell, coloured per company */}
+              <mesh position={[0, 1.95, 0]} material={mat(COMPANY_COLORS[key])}>
+                <torusGeometry args={[0.98, 0.07, 6, 16]} />
+              </mesh>
+              {/* numbered step stone */}
+              <Box args={[0.7, 0.7, 0.12]} position={[s.x < 0 ? 1.36 : -1.36, 0.6, 0]} rotation={[0, Math.PI / 2, 0]} color={COMPANY_COLORS[key]} cast={false} />
+              <Label position={[0, 6.4, 0]} range={16}>
+                <span className="world-label-place">
+                  {i + 1}. {t(`experience.positions.${key}.company`)}
+                </span>
+                <span className="world-label-sub">{t(`experience.positions.${key}.period`)}</span>
+              </Label>
+            </group>
+          </Fade>
         );
       })}
     </>
@@ -633,7 +630,9 @@ function Pasar() {
   return (
     <>
       {projects.map((p, i) => (
-        <Stall key={p.id} index={i} />
+        <Fade key={p.id}>
+          <Stall index={i} />
+        </Fade>
       ))}
       {/* shade tree in the middle of the market */}
       <group position={[ZONES.pasar.x, 0, ZONES.pasar.z]}>
@@ -1107,26 +1106,43 @@ function BanyanExtras() {
 export default function Landmarks({ night }: { night: boolean }) {
   return (
     <NightContext.Provider value={night}>
-      <Monas />
+      {/* big structures ghost while they hide the player (see Fade) */}
+      <Fade>
+        <Monas />
+      </Fade>
       <Flag position={[4.2, 0, -3.5]} />
       <Signpost />
-      <Joglo night={night} />
-      <Gapura />
-      <Candi />
+      <Fade>
+        <Joglo night={night} />
+      </Fade>
+      <Fade>
+        <Gapura />
+      </Fade>
+      <Fade>
+        <Candi />
+      </Fade>
       <JourneyStupas />
       <Pasar />
       <Sawah />
-      <Saung />
-      <Beringin />
+      <Fade>
+        <Saung />
+      </Fade>
+      <Fade>
+        <Beringin />
+      </Fade>
       <Pier night={night} />
-      <Phinisi />
+      <Fade>
+        <Phinisi />
+      </Fade>
       {PENJOR.map((p) => (
         <Penjor key={`${p.x}${p.z}`} {...p} />
       ))}
       {TORCHES.map((t, i) => (
         <Torch key={`${t.x}${t.z}`} position={[t.x, 0, t.z]} night={night} index={i} />
       ))}
-      <BaksoCart />
+      <Fade>
+        <BaksoCart />
+      </Fade>
       <BeachSpot {...BEACH_SPOTS[0]} color="#0ea5e9" />
       <BeachSpot {...BEACH_SPOTS[1]} color="#f43f5e" />
       <BanyanExtras />

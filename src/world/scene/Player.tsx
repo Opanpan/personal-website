@@ -1,7 +1,7 @@
 import React, { useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
-import { interactables, isOnPier, PIER, resolvePosition } from '../config';
+import { groundAt, insideSolid, interactables, isOnPier, PIER, resolvePosition } from '../config';
 import { runtime } from '../runtime';
 import { getState, setState } from '../store';
 import { C } from '../materials';
@@ -34,6 +34,12 @@ export default function Player() {
   const lookAt = useRef(new THREE.Vector3());
   const intro = useRef(0);
   const walkPhase = useRef(0);
+  /** smoothed height of the surface underfoot, so the camera follows onto terraces without bobbing */
+  const standing = useRef(0);
+  /** fraction of the full camera distance currently in use (shrinks when a wall is in the way) */
+  const camReach = useRef(1);
+  /** camera pitch actually used: the player's pitch, raised to see over walls */
+  const camLift = useRef(runtime.camPitch);
   const initialised = useRef(false);
 
   useFrame((state, rawDt) => {
@@ -46,6 +52,8 @@ export default function Player() {
       p.x = runtime.teleport.x;
       p.z = runtime.teleport.z;
       p.heading = Math.PI;
+      runtime.jumpY = 0;
+      runtime.jumpV = 0;
       runtime.teleport = null;
       runtime.target = null;
     }
@@ -92,7 +100,7 @@ export default function Player() {
       const nz = dz / Math.max(1, len);
       const running = runtime.keys.run || Math.hypot(runtime.joy.x, runtime.joy.y) > 0.92 || !!runtime.target;
       const speed = running ? RUN_SPEED : WALK_SPEED;
-      const [rx, rz] = resolvePosition(p.x + nx * speed * dt, p.z + nz * speed * dt, p.x, p.z);
+      const [rx, rz] = resolvePosition(p.x + nx * speed * dt, p.z + nz * speed * dt, p.x, p.z, runtime.jumpY);
       // stuck against an obstacle while click-moving → give up
       if (runtime.target && Math.hypot(rx - p.x, rz - p.z) < speed * dt * 0.1) {
         runtime.target = null;
@@ -115,26 +123,35 @@ export default function Player() {
 
     audio.update(p.x, p.z, t);
 
-    // ---- jump
-    const grounded = runtime.jumpY <= 0 && runtime.jumpV <= 0;
+    // ---- jump / fall. jumpY is the feet height above the ground (or pier deck); `floor` is
+    // the top of whatever is underfoot (a rock, barrel, terrace) so you can land on it.
+    const floor = groundAt(p.x, p.z, runtime.jumpY);
+    let grounded = runtime.jumpV <= 0 && runtime.jumpY <= floor + 0.001;
+    if (grounded) {
+      // step up onto low ledges quickly rather than teleporting
+      runtime.jumpY = floor > runtime.jumpY ? Math.min(floor, runtime.jumpY + dt * 8) : floor;
+    }
     if (runtime.jumpQueued) {
       runtime.jumpQueued = false;
       if (grounded && canMove) {
         runtime.jumpV = JUMP_SPEED;
         if (runtime.emote?.kind !== 'wave') runtime.emote = null;
         audio.hop();
+        grounded = false;
       }
     }
     if (!grounded) {
+      // stepped off a ledge, or mid-jump
       runtime.jumpV -= GRAVITY * dt;
       runtime.jumpY += runtime.jumpV * dt;
-      if (runtime.jumpY <= 0) {
-        runtime.jumpY = 0;
+      if (runtime.jumpV <= 0 && runtime.jumpY <= floor) {
+        runtime.jumpY = floor;
         runtime.jumpV = 0;
         audio.land();
       }
     }
-    const airborne = runtime.jumpY > 0;
+    standing.current = THREE.MathUtils.lerp(standing.current, floor, Math.min(1, dt * 6));
+    const airborne = runtime.jumpY > floor + 0.02;
 
     // ---- emotes: walking cancels sitting/dancing, waves and dances time out
     const em = runtime.emote;
@@ -233,17 +250,45 @@ export default function Player() {
     // follow point trails the player slightly; the orbit offset is applied on top so
     // rotating the view swings around the player instead of cutting across
     if (!initialised.current) {
-      lookAt.current.set(p.x, p.y + 1.2, p.z);
+      lookAt.current.set(p.x, p.y + standing.current + 1.2, p.z);
       initialised.current = true;
     }
-    lookAt.current.lerp(tmpLook.set(p.x, p.y + 1.2, p.z), Math.min(1, dt * 8));
+    lookAt.current.lerp(tmpLook.set(p.x, p.y + standing.current + 1.2, p.z), Math.min(1, dt * 8));
     const dist = CAM_DISTANCE * runtime.zoom;
-    const pitch = runtime.camPitch;
-    camPos.current.set(
-      lookAt.current.x + sinY * Math.cos(pitch) * dist,
-      lookAt.current.y + Math.sin(pitch) * dist,
-      lookAt.current.z + cosY * Math.cos(pitch) * dist
-    );
+    const placeCam = (pitch: number) =>
+      camPos.current.set(
+        lookAt.current.x + sinY * Math.cos(pitch) * dist,
+        lookAt.current.y + Math.sin(pitch) * dist,
+        lookAt.current.z + cosY * Math.cos(pitch) * dist
+      );
+    // how far along player → camera the view is clear of solid structures (1 = all the way)
+    const clearReach = () => {
+      const STEPS = 24;
+      for (let i = 1; i <= STEPS; i++) {
+        tmpCam.lerpVectors(lookAt.current, camPos.current, i / STEPS);
+        if (insideSolid(tmpCam.x, tmpCam.y - p.y, tmpCam.z)) return (i - 1) / STEPS;
+      }
+      return 1;
+    };
+    // ---- camera collision: never enter a building. First crane up over whatever is in the
+    // way; only if no angle clears it, slide in towards the player.
+    let pitch = runtime.camPitch;
+    placeCam(pitch);
+    let reach = clearReach();
+    for (let up = pitch + 0.1; reach < 0.85 && up <= 1.35; up += 0.1) {
+      placeCam(up);
+      const r = clearReach();
+      if (r > reach) {
+        pitch = up;
+        reach = r;
+      }
+    }
+    // pitch eases back down / reach eases back out, so the camera doesn't pump
+    camLift.current = pitch > camLift.current ? THREE.MathUtils.lerp(camLift.current, pitch, Math.min(1, dt * 10)) : THREE.MathUtils.lerp(camLift.current, pitch, Math.min(1, dt * 2.5));
+    placeCam(camLift.current);
+    reach = Math.max(0.12, Math.min(reach, clearReach()));
+    camReach.current = reach < camReach.current ? reach : THREE.MathUtils.lerp(camReach.current, reach, Math.min(1, dt * 3));
+    camPos.current.lerpVectors(lookAt.current, camPos.current, camReach.current);
     const orbitA = t * 0.06;
     camera.position.copy(tmpCam.set(Math.sin(orbitA) * 70, 42, Math.cos(orbitA) * 70).lerp(camPos.current, intro.current));
     camera.lookAt(tmpFollow.set(0, 0, 0).lerp(lookAt.current, intro.current));

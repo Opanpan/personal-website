@@ -75,7 +75,7 @@ export const interactables: Interactable[] = [
       kind: 'experience' as const,
       group: 'experience' as const,
       ref: key,
-      x: s.x + side * 2.2,
+      x: s.x + side * 3.1, // clear of the stupa base so the marker ring doesn't run into it
       z: s.z,
       radius: 2.6,
       markerY: 5.2,
@@ -83,7 +83,7 @@ export const interactables: Interactable[] = [
   }),
   { id: 'education', kind: 'education', group: 'experience', x: 0, z: -21.5, radius: 3, markerY: 3.2 },
   ...projects.map((p, i) => {
-    const s = stallSpot(i, PASAR_RING - 3.4);
+    const s = stallSpot(i, PASAR_RING - 3.6);
     return {
       id: `project_${p.id}`,
       kind: 'project' as const,
@@ -95,8 +95,8 @@ export const interactables: Interactable[] = [
       markerY: 3.6,
     };
   }),
-  { id: 'skills', kind: 'skills', group: 'skills', x: ZONES.saung.x, z: ZONES.saung.z - 3.4, radius: 3, markerY: 4.6 },
-  { id: 'quote', kind: 'quote', group: 'quote', x: ZONES.beringin.x, z: ZONES.beringin.z - 4.6, radius: 3, markerY: 3 },
+  { id: 'skills', kind: 'skills', group: 'skills', x: ZONES.saung.x, z: ZONES.saung.z - 4, radius: 3, markerY: 4.6 },
+  { id: 'quote', kind: 'quote', group: 'quote', x: ZONES.beringin.x, z: ZONES.beringin.z - 5.4, radius: 3, markerY: 3 },
   { id: 'contact', kind: 'contact', group: 'contact', x: 0, z: PIER.end - 1.5, radius: 3, markerY: 3.4 },
 ];
 
@@ -134,22 +134,75 @@ export function distToSegment(px: number, pz: number, [ax, az, bx, bz]: Segment)
 }
 
 // ---------------------------------------------------------------------------
+// Candi (Borobudur-style temple) shape, shared by the mesh and its colliders. Local to ZONES.candi.
+// ---------------------------------------------------------------------------
+/** square level sizes, bottom to top */
+export const CANDI_LEVELS = [17, 14.4, 11.8, 9.2, 6.6];
+export const CANDI_LEVEL_H = 1.5;
+export const CANDI_STAIR_HALF_WIDTH = 1.3;
+/**
+ * Stairway up the south face: four low steps per level, each within STEP_UP so it can be walked.
+ * Each level is 1.3 smaller on every side, so four steps of 0.325 land exactly on the next level.
+ */
+export const CANDI_STEPS = Array.from({ length: CANDI_LEVELS.length * 4 }, (_, i) => {
+  const depth = (CANDI_LEVELS[0] - CANDI_LEVELS[1]) / 2 / 4;
+  const outer = CANDI_LEVELS[0] / 2 + 4 * depth - i * depth;
+  return { top: ((i + 1) * CANDI_LEVEL_H) / 4, z0: outer - depth, z1: outer };
+});
+/** gateway (kori) with the kala head over the foot of the stairway */
+export const CANDI_GATE = { z: CANDI_LEVELS[0] / 2 + 1.3 + 0.35, halfSpan: 1.75 };
+/** small stupas lining the upper three terraces (local x, top-of-level y, z) */
+export const CANDI_STUPAS = [2, 3, 4].flatMap((lvl) => {
+  const size = CANDI_LEVELS[lvl] - 1.4;
+  const y = (lvl + 1) * CANDI_LEVEL_H;
+  const n = Math.max(2, Math.floor(size / 2.4));
+  const out: { x: number; y: number; z: number }[] = [];
+  for (let i = 0; i <= n; i++) {
+    const u = -size / 2 + (size * i) / n;
+    for (const [x, z] of [
+      [u, -size / 2],
+      [u, size / 2],
+      [-size / 2, u],
+      [size / 2, u],
+    ]) {
+      if (z === size / 2 && Math.abs(x) < 1.6) continue; // leave the stairway clear
+      out.push({ x, y, z });
+    }
+  }
+  return out;
+});
+
+// ---------------------------------------------------------------------------
 // Collision
 // ---------------------------------------------------------------------------
+// `h` is the height of an obstacle's top surface. Obstacles with `h` can be jumped over and
+// stood on; obstacles without it (walls, trunks, poles) block at any height.
 interface Circle {
   x: number;
   z: number;
   r: number;
+  h?: number;
 }
 interface Box {
   minX: number;
   maxX: number;
   minZ: number;
   maxZ: number;
+  h?: number;
 }
+/** ledges up to this high are stepped onto without jumping */
+const STEP_UP = 0.4;
+const passable = (h: number | undefined, feet: number) => h !== undefined && h <= feet + STEP_UP;
 
 export const circleColliders: Circle[] = [
   { x: 4.2, z: -3.5, r: 0.35 }, // flag pole
+  // Monas corner posts: knee-high once you're on the plinth
+  ...[-1, 1].flatMap((sx) => [-1, 1].map((sz) => ({ x: sx * 2.65, z: sz * 2.65, r: 0.2, h: 1.6 }))),
+  // Candi: stupas on the terraces, the crowning stupa, and the gateway pillars
+  // (stupa geometry is ~2.6 tall at scale 1: small ones are scale 0.5, the crowning one 2.3)
+  ...CANDI_STUPAS.map((st) => ({ x: ZONES.candi.x + st.x, z: ZONES.candi.z + st.z, r: 0.5, h: st.y + 1.3 })),
+  { x: ZONES.candi.x, z: ZONES.candi.z, r: 2.3, h: CANDI_LEVELS.length * CANDI_LEVEL_H + 6 },
+  ...[-1, 1].map((sx) => ({ x: ZONES.candi.x + sx * CANDI_GATE.halfSpan, z: ZONES.candi.z + CANDI_GATE.z, r: 0.3 })),
   ...EXPERIENCE_ORDER.map((k) => ({ ...STUPA_SPOTS[k], r: 1.5 })),
   ...projects.map((_, i) => ({ ...stallSpot(i), r: 1.9 })),
   { x: ZONES.pasar.x, z: ZONES.pasar.z, r: 1.6 }, // pasar centre tree
@@ -157,11 +210,30 @@ export const circleColliders: Circle[] = [
 ];
 
 export const boxColliders: Box[] = [
-  { minX: -2.9, maxX: 2.9, minZ: -2.9, maxZ: 2.9 }, // Monas
+  // Monas: plinth + upper plinth (hop up), the column itself blocks
+  { minX: -2.8, maxX: 2.8, minZ: -2.8, maxZ: 2.8, h: 0.7 },
+  { minX: -2.1, maxX: 2.1, minZ: -2.1, maxZ: 2.1, h: 1.6 },
+  { minX: -0.75, maxX: 0.75, minZ: -0.75, maxZ: 0.75 },
   { minX: ZONES.joglo.x - 5.6, maxX: ZONES.joglo.x + 5.6, minZ: ZONES.joglo.z - 5.2, maxZ: ZONES.joglo.z + 5 }, // Joglo
-  { minX: -8.6, maxX: 8.6, minZ: -42.6, maxZ: -25.4 }, // Candi
-  { minX: -1.7, maxX: 1.7, minZ: -25.4, maxZ: -23.4 }, // Candi stairs
-  { minX: -37, maxX: -21, minZ: 17, maxZ: 33 }, // Sawah terraces
+  // Candi: each level is a platform, reached by the stairway on the south face
+  ...CANDI_LEVELS.map((size, i) => ({
+    minX: ZONES.candi.x - size / 2,
+    maxX: ZONES.candi.x + size / 2,
+    minZ: ZONES.candi.z - size / 2,
+    maxZ: ZONES.candi.z + size / 2,
+    h: (i + 1) * CANDI_LEVEL_H,
+  })),
+  ...CANDI_STEPS.map((st) => ({
+    minX: ZONES.candi.x - CANDI_STAIR_HALF_WIDTH,
+    maxX: ZONES.candi.x + CANDI_STAIR_HALF_WIDTH,
+    minZ: ZONES.candi.z + st.z0,
+    maxZ: ZONES.candi.z + st.z1,
+    h: st.top,
+  })),
+  // Sawah terraces: three stepped paddies (matches TERRACES in Landmarks)
+  { minX: -37, maxX: -21, minZ: 17, maxZ: 33, h: 0.35 },
+  { minX: -37, maxX: -26, minZ: 17, maxZ: 33, h: 0.8 },
+  { minX: -37, maxX: -31, minZ: 17, maxZ: 33, h: 1.25 },
   { minX: ZONES.saung.x - 2.3, maxX: ZONES.saung.x + 2.3, minZ: ZONES.saung.z - 2.3, maxZ: ZONES.saung.z + 2.3 }, // Saung
 ];
 
@@ -220,8 +292,9 @@ export const GONG_POS = { x: ZONES.joglo.x - 0.7, z: ZONES.joglo.z + 3.7 };
 circleColliders.push(
   { ...BAKSO_CART, r: 1.2 },
   ...BEACH_SPOTS.map((b) => ({ ...b, r: 0.5 })),
-  { x: -1.1, z: PIER.end - 6, r: 0.45 }, // barrels on the pier
-  { x: -1.1, z: PIER.end - 6.9, r: 0.45 },
+  { x: -1.1, z: PIER.end - 6, r: 0.45, h: 0.9 }, // barrels on the pier
+  { x: -1.1, z: PIER.end - 6.9, r: 0.45, h: 0.9 },
+  { x: -26, z: 27, r: 0.2 }, // scarecrow pole on the terraces
   { x: -GAPURA.halfGap - 1.1, z: GAPURA.z, r: 1.2 },
   { x: GAPURA.halfGap + 1.1, z: GAPURA.z, r: 1.2 },
   ...DWARAPALA.map((d) => ({ ...d, r: 0.6 })),
@@ -230,15 +303,64 @@ circleColliders.push(
   ...TORCHES.map((t) => ({ ...t, r: 0.2 }))
 );
 
-export function addCircleCollider(x: number, z: number, r: number) {
-  circleColliders.push({ x, z, r });
+/** Distance from (x, z) to the nearest obstacle edge (0 when inside one). */
+export function obstacleClearance(x: number, z: number) {
+  let d = Infinity;
+  for (const c of circleColliders) d = Math.min(d, Math.hypot(x - c.x, z - c.z) - c.r);
+  for (const b of boxColliders) d = Math.min(d, Math.hypot(Math.max(b.minX - x, 0, x - b.maxX), Math.max(b.minZ - z, 0, z - b.maxZ)));
+  return Math.max(0, d);
 }
 
-/** Push a desired position out of obstacles and keep it on land / on the pier. */
-export function resolvePosition(x: number, z: number, prevX: number, prevZ: number): [number, number] {
+export function addCircleCollider(x: number, z: number, r: number, h?: number) {
+  circleColliders.push({ x, z, r, h });
+}
+
+/**
+ * Height of the surface under (x, z) for feet currently at `feet` (relative to the ground / pier deck):
+ * the top of the highest obstacle the player is above or can step onto, else 0.
+ */
+export function groundAt(x: number, z: number, feet: number) {
+  // stay on a ledge until the body's centre is past its edge
+  const edge = PLAYER_RADIUS * 0.5;
+  let floor = 0;
+  for (const c of circleColliders) {
+    if (!passable(c.h, feet) || c.h! <= floor) continue;
+    if (Math.hypot(x - c.x, z - c.z) < c.r + edge) floor = c.h!;
+  }
+  for (const b of boxColliders) {
+    if (!passable(b.h, feet) || b.h! <= floor) continue;
+    if (x > b.minX - edge && x < b.maxX + edge && z > b.minZ - edge && z < b.maxZ + edge) floor = b.h!;
+  }
+  return floor;
+}
+
+/** Height used for box obstacles with no `h` (walls, buildings) when keeping the camera out. */
+const SOLID_BOX_HEIGHT = 8;
+
+/**
+ * Is this 3D point inside a solid structure? Used to stop the camera entering buildings, the candi
+ * levels, terraces, plinths and rocks. Thin obstacles without a height (trunks, poles) are ignored —
+ * those fade instead.
+ */
+export function insideSolid(x: number, y: number, z: number, pad = 0.3) {
+  for (const b of boxColliders) {
+    if (y < (b.h ?? SOLID_BOX_HEIGHT) + pad && x > b.minX - pad && x < b.maxX + pad && z > b.minZ - pad && z < b.maxZ + pad) return true;
+  }
+  for (const c of circleColliders) {
+    if (c.h !== undefined && y < c.h + pad && Math.hypot(x - c.x, z - c.z) < c.r + pad) return true;
+  }
+  return false;
+}
+
+/**
+ * Push a desired position out of obstacles and keep it on land / on the pier.
+ * `feet` is how high the player is; obstacles whose top is within a step of it don't block.
+ */
+export function resolvePosition(x: number, z: number, prevX: number, prevZ: number, feet = 0): [number, number] {
   const pr = PLAYER_RADIUS;
 
   for (const c of circleColliders) {
+    if (passable(c.h, feet)) continue;
     const dx = x - c.x;
     const dz = z - c.z;
     const min = c.r + pr;
@@ -251,6 +373,7 @@ export function resolvePosition(x: number, z: number, prevX: number, prevZ: numb
   }
 
   for (const b of boxColliders) {
+    if (passable(b.h, feet)) continue;
     const cx = Math.max(b.minX, Math.min(x, b.maxX));
     const cz = Math.max(b.minZ, Math.min(z, b.maxZ));
     const dx = x - cx;

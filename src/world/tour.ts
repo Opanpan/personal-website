@@ -45,7 +45,7 @@ export function goToStop(index: number) {
   const it = interactables.find((i) => i.id === id);
   if (!it) return endTour();
   clearMovement();
-  setState({ panel: null, mapOpen: false, questOpen: false, tour: { active: true, index, seen: false } });
+  setState({ panel: null, mapOpen: false, questOpen: false, menuOpen: false, tour: { active: true, index, seen: false } });
 
   const p = runtime.player;
   if (Math.hypot(it.x - p.x, it.z - p.z) < 7) {

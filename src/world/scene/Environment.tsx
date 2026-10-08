@@ -1,10 +1,11 @@
 import React, { useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
-import { Sky, Stars } from '@react-three/drei';
+import { Stars } from '@react-three/drei';
 import { mulberry32 } from '../config';
 import { runtime } from '../runtime';
 import { C, mat, useWarmup } from '../materials';
+import SkyDome from './SkyDome';
 
 const DAY = { fog: '#bfe6f2', hemiSky: '#dff4ff', hemiGround: '#6a8f4e', sun: '#fff1d6', sunI: 2.4, hemiI: 1.1 };
 const NIGHT = { fog: '#0d1b33', hemiSky: '#6078bb', hemiGround: '#24352a', sun: '#a9c0ff', sunI: 0.95, hemiI: 0.7 };
@@ -218,7 +219,8 @@ export default function Environment({ night }: { night: boolean }) {
   return (
     <>
       <Lights night={night} />
-      {/* both skies stay mounted; see useWarmup */}
+      <SkyDome night={night} />
+      {/* night-only objects stay mounted; see useWarmup */}
       <group visible={night || warm}>
         <Stars radius={180} depth={40} count={2500} factor={5} fade speed={0.6} />
         <mesh position={[80, 70, -160]}>
@@ -226,9 +228,6 @@ export default function Environment({ night }: { night: boolean }) {
           <meshBasicMaterial color="#fff6d5" fog={false} />
         </mesh>
         <Fireflies />
-      </group>
-      <group visible={!night || warm}>
-        <Sky distance={4500} sunPosition={[100, 60, -80]} turbidity={6} rayleigh={1.2} mieCoefficient={0.005} mieDirectionalG={0.8} />
       </group>
       <Horizon />
       <Clouds night={night} />

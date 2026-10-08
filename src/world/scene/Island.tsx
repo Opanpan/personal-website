@@ -15,8 +15,36 @@ function wobblyDisc(radius: number, wobble: number, seed: number, segments = 96)
     const x = pos.getX(i);
     const y = pos.getY(i);
     const a = Math.atan2(y, x);
-    const k = 1 + (Math.sin(a * 3 + seed) * 0.5 + Math.sin(a * 7 + seed * 2) * 0.3 + Math.sin(a * 13 + seed) * 0.2) * (wobble / radius);
+    const k = coastWobble(a, radius, wobble, seed);
     pos.setXY(i, x * k, y * k);
+  }
+  geo.computeVertexNormals();
+  return geo;
+}
+
+/** Coastline wobble factor at angle `a` (same shape wobblyDisc gives the rim). */
+function coastWobble(a: number, radius: number, wobble: number, seed: number) {
+  return 1 + (Math.sin(a * 3 + seed) * 0.5 + Math.sin(a * 7 + seed * 2) * 0.3 + Math.sin(a * 13 + seed) * 0.2) * (wobble / radius);
+}
+
+const BEACH_FLAT = ISLAND_RADIUS - 3; // dry sand ends here, then the beach slopes under the sea
+const BEACH_TOE = ISLAND_RADIUS + 6; // ...down to well below the lowest wave trough
+const BEACH_DEPTH = 1.6;
+
+/**
+ * Sand ring that runs flat under the grass, then slopes down into the water, so the waterline is
+ * wherever the (gently moving) sea meets the slope instead of a flat disc floating on the waves.
+ */
+function beachGeometry() {
+  const geo = new THREE.RingGeometry(LAND_RADIUS - 5, BEACH_TOE + 3, 160, 14);
+  const pos = geo.attributes.position as THREE.BufferAttribute;
+  for (let i = 0; i < pos.count; i++) {
+    const x = pos.getX(i);
+    const y = pos.getY(i);
+    const r = Math.hypot(x, y) / coastWobble(Math.atan2(y, x), ISLAND_RADIUS, 2.2, 0.4);
+    const t = THREE.MathUtils.clamp((r - BEACH_FLAT) / (BEACH_TOE - BEACH_FLAT), 0, 1);
+    // local z becomes world height once the ring is laid flat
+    pos.setZ(i, -0.06 - BEACH_DEPTH * t * t * (1.6 - 0.6 * t));
   }
   geo.computeVertexNormals();
   return geo;
@@ -43,9 +71,12 @@ function Water({ night }: { night: boolean }) {
           uniform float uTime;
           varying float vWave;
           varying vec2 vXZ;
+          uniform float uIsland;
           void main() {
             vec4 world = modelMatrix * vec4(position, 1.0);
-            float w = sin(world.x * 0.15 + uTime * 1.2) * 0.22 + cos(world.z * 0.12 + uTime * 0.9) * 0.22;
+            // calm water near the beach: big swells would wash over the sand
+            float calm = mix(0.25, 1.0, smoothstep(uIsland - 2.0, uIsland + 18.0, length(world.xz)));
+            float w = (sin(world.x * 0.15 + uTime * 1.2) * 0.22 + cos(world.z * 0.12 + uTime * 0.9) * 0.22) * calm;
             world.y += w;
             vWave = w;
             vXZ = world.xz;
@@ -133,18 +164,12 @@ export default function Island({ night }: { night: boolean }) {
     return g;
   }, []);
   const sand = useMemo(() => {
-    const g = wobblyDisc(ISLAND_RADIUS, 2.2, 0.4);
+    const g = beachGeometry();
     applyGroundUV(g);
     return g;
   }, []);
   const grassMat = useMemo(() => new THREE.MeshLambertMaterial({ map: groundTexture() }), []);
   const sandMat = useMemo(() => new THREE.MeshLambertMaterial({ map: sandTexture() }), []);
-  const shelf = useMemo(() => {
-    // underwater slope from the beach into the deep
-    const geo = new THREE.CylinderGeometry(ISLAND_RADIUS + 1, ISLAND_RADIUS + 22, 6, 64, 1, true);
-    geo.translate(0, -3.2, 0);
-    return geo;
-  }, []);
   const down = useRef<{ x: number; y: number } | null>(null);
 
   const onDown = (e: ThreeEvent<PointerEvent>) => {
@@ -165,13 +190,12 @@ export default function Island({ night }: { night: boolean }) {
     <group>
       <group onPointerDown={onDown} onPointerUp={onUp}>
         <mesh geometry={grass} rotation-x={-Math.PI / 2} position-y={0} material={grassMat} receiveShadow />
-        <mesh geometry={sand} rotation-x={-Math.PI / 2} position-y={-0.06} material={sandMat} receiveShadow />
+        <mesh geometry={sand} rotation-x={-Math.PI / 2} material={sandMat} receiveShadow />
         {/* pier deck is clickable too */}
         <mesh position={[0, PIER.deck - 0.08, (PIER.start + PIER.end) / 2]} visible={false}>
           <boxGeometry args={[PIER.halfWidth * 2 + 0.4, 0.1, PIER.end - PIER.start]} />
         </mesh>
       </group>
-      <mesh geometry={shelf} material={mat('#d9c48c')} />
       <Plaza />
       <Water night={night} />
     </group>

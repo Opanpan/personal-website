@@ -12,8 +12,9 @@ export type Surface = 'grass' | 'wood' | 'stone';
 const MUTE_KEY = 'world-muted';
 const MASTER_VOLUME = 0.75;
 
-// Slendro-like scale (5 roughly equal steps per octave) rooted on D4
-const SLENDRO = Array.from({ length: 11 }, (_, i) => 293.66 * Math.pow(2, i / 5));
+// Slendro-like scale (5 roughly equal steps per octave) rooted on D4.
+// 13 notes so the high counter-melody (max balungan degree 5 + 7) stays in range.
+const SLENDRO = Array.from({ length: 13 },(_, i) => 293.66 * Math.pow(2, i / 5));
 // 16-beat balungan pattern (scale degrees; -1 = rest), loops forever
 const BALUNGAN = [2, 3, 2, 1, -1, 2, 3, 5, 3, 2, 1, 2, -1, 3, 5, 4];
 const BEAT = 0.62; // seconds
