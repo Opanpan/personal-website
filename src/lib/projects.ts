@@ -61,6 +61,6 @@ export const projects: Project[] = [
     image: '/images/projects/olew.webp',
     techStack: ['Next.js', 'React', 'TypeScript', 'TailwindCSS', 'Three.js', 'Docker'],
     gradient: 'from-blue-600 via-blue-500 to-sky-400',
-    appUrl: 'https://olew-app.alriansyah.my.id',
+    appUrl: 'https://olew.alriansyah.my.id',
   },
 ];
