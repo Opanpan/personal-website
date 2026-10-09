@@ -606,7 +606,9 @@ function ProjectBoard({ index }: { index: number }) {
           [-0.072, Math.PI],
         ].map(([z, ry]) => (
           <mesh
-            key={z}
+            // remount once the screenshot arrives: swapping the material child in place can leave
+            // R3F's detach restoring the mesh's default material over the new one (blank board)
+            key={`${z}-${tex ? 'tex' : 'placeholder'}`}
             position={[0, 0, z]}
             rotation-y={ry}
             onClick={open}
