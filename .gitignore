@@ -55,3 +55,6 @@ certbot/
 # Local development
 .cache
 .turbo
+
+# local-only promo video project (Hyperframes)
+promo/

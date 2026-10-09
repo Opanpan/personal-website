@@ -198,8 +198,14 @@ function useCameraDrag(root: React.RefObject<HTMLDivElement>) {
 
 export default function Game() {
   const { t } = useTranslation('common');
-  const { theme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const night = theme === 'dark';
+
+  // dev-only handle for the scripted promo recorder (promo/); stripped from production builds
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'production') return;
+    (window as unknown as { __world: unknown }).__world = { runtime, getState, setState, setTheme };
+  }, [setTheme]);
   const [supported, setSupported] = useState<boolean | null>(null);
   const [touch, setTouch] = useState(false);
   const panel = useGame((s) => s.panel);
